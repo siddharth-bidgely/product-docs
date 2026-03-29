@@ -1,0 +1,169 @@
+features:
+  project-management:
+    display_name: "Project Management"
+    description: "1-click project and environment creation — provisions infrastructure, CMS content, and SaaS configuration automatically"
+    confluence_page_ids: ["931495969", "847642630", "853245955", "853475347", "852557844"]
+    feature_doc: features/project-management.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/utility/
+          - src/api/utility-appliance-profile/
+          - src/api/utility-home-profile/
+          - src/api/utility-reco-score/
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/utility/
+          - src/features/cmsPilot/
+          - src/features/pilot/
+          - src/apis/pilotAPI.ts
+          - src/apis/cmsPilotAPI.ts
+
+  recommendations:
+    display_name: "Recommendations"
+    description: "Create, review, and publish energy recommendations with i18n and workflows"
+    confluence_page_ids: ["815431723", "633110556"]
+    context_docs:
+      - repo: bidgely-quill-fe
+        paths:
+          - README.md
+    feature_doc: features/recommendations.md
+    api_doc: api/recommendations-api.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/recommendation/
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/recommendations/
+          - src/apis/recoAPI.ts
+
+  survey-builder:
+    display_name: "Survey Builder"
+    description: "Build and manage survey templates, categories, and questions"
+    confluence_page_ids: ["948535302"]
+    feature_doc: features/survey-builder.md
+    api_doc: api/survey-api.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/survey-category/
+          - src/api/survey-question/
+          - src/api/survey-template/
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/survey/
+          - src/apis/surveyQBAPI.ts
+          - src/apis/surveyTemplateAPI.ts
+
+  cx-visual-editor:
+    display_name: "CX Visual Editor"
+    description: "Visual template editor for customer experience content"
+    confluence_page_ids: ["975110165", "1039237136", "1504018492", "1028194310", "1079345206"]
+    feature_doc: features/cx-visual-editor.md
+    service_docs:
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/contentManagement/wysiwyg/
+
+  config-registry:
+    display_name: "Config Registry"
+    description: "Centralized configuration management for configs, lookups, and templates"
+    confluence_page_ids: ["1330413583", "1331101711"]
+    context_docs:
+      - repo: bidgely-quill
+        paths:
+          - docs/config-registry/ARCHITECTURE.md
+          - docs/config-registry/README.md
+          - docs/config-registry/API-REFERENCE.md
+          - docs/config-registry-workflow.md
+    feature_doc: features/config-registry.md
+    api_doc: api/config-registry-api.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/config-registry-config/
+          - src/api/config-registry-lookup/
+          - src/api/config-registry-lookup-type/
+          - src/api/config-registry-template/
+          - src/api/config/
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/config-registry/
+          - src/features/config-tools/
+
+  config-tools:
+    display_name: "Config Tools"
+    description: "DCX clusters, feature access, template personalization, config sync"
+    feature_doc: features/config-tools.md
+    service_docs:
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/config-tools/
+
+  data-scenarios:
+    display_name: "Data Scenarios"
+    description: "Configure data scenarios for testing and demo environments"
+    confluence_page_ids: ["1112571921"]
+    feature_doc: features/data-scenarios.md
+    api_doc: api/data-scenario-api.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/data-scenario/
+          - src/api/data-scenario-payload/
+
+  content-management:
+    display_name: "Content Management"
+    description: "Manage appliances and home profile attributes used across customer experiences"
+    confluence_page_ids: ["815431723", "633110556"]
+    feature_doc: features/content-management.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/appliance/
+          - src/api/appliance-category/
+          - src/api/home-profile-attribute/
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/contentManagement/
+
+  color-management:
+    display_name: "Color Management"
+    description: "Centrally manage project-specific color palettes and shade mappings for digital and paper assets"
+    confluence_page_ids: ["1212645380"]
+    feature_doc: features/color-management.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/color-category/
+          - src/api/color-shade-mapping/
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/contentManagement/colorManagement/
+
+  data-migration:
+    display_name: "Data Migration"
+    description: "Bulk data migration tools and job manifests"
+    confluence_page_ids: ["1208811597", "1224310787"]
+    context_docs:
+      - repo: bidgely-quill
+        paths:
+          - scripts/migration/README.md
+    feature_doc: features/data-migration.md
+    api_doc: api/migration-api.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/migration/
+          - src/api/job-manifest/
+
+  environment-management:
+    display_name: "Environment Management"
+    description: "Environment setup, configuration, and lifecycle management — backed by Environment Manager infrastructure provisioning"
+    confluence_page_ids: ["1234796545", "1232404485", "1233977351"]
+    feature_doc: features/environment-management.md
+    service_docs:
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/environments/

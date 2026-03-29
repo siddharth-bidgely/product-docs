@@ -1,0 +1,98 @@
+site_name: DETO - Delivery Tools Documentation
+site_description: Product documentation for Bidgely's DETO platform — self-serve delivery tools for energy utilities
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.copy
+
+plugins:
+  - search
+  - tags
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Overview: getting-started/overview.md
+    - Architecture: getting-started/architecture.md
+  - Features:
+    - Project Management: features/project-management.md
+    - Recommendations: features/recommendations.md
+    - Survey Builder: features/survey-builder.md
+    - CX Visual Editor: features/cx-visual-editor.md
+    - Config Registry: features/config-registry.md
+    - Config Tools: features/config-tools.md
+    - Color Management: features/color-management.md
+    - Data Scenarios: features/data-scenarios.md
+    - Content Management: features/content-management.md
+    - Data Migration: features/data-migration.md
+    - Environment Management: features/environment-management.md
+  - Technical:
+    - CMS:
+      - technical/cms/index.md
+      - Data Models: technical/cms/data-models.md
+      - RBAC & Permissions: technical/cms/rbac.md
+      - Workflows: technical/cms/workflows.md
+    - Environment Manager: technical/environment-manager/index.md
+    - Proxy Pulse: technical/proxy-pulse/index.md
+  - API Reference:
+    - api/index.md
+    - Recommendations API: api/recommendations-api.md
+    - Survey API: api/survey-api.md
+    - Data Scenario API: api/data-scenario-api.md
+    - Migration API: api/migration-api.md
+    - Config Registry API: api/config-registry-api.md
+  - Runbooks:
+    - Deployment: runbooks/deployment.md
+    - Troubleshooting: runbooks/troubleshooting.md
+    - Database: runbooks/database.md
+  - Reference:
+    - Environment Variables: reference/environment-variables.md
+    - Glossary: reference/glossary.md
+
+extra_javascript:
+  - assets/js/chat-widget.js
+
+extra_css:
+  - assets/css/chat-widget.css
