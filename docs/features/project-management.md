@@ -61,7 +61,6 @@ The DETO web application gives delivery teams a single, unified dashboard to cre
 Project‑level configuration is controlled by the DETO system administrators.  Delivery teams can request changes through the dashboard, but any global settings (e.g., default ingestion parameters, environment templates, or cluster‑wide overrides) are managed by the admin console and not directly editable in the wizard.
 
 ## Related Features  
-- [Project Management](../docs/project-management.md)  
-- [Recommendations](../docs/recommendations.md)  
-- [Survey Builder](../docs/survey-builder.md)  
-- [Content Management](../docs/content-management.md)
+- [Recommendations](recommendations.md)  
+- [Survey Builder](survey-builder.md)  
+- [Content Management](content-management.md)
