@@ -1,8 +1,13 @@
+# Tab title for the Features section (MkDocs hook). Inner entries use feature_doc (not page_doc).
+# Confluence: confluence_pm_page_ids = product/PM specs; confluence_dev_page_ids = technical/DEV specs.
+# Deprecated: confluence_page_ids (treated as PM if present).
+display_name: Features
 features:
   project-management:
     display_name: "Project Management"
     description: "1-click project and environment creation — provisions infrastructure, CMS content, and SaaS configuration automatically"
-    confluence_page_ids: ["931495969", "847642630", "853245955", "853475347", "852557844"]
+    confluence_pm_page_ids: ["847642630", "853245955", "853475347", "852557844"]
+    confluence_dev_page_ids: []
     feature_doc: features/project-management.md
     service_docs:
       - repo: bidgely-quill
@@ -22,13 +27,15 @@ features:
   recommendations:
     display_name: "Recommendations"
     description: "Create, review, and publish energy recommendations with i18n and workflows"
-    confluence_page_ids: ["815431723", "633110556"]
+    confluence_pm_page_ids: ["815431723", "633110556"]
+    confluence_dev_page_ids: []
     context_docs:
       - repo: bidgely-quill-fe
         paths:
           - README.md
     feature_doc: features/recommendations.md
-    api_doc: api/recommendations-api.md
+    api_doc: api/cms/recommendations-api.md
+    openapi_spec: assets/openapi/recommendations.yaml
     service_docs:
       - repo: bidgely-quill
         code_paths:
@@ -41,9 +48,11 @@ features:
   survey-builder:
     display_name: "Survey Builder"
     description: "Build and manage survey templates, categories, and questions"
-    confluence_page_ids: ["948535302"]
+    confluence_pm_page_ids: ["948535302"]
+    confluence_dev_page_ids: []
     feature_doc: features/survey-builder.md
-    api_doc: api/survey-api.md
+    api_doc: api/cms/survey-api.md
+    openapi_spec: assets/openapi/survey-builder.yaml
     service_docs:
       - repo: bidgely-quill
         code_paths:
@@ -59,7 +68,8 @@ features:
   cx-visual-editor:
     display_name: "CX Visual Editor"
     description: "Visual template editor for customer experience content"
-    confluence_page_ids: ["975110165", "1039237136", "1504018492", "1028194310", "1079345206"]
+    confluence_pm_page_ids: ["975110165", "1039237136", "1504018492", "1028194310", "1079345206"]
+    confluence_dev_page_ids: []
     feature_doc: features/cx-visual-editor.md
     service_docs:
       - repo: bidgely-quill-fe
@@ -69,7 +79,8 @@ features:
   config-registry:
     display_name: "Config Registry"
     description: "Centralized configuration management for configs, lookups, and templates"
-    confluence_page_ids: ["1330413583", "1331101711"]
+    confluence_pm_page_ids: ["1330413583", "1331101711"]
+    confluence_dev_page_ids: []
     context_docs:
       - repo: bidgely-quill
         paths:
@@ -78,7 +89,8 @@ features:
           - docs/config-registry/API-REFERENCE.md
           - docs/config-registry-workflow.md
     feature_doc: features/config-registry.md
-    api_doc: api/config-registry-api.md
+    api_doc: api/cms/config-registry-api.md
+    openapi_spec: assets/openapi/config-registry.yaml
     service_docs:
       - repo: bidgely-quill
         code_paths:
@@ -90,80 +102,86 @@ features:
       - repo: bidgely-quill-fe
         code_paths:
           - src/features/config-registry/
-          - src/features/config-tools/
 
-  config-tools:
-    display_name: "Config Tools"
-    description: "DCX clusters, feature access, template personalization, config sync"
-    feature_doc: features/config-tools.md
-    service_docs:
-      - repo: bidgely-quill-fe
-        code_paths:
-          - src/features/config-tools/
+  # config-tools:
+  #   display_name: "Config Tools"
+  #   description: "DCX clusters, feature access, template personalization, config sync"
+  #   feature_doc: features/config-tools.md
+  #   service_docs:
+  #     - repo: bidgely-quill-fe
+  #       code_paths:
+  #         - src/features/config-tools/
 
-  data-scenarios:
-    display_name: "Data Scenarios"
-    description: "Configure data scenarios for testing and demo environments"
-    confluence_page_ids: ["1112571921"]
-    feature_doc: features/data-scenarios.md
-    api_doc: api/data-scenario-api.md
-    service_docs:
-      - repo: bidgely-quill
-        code_paths:
-          - src/api/data-scenario/
-          - src/api/data-scenario-payload/
+  # data-scenarios:
+  #   display_name: "Data Scenarios"
+  #   description: "Configure data scenarios for testing and demo environments"
+  #   confluence_pm_page_ids: ["1112571921"]
+  #   confluence_dev_page_ids: []
+  #   feature_doc: features/data-scenarios.md
+  #   api_doc: api/cms/data-scenario-api.md
+  #   openapi_spec: assets/openapi/data-scenarios.yaml
+  #   service_docs:
+  #     - repo: bidgely-quill
+  #       code_paths:
+  #         - src/api/data-scenario/
+  #         - src/api/data-scenario-payload/
 
-  content-management:
-    display_name: "Content Management"
-    description: "Manage appliances and home profile attributes used across customer experiences"
-    confluence_page_ids: ["815431723", "633110556"]
-    feature_doc: features/content-management.md
-    service_docs:
-      - repo: bidgely-quill
-        code_paths:
-          - src/api/appliance/
-          - src/api/appliance-category/
-          - src/api/home-profile-attribute/
-      - repo: bidgely-quill-fe
-        code_paths:
-          - src/features/contentManagement/
+  # content-management:
+  #   display_name: "Content Management"
+  #   description: "Manage appliances and home profile attributes used across customer experiences"
+  #   confluence_pm_page_ids: ["815431723", "633110556"]
+  #   confluence_dev_page_ids: []
+  #   feature_doc: features/content-management.md
+  #   service_docs:
+  #     - repo: bidgely-quill
+  #       code_paths:
+  #         - src/api/appliance/
+  #         - src/api/appliance-category/
+  #         - src/api/home-profile-attribute/
+  #     - repo: bidgely-quill-fe
+  #       code_paths:
+  #         - src/features/contentManagement/
 
-  color-management:
-    display_name: "Color Management"
-    description: "Centrally manage project-specific color palettes and shade mappings for digital and paper assets"
-    confluence_page_ids: ["1212645380"]
-    feature_doc: features/color-management.md
-    service_docs:
-      - repo: bidgely-quill
-        code_paths:
-          - src/api/color-category/
-          - src/api/color-shade-mapping/
-      - repo: bidgely-quill-fe
-        code_paths:
-          - src/features/contentManagement/colorManagement/
+  # color-management:
+  #   display_name: "Color Management"
+  #   description: "Centrally manage project-specific color palettes and shade mappings for digital and paper assets"
+  #   confluence_pm_page_ids: ["1212645380"]
+  #   confluence_dev_page_ids: []
+  #   feature_doc: features/color-management.md
+  #   service_docs:
+  #     - repo: bidgely-quill
+  #       code_paths:
+  #         - src/api/color-category/
+  #         - src/api/color-shade-mapping/
+  #     - repo: bidgely-quill-fe
+  #       code_paths:
+  #         - src/features/contentManagement/colorPalette/
 
-  data-migration:
-    display_name: "Data Migration"
-    description: "Bulk data migration tools and job manifests"
-    confluence_page_ids: ["1208811597", "1224310787"]
-    context_docs:
-      - repo: bidgely-quill
-        paths:
-          - scripts/migration/README.md
-    feature_doc: features/data-migration.md
-    api_doc: api/migration-api.md
-    service_docs:
-      - repo: bidgely-quill
-        code_paths:
-          - src/api/migration/
-          - src/api/job-manifest/
+  # data-migration:
+  #   display_name: "Data Migration"
+  #   description: "Bulk data migration tools and job manifests"
+  #   confluence_pm_page_ids: ["1208811597", "1224310787"]
+  #   confluence_dev_page_ids: []
+  #   context_docs:
+  #     - repo: bidgely-quill
+  #       paths:
+  #         - scripts/migration/README.md
+  #   feature_doc: features/data-migration.md
+  #   api_doc: api/cms/migration-api.md
+  #   openapi_spec: assets/openapi/data-migration.yaml
+  #   service_docs:
+  #     - repo: bidgely-quill
+  #       code_paths:
+  #         - src/api/migration/
+  #         - src/api/job-manifest/
 
-  environment-management:
-    display_name: "Environment Management"
-    description: "Environment setup, configuration, and lifecycle management — backed by Environment Manager infrastructure provisioning"
-    confluence_page_ids: ["1234796545", "1232404485", "1233977351"]
-    feature_doc: features/environment-management.md
-    service_docs:
-      - repo: bidgely-quill-fe
-        code_paths:
-          - src/features/environments/
+  # environment-management:
+  #   display_name: "Environment Management"
+  #   description: "Environment setup, configuration, and lifecycle management — backed by Environment Manager infrastructure provisioning"
+  #   confluence_pm_page_ids: ["1234796545", "1232404485", "1233977351"]
+  #   confluence_dev_page_ids: []
+  #   feature_doc: features/environment-management.md
+  #   service_docs:
+  #     - repo: bidgely-quill-fe
+  #       code_paths:
+  #         - src/features/environments/

@@ -1,0 +1,504 @@
+openapi: 3.0.3
+info:
+  title: Data Scenarios API
+  version: 1.0.0
+  description: API specification for the Data Scenarios feature of the DETO platform.
+servers:
+  - url: https://cms.bidgely.com
+    description: Production CMS
+security:
+  - bearerAuth: []
+paths:
+  /data-scenario/v1/scenario-with-payload:
+    get:
+      summary: Retrieve a data scenario with its payload
+      description: |
+        Returns a single data scenario identified by `scenarioId` and `pilotId` along with the payload for the specified `templateTypeName`.
+      operationId: data-scenario-external-apis_getScenarioWithPayload
+      tags:
+        - Data Scenarios
+      parameters:
+        - name: scenarioId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: pilotId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: templateTypeName
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DataScenarioWithPayloadResponse'
+        '400':
+          description: Bad request – missing or invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+  /data-scenario/v1/pilot/{pilotId}/scenario/{scenarioId}:
+    get:
+      summary: Retrieve a data scenario with all its payloads
+      description: |
+        Returns a data scenario identified by `pilotId` and `scenarioId` along with all associated payloads.
+      operationId: data-scenario-external-apis_getScenarioWithAllPayloads
+      tags:
+        - Data Scenarios
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: scenarioId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/DataScenarioWithAllPayloadsResponse'
+        '400':
+          description: Bad request – missing or invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+    delete:
+      summary: Delete a data scenario by ID
+      description: |
+        Deletes a data scenario identified by `pilotId` and `scenarioId`. Optionally filters by `templateTypeNames` query parameter.
+      operationId: data-scenario-external-apis_deleteScenarioById
+      tags:
+        - Data Scenarios
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: scenarioId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: templateTypeNames
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+        '400':
+          description: Bad request – missing or invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+  /data-scenario/v1/clone:
+    post:
+      summary: Initiate a clone job for data scenarios
+      description: |
+        Starts a clone job that copies data scenarios from a source pilot to a target pilot for the specified template names.
+      operationId: data-scenario-external-apis_cloneDataScenarios
+      tags:
+        - Data Scenarios
+      requestBody:
+        description: Clone request payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataScenarioCloneRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CloneJobResponse'
+        '400':
+          description: Bad request – missing or invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+  /data-scenario/v1/clone/status/{jobId}:
+    get:
+      summary: Retrieve clone job status
+      description: |
+        Returns the status of a clone job identified by `jobId`, including progress and template results if available.
+      operationId: data-scenario-external-apis_getCloneJobStatus
+      tags:
+        - Data Scenarios
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CloneJobStatusResponse'
+        '400':
+          description: Bad request – missing or invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+  /data-scenario/v1/create-with-payloads:
+    post:
+      summary: Create a data scenario with payloads
+      description: |
+        Creates a new data scenario along with its payloads for the specified pilot.
+      operationId: data-scenario-external-apis_createScenarioWithPayloads
+      tags:
+        - Data Scenarios
+      requestBody:
+        description: Scenario creation payload
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataScenarioCreateWithPayloadsRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+        '400':
+          description: Bad request – missing or invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+  /data-scenario/v1/pilot/{pilotId}:
+    delete:
+      summary: Bulk delete data scenarios by pilot
+      description: |
+        Deletes all data scenarios for a pilot, optionally filtered by template name, scenario locale, or fuel type.
+      operationId: data-scenario-external-apis_bulkDeleteByPilotId
+      tags:
+        - Data Scenarios
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: templateName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: scenarioLocale
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: fuelType
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+        '400':
+          description: Bad request – missing or invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    DataScenarioWithPayloadResponse:
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioDisplayName:
+          type: string
+        productType:
+          type: string
+          enum:
+            - Email
+            - Web
+            - HER
+            - SMS
+        scenarioLocale:
+          type: string
+        fuelType:
+          type: string
+          enum:
+            - ELECTRIC
+            - GAS
+            - WATER
+        templateName:
+          type: string
+        elementNames:
+          type: object
+        userClusters:
+          type: object
+        defaultScenario:
+          type: boolean
+        payload:
+          type: string
+          nullable: true
+    DataScenarioWithAllPayloadsResponse:
+      type: object
+      properties:
+        documentId:
+          type: string
+        scenarioId:
+          type: string
+        scenarioDisplayName:
+          type: string
+        productType:
+          type: string
+          enum:
+            - Email
+            - Web
+            - HER
+            - SMS
+        scenarioLocale:
+          type: string
+        fuelType:
+          type: string
+          enum:
+            - ELECTRIC
+            - GAS
+            - WATER
+        templateName:
+          type: string
+        elementNames:
+          type: object
+        userClusters:
+          type: object
+        defaultScenario:
+          type: boolean
+        scenarioDocumentation:
+          type: string
+        payloads:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioPayloadResponse'
+    ScenarioPayloadResponse:
+      type: object
+      properties:
+        documentId:
+          type: string
+        templateTypeName:
+          type: string
+        payload:
+          type: object
+    CloneJobResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+        pilotId:
+          type: string
+        jobStatus:
+          type: string
+        progress:
+          type: number
+    CloneJobStatusResponse:
+      type: object
+      properties:
+        jobId:
+          type: string
+        pilotId:
+          type: string
+        jobStatus:
+          type: string
+        progress:
+          type: number
+        templateResults:
+          type: array
+          items:
+            $ref: '#/components/schemas/TemplateResultResponse'
+    TemplateResultResponse:
+      type: object
+      properties:
+        templateName:
+          type: string
+        status:
+          type: string
+        scenariosCloned:
+          type: number
+        payloadsCloned:
+          type: number
+        error:
+          type: string
+          nullable: true
+    DataScenarioCloneRequest:
+      type: object
+      properties:
+        sourcePilotId:
+          type: string
+        targetPilotData:
+          type: object
+          properties:
+            pilotId:
+              type: string
+          required:
+            - pilotId
+        templateNames:
+          type: array
+          items:
+            type: string
+      required:
+        - sourcePilotId
+        - targetPilotData
+        - templateNames
+    DataScenarioCreateWithPayloadsRequest:
+      type: object
+      properties:
+        pilotId:
+          type: string
+        scenarioId:
+          type: string
+        scenarioDisplayName:
+          type: string
+        productType:
+          type: string
+          enum:
+            - Email
+            - Web
+            - HER
+            - SMS
+        scenarioLocale:
+          type: string
+        fuelType:
+          type: string
+          enum:
+            - ELECTRIC
+            - GAS
+            - WATER
+        templateName:
+          type: string
+        payloads:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScenarioPayloadCreateRequest'
+      required:
+        - pilotId
+        - scenarioId
+        - scenarioDisplayName
+        - productType
+        - scenarioLocale
+        - fuelType
+        - templateName
+        - payloads
+    ScenarioPayloadCreateRequest:
+      type: object
+      properties:
+        templateTypeName:
+          type: string
+        payload:
+          type: object
+      required:
+        - templateTypeName
+        - payload
+    DataScenario:
+      type: object
+      properties:
+        scenarioId:
+          type: string
+        scenarioDisplayName:
+          type: string
+        utility:
+          type: object
+        productType:
+          type: string
+          enum:
+            - Email
+            - Web
+            - HER
+            - SMS
+        scenarioLocale:
+          type: string
+        fuelType:
+          type: string
+          enum:
+            - ELECTRIC
+            - GAS
+            - WATER
+        templateName:
+          type: string
+        elementNames:
+          type: object
+        defaultScenario:
+          type: boolean
+        userClusters:
+          type: object
+        scenarioDocumentation:
+          type: string
+        data_scenario_payloads:
+          type: object
+      required:
+        - scenarioId
+        - scenarioDisplayName
+    DataScenarioPayload:
+      type: object
+      properties:
+        templateTypeName:
+          type: string
+        payload:
+          type: object
+        dataScenarioDocumentId:
+          type: object
+      required:
+        - templateTypeName

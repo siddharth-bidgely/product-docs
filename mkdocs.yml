@@ -29,9 +29,13 @@ theme:
     - content.tabs.link
     - content.code.copy
 
+hooks:
+  - hooks.py
+
 plugins:
   - search
   - tags
+  - swagger-ui-tag
 
 markdown_extensions:
   - admonition
@@ -51,45 +55,7 @@ markdown_extensions:
   - toc:
       permalink: true
 
-nav:
-  - Home: index.md
-  - Getting Started:
-    - Overview: getting-started/overview.md
-    - Architecture: getting-started/architecture.md
-  - Features:
-    - Project Management: features/project-management.md
-    - Recommendations: features/recommendations.md
-    - Survey Builder: features/survey-builder.md
-    - CX Visual Editor: features/cx-visual-editor.md
-    - Config Registry: features/config-registry.md
-    - Config Tools: features/config-tools.md
-    - Color Management: features/color-management.md
-    - Data Scenarios: features/data-scenarios.md
-    - Content Management: features/content-management.md
-    - Data Migration: features/data-migration.md
-    - Environment Management: features/environment-management.md
-  - Technical:
-    - CMS:
-      - technical/cms/index.md
-      - Data Models: technical/cms/data-models.md
-      - RBAC & Permissions: technical/cms/rbac.md
-      - Workflows: technical/cms/workflows.md
-    - Environment Manager: technical/environment-manager/index.md
-    - Proxy Pulse: technical/proxy-pulse/index.md
-  - API Reference:
-    - api/index.md
-    - Recommendations API: api/recommendations-api.md
-    - Survey API: api/survey-api.md
-    - Data Scenario API: api/data-scenario-api.md
-    - Migration API: api/migration-api.md
-    - Config Registry API: api/config-registry-api.md
-  - Runbooks:
-    - Deployment: runbooks/deployment.md
-    - Troubleshooting: runbooks/troubleshooting.md
-    - Database: runbooks/database.md
-  - Reference:
-    - Environment Variables: reference/environment-variables.md
-    - Glossary: reference/glossary.md
+# nav is built by hooks.py from docs/_data/*.yml (see site-nav.yml)
 
 extra_javascript:
   - assets/js/chat-widget.js

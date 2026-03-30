@@ -1,49 +1,55 @@
 # CX Visual Editor
 
-!!! abstract "Product Specification"
-    - [Visual Editor Scope](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=975110165)
-    - [Additional Specs 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1039237136)
-    - [Additional Specs 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1504018492)
-    - [Additional Specs 3](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1028194310)
-    - [Additional Specs 4](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1079345206)
+!!! abstract "Confluence"
+    - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=975110165)
+    - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1039237136)
+    - [Confluence 3](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1504018492)
+    - [Confluence 4](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1028194310)
+    - [Confluence 5](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1079345206)
 
-## Overview
-The CX Visual Editor is a WYSIWYG (What-You-See-Is-What-You-Get) templating engine empowering Customer Experience (CX) managers to design, edit, and preview customer-facing content without touching raw code. It bridges the gap between structured backend data and the eventual presentation layer on Web, Email, and Paper interfaces.
+## Overview  
+The CX Visual Editor is a web‑based canvas that lets marketers, product managers, and administrators author and preview Email, HER, and Web templates at the element level. It separates authoring from live rendering, so changes can be tested safely before they go live. The editor supports multiple variants—hierarchy, locale, and scenario—so you can see exactly how a template will look for each audience.  
 
-## Key Capabilities
-- **Drag-and-Drop Interface:** Easily construct emails or digital widgets by dragging predefined content blocks (like charts, text areas, or specific Bidgely insights).
-- **Responsive Previews:** Instantly preview how the designed template will render on desktop, tablet, and mobile breakpoints.
-- **Dynamic Content Injection:** Seamlessly bind dynamic customer properties (like `billing_cycle`, `savings_percentage`) directly into the text using a variable picker.
-- **Brand Theming Inheritance:** Visual templates automatically inherit the overarching theme colors and fonts defined inside the Pilot Configuration mapping.
+By editing text, images, colors, and metadata directly in the preview, you can iterate quickly, enforce brand guidelines, and keep a clear audit trail of every change. The editor is part of the broader Content Management experience, but it can be used on its own to fine‑tune templates before they are published.
 
-## User Guide
+## Key Capabilities  
+- Browse and select templates by channel (Email, HER, Web).  
+- Switch between hierarchy, locale, and scenario variants.  
+- Edit text, images, colors, and metadata in real time.  
+- Preview changes instantly in a sandboxed iframe.  
+- Compare two variants side‑by‑side.  
+- Sign‑off or lock elements for a variant.  
+- View audit trail and compliance checklist.  
+- Reset to default or revert overrides.  
+- Save or cancel edits for the current variant.  
+- Toggle between desktop and mobile preview modes.  
 
-### 1. Launching the Editor
-1. In the CMS interface, navigate to the Content Management module.
-2. Select **CX Customization > Visual Templates**.
-3. Create a new template or select an existing draft. The main WYSIWYG canvas will initialize.
+## User Guide  
 
-![Visual Editor Dashboard](../assets/images/975110165-image-20251002-104536.png)
+### Open and Edit a Template  
+1. From the **CX Visual Editor** page, click the **Templates Sidebar** to see the list of available templates.  
+2. Select a template by clicking its name; the editor loads in the main area.  
+3. In the **Editor Toolbar**, choose the desired **Hierarchy**, **Locale**, and **Scenario** from the dropdowns.  
+4. Click an element in the preview pane; the **Inspector Panel** opens on the right.  
+5. In the **Text** tab, edit the content and watch the preview update after a short debounce.  
+6. Use the **Images** tab to replace a picture or copy its URL.  
+7. In the **Colors** tab, adjust the hex value or toggle an override; the preview shows contrast warnings if needed.  
+8. When finished, click **Save** in the toolbar to persist the changes for the selected variant.  
+![Editing a template](../assets/images/975110165-image-20251002-104113.png)  
 
-### 2. Modifying a Layout
-1. Use the left-hand sidebar to pull in structural elements (Rows, Columns, Spacers).
-2. Drag Bidgely-specific Widgets (e.g., *Bill Projection*, *Similar Home Comparison*) into the layout containers.
-3. Use the right-hand **Properties Panel** to adjust padding, borders, text alignments, and conditional display rules.
+### Compare Two Variants  
+1. In the **Editor Toolbar**, click **Compare** to open the **Compare Dialog**.  
+2. For **Variant A**, select the template, hierarchy, locale, and scenario.  
+3. For **Variant B**, choose a different set of options.  
+4. Click **Run Compare**; the editor shows a side‑by‑side diff of the rendered output.  
+5. Review differences, then close the dialog or adjust variants as needed.  
+![Comparing variants](../assets/images/975110165-image-20251002-133032.png)  
 
-![Layout Modification](../assets/images/975110165-image-20251002-132504.png)
+## Configuration Options  
+The CX Visual Editor’s settings—such as available locales, scenarios, and user permissions—are managed by system administrators through the **Content Management** configuration portal. Users with editor rights can access the editor but cannot change these global options.
 
-### 3. Binding Dynamic Tokens
-1. Click into a Text Block component.
-2. Select the `{}` Token Picker icon from the text formatting toolbar.
-3. Select the desired backend variable (e.g., `user.first_name` or `reco.estimated_savings`). The engine will dynamically replace this placeholder at runtime.
-
-![Token Binding](../assets/images/975110165-image-20251002-133135.png)
-
-## Configuration Options
-- **Strict Mode Formatting:** Restrict font choices in the editor to brand-approved weights and sizes.
-- **Component Access Rules:** Limit access to complex analytical widgets to advanced CX designers only.
-
-## Related Features
-- [Content Management](content-management.md)
-- [Recommendations](recommendations.md)
-- [Color Management](color-management.md)
+## Related Features  
+- [Content Management](content-management.md)  
+- [Recommendations](recommendations.md)  
+- [Survey Builder](survey-builder.md)  
+- [Workflow Engine](workflow-engine.md)

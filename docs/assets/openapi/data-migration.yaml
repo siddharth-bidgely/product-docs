@@ -1,0 +1,217 @@
+openapi: 3.0.3
+info:
+  title: Data Migration API
+  version: 1.0.0
+  description: API specification for the Data Migration feature of the DETO platform.
+servers:
+  - url: https://cms.bidgely.com
+    description: Production CMS
+security:
+  - bearerAuth: []
+paths:
+  /migration/run:
+    post:
+      summary: Initiate a data migration job
+      operationId: migration_run
+      tags:
+        - Data Migration
+      description: |
+        Starts a new migration job for a specified pilot. The request body must include the pilot identifier, the type of migration, and the payload of jobs to be processed. The response contains the created job manifest.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrationRunRequest'
+            example:
+              pilotId: "pilot-12345"
+              jobType: "USER_DATA_IMPORT"
+              jobs:
+                users:
+                  - id: "user-001"
+                    name: "Alice Smith"
+                    email: "alice@example.com"
+                  - id: "user-002"
+                    name: "Bob Jones"
+                    email: "bob@example.com"
+      responses:
+        '200':
+          description: Migration job created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/JobManifest'
+              example:
+                data:
+                  jobId: "job-98765"
+                  pilotId: "pilot-12345"
+                  jobType: "USER_DATA_IMPORT"
+                  jobStatus: "PENDING"
+                  progress: 0
+                  jobs:
+                    users:
+                      - id: "user-001"
+                        name: "Alice Smith"
+                        email: "alice@example.com"
+                      - id: "user-002"
+                        name: "Bob Jones"
+                        email: "bob@example.com"
+                  error: null
+                  result: null
+        '400':
+          description: Bad request – missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: 400
+                message: "Invalid request payload"
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: 401
+                message: "Unauthorized"
+      x-policies:
+        - api::migration.is-internal-request
+  /migration/jobs/{jobId}:
+    get:
+      summary: Retrieve a migration job manifest
+      operationId: migration_getJob
+      tags:
+        - Data Migration
+      description: |
+        Fetches the manifest of a previously started migration job by its unique identifier. The manifest includes status, progress, and any errors or results produced.
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the migration job
+      responses:
+        '200':
+          description: Migration job manifest retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/JobManifest'
+              example:
+                data:
+                  jobId: "job-98765"
+                  pilotId: "pilot-12345"
+                  jobType: "USER_DATA_IMPORT"
+                  jobStatus: "COMPLETED"
+                  progress: 100
+                  jobs:
+                    users:
+                      - id: "user-001"
+                        name: "Alice Smith"
+                        email: "alice@example.com"
+                      - id: "user-002"
+                        name: "Bob Jones"
+                        email: "bob@example.com"
+                  error: null
+                  result:
+                    importedCount: 2
+                    failedCount: 0
+        '400':
+          description: Bad request – invalid jobId format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: 400
+                message: "Invalid jobId"
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: 401
+                message: "Unauthorized"
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                status: 404
+                message: "Job not found"
+      x-policies:
+        - api::migration.is-internal-request
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    JobManifest:
+      type: object
+      properties:
+        jobId:
+          type: string
+        pilotId:
+          type: string
+        jobType:
+          type: string
+        jobStatus:
+          type: string
+          enum:
+            - PENDING
+            - RUNNING
+            - FAILED
+            - COMPLETED
+          default: PENDING
+        progress:
+          type: integer
+          default: 0
+        jobs:
+          type: object
+        error:
+          type: object
+        result:
+          type: object
+      required:
+        - jobId
+        - pilotId
+        - jobType
+        - jobs
+    MigrationRunRequest:
+      type: object
+      properties:
+        pilotId:
+          type: string
+        jobType:
+          type: string
+        jobs:
+          type: object
+      required:
+        - pilotId
+        - jobType
+        - jobs
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+        message:
+          type: string
+      required:
+        - status
+        - message

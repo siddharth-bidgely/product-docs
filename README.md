@@ -1,182 +1,193 @@
 # product-docs
 
-Central documentation site for the Bidgely Quill platform. Built with [MkDocs](https://www.mkdocs.org/) and the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme with an embedded RAG-powered chat widget.
+Central documentation site for **DETO (Delivery Tools)** — Bidgely’s self-serve platform for utility delivery teams. The site is built with [MkDocs](https://www.mkdocs.org/) and [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/), with Swagger UI for API pages and an optional RAG-powered chat widget.
 
-This repository is the single source of truth for product documentation across all services. Documentation is kept in sync through two mechanisms:
-1. **Seed script** -- Parses source repos and generates initial docs (API tables, data models, env vars, feature summaries)
-2. **DocGen pipeline** -- Automatically updates docs when PRs are merged on source repos
+Documentation stays aligned with the codebases through:
 
-## How It Works
+1. **Seed script** ([bidgely-doc-gen](https://github.com/bidgely/bidgely-doc-gen)) — Parses `bidgely-quill` and `bidgely-quill-fe`, regenerates consolidated data models, environment variable tables, feature runbooks (with Confluence + FE context), OpenAPI YAML, and optional section pages from Confluence.
+2. **DocGen pipeline** — LangGraph-based flow that can propose markdown updates from PRs and open PRs on this repo (see bidgely-doc-gen).
 
-```
-Developer merges PR on bidgely-quill
-        |
-        v
-DocGen pipeline (AWS CodeBuild)
-  - Analyzes code changes with LLM
-  - Synthesizes doc updates
-  - Merges into markdown via AST (deterministic)
-        |
-        v
-Opens PR on this repo (product-docs)
-        |
-        v
-Human reviews and merges
-        |
-        v
-GitHub Actions builds and deploys MkDocs site
-        |
-        v
-Users browse docs + ask questions via chat widget
-  (backed by RAG: LanceDB + Ollama/Claude)
-```
+## Information architecture
 
-## Site Structure
+| Area | Audience | Notes |
+|------|----------|--------|
+| **Getting Started** | PM, CS, admins | Overview, high-level architecture, **Technical reference** (CMS data models, RBAC, workflows, Environment Manager, Proxy Pulse) |
+| **Features** | DETO web app users | App-focused runbooks (no APIs in-page); seed uses PM/DEV Confluence + FE routes and internal TSX excerpts to infer UI flows — use **API Reference** for HTTP contracts |
+| **API Reference** | Integrators, partners, automation | OpenAPI-backed CMS APIs (Swagger UI) |
+| **Runbooks** | Ops | Placeholders until internal runbooks are published here |
+| **Reference** | Operators / admins | Environment variables, glossary |
+
+## Repository layout
 
 ```
+mkdocs.yml
+hooks.py                         # Builds nav from docs/_data/*.yml
 docs/
-├── index.md                        # Landing page
+├── index.md
 ├── _data/
-│   └── feature-map.yml             # Code path -> doc file mapping (used by DocGen + seed)
+│   ├── site-nav.yml             # Order of top-level sections (tabs)
+│   ├── home.yml                 # Home tab → index.md
+│   ├── getting-started.yml      # Getting Started tree (titles + doc paths)
+│   ├── feature-map.yml          # Features tab: each feature → display_name, feature_doc, seed fields
+│   ├── api-reference.yml        # API Reference tree (Swagger wrapper pages)
+│   ├── runbooks.yml             # Runbooks tab
+│   ├── reference.yml            # Reference tab (env vars, glossary, …)
+│   └── section-confluence.yml   # Optional: Confluence → arbitrary docs/ pages (see bidgely-doc-gen)
 ├── assets/
-│   ├── js/chat-widget.js           # Embedded RAG chat widget
-│   └── css/chat-widget.css         # Chat widget styles
+│   ├── js/chat-widget.js
+│   ├── css/chat-widget.css
+│   └── openapi/                 # Generated OpenAPI YAML (seed)
 ├── getting-started/
-│   ├── overview.md                 # Platform overview
-│   └── architecture.md             # System architecture with mermaid diagrams
-├── services/
-│   ├── quill/                      # bidgely-quill (Strapi 5 CMS backend)
-│   │   ├── index.md                # Service overview with domain listing
-│   │   ├── utility.md              # API endpoints + data models (auto-generated)
-│   │   ├── recommendation.md       # API endpoints + data models (auto-generated)
-│   │   ├── config-registry.md      # ...
-│   │   ├── survey.md
-│   │   ├── workflow.md
-│   │   ├── data-scenario.md
-│   │   ├── migration.md
-│   │   ├── content-management.md
-│   │   └── environment.md
-│   └── quill-fe/                   # bidgely-quill-fe (React 19 frontend)
-│       ├── index.md
-│       ├── utility.md              # API integration tables (auto-generated)
-│       ├── recommendation.md
-│       ├── config-registry.md
-│       ├── survey.md
-│       ├── workflow.md
-│       ├── pilot.md
-│       ├── content-management.md
-│       └── api-integration.md
-├── features/                       # Cross-service feature docs
-│   ├── utility-management.md       # Feature summary (LLM-generated)
-│   ├── recommendation-authoring.md
-│   ├── config-registry.md
-│   ├── survey-builder.md
-│   ├── workflow-engine.md
-│   ├── content-management.md
-│   ├── data-scenarios.md
-│   └── migration.md
+│   ├── overview.md
+│   ├── architecture.md
+│   └── technical/               # Former top-level “Technical” section
+│       ├── cms/                 # index, data-models (generated), rbac, workflows
+│       ├── environment-manager/
+│       └── proxy-pulse/
+├── features/                    # Feature runbooks (seed + LLM when configured)
+├── api/
+│   ├── index.md
+│   └── cms/                     # Swagger UI wrapper pages per API area
 ├── runbooks/
-│   ├── deployment.md
-│   ├── troubleshooting.md
-│   └── database.md
 └── reference/
-    ├── data-models.md              # All 26 content-type schemas (auto-generated)
-    ├── api-catalog.md              # All 213 API endpoints (auto-generated)
-    └── environment-variables.md    # All env vars from both repos (auto-generated)
+    ├── environment-variables.md # Generated by seed
+    └── glossary.md
 ```
 
-### Documentation Layers
+The **site navigation** is not maintained inside `mkdocs.yml`. `hooks.py` runs on `mkdocs build` / `mkdocs serve` and sets `nav` from the YAML files above. Edit those files to add, reorder, or nest pages.
 
-| Layer | Purpose | Auto-generated? |
-|-------|---------|-----------------|
-| **Services** | Per-repo, per-domain technical docs (APIs, data models) | Yes -- from seed script + pipeline |
-| **Features** | Cross-service behavioral docs (how BE + FE work together) | Yes -- feature summaries via LLM |
-| **Runbooks** | Operational guides (deployment, troubleshooting, DB) | Manual |
-| **Reference** | Consolidated catalogs (all APIs, all data models, all env vars) | Yes -- from seed script |
+### Site nav order (`docs/_data/site-nav.yml`)
 
-### Feature Map
+Lists `order` of section ids: `home`, `getting_started`, `features`, `api_reference`, `runbooks`, `reference`. Omit the file to use the default order in `hooks.py`.
 
-`docs/_data/feature-map.yml` is the routing table that maps code paths to documentation files. Both the seed script and the DocGen pipeline use it to determine which docs to update when code changes.
+### Unified page schema (Home, Getting Started, API Reference, Runbooks, Reference)
 
-```yaml
-features:
-  utility-management:
-    display_name: "Utility / Pilot Management"
-    confluence_page_ids: [815431723]      # Confluence product spec pages
-    context_docs:                          # In-repo docs for LLM context
-      - repo: bidgely-quill-fe
-        paths: [README.md]
-    service_docs:
-      - repo: bidgely-quill
-        doc_path: services/quill/utility.md
-        code_paths: [src/api/utility/, ...]
-      - repo: bidgely-quill-fe
-        doc_path: services/quill-fe/utility.md
-        code_paths: [src/features/utility/, ...]
-    cross_doc: features/utility-management.md
-```
+These files mirror **feature-map** entries: `display_name`, optional `description`, optional `confluence_pm_page_ids` and `confluence_dev_page_ids` (product vs technical Confluence sources), optional `prompt_profile` (passed to the section Confluence LLM in bidgely-doc-gen). Legacy `confluence_page_ids` is still accepted and treated as PM-only. The only deliberate difference from a feature row is the path field:
 
-### Chat Widget
+| Field | Feature map (`features.<slug>`) | Other section files |
+|--------|-----------------------------------|----------------------|
+| Markdown output | `feature_doc` | `page_doc` |
+| Nested children | N/A (flat `features:` map) | Nested slug-keyed `pages:` maps |
 
-An embedded chat interface (floating button, bottom-right) that lets users ask questions about the documentation. Powered by a RAG pipeline:
+**Section root** (each of `home.yml`, `getting-started.yml`, …): `display_name` (MkDocs tab title), optional `description`, and either `page_doc` alone (`home.yml`) or a `pages:` object.
 
-1. All docs are indexed into a LanceDB vector store on the chat server
-2. User question is embedded and matched against doc chunks
-3. Top results + question sent to an LLM (Ollama locally, Claude in prod)
-4. Answer returned with links to source pages
+**Each page node** under `pages:`: slug key (stable id for tooling), `display_name` (nav label), optional `description`, optional `page_doc`, optional `confluence_pm_page_ids` / `confluence_dev_page_ids`, optional `prompt_profile`, and optional nested `pages:` for sub-groups. If a node has both `page_doc` and `pages`, the index file is listed first in the nav (same pattern as CMS under Technical reference).
 
-The chat widget is vanilla JS/CSS with no build step, loaded via MkDocs `extra_javascript`/`extra_css`.
+When either Confluence ID list is non-empty, **bidgely-doc-gen** seed runs the Confluence → markdown pipeline (with PM- vs DEV-specific summarization) for that `page_doc`, same as legacy `section-confluence.yml`.
 
-## Local Development
+### Feature map (`docs/_data/feature-map.yml`)
 
-### Prerequisites
+Top-level `display_name` sets the **Features** tab title (default was “Features”). Under `features:` each entry includes:
 
-- Python 3.9+ (for MkDocs)
-- bidgely-doc-gen chat server running (for the chat widget to work)
+- `display_name`, `description`
+- `confluence_pm_page_ids` / `confluence_dev_page_ids` (optional); legacy `confluence_page_ids` = PM
+- `feature_doc` — runbook path
+- `context_docs` (optional), `service_docs`
+- `api_doc` + `openapi_spec` (optional) — keep Swagger targets aligned with `api-reference.yml`
 
-### Setup
+### Section Confluence (`docs/_data/section-confluence.yml`)
+
+Optional **legacy** `pages:` entries (`output`, `title`, `confluence_pm_page_ids` / `confluence_dev_page_ids` or deprecated `confluence_page_ids`, `prompt_profile`). Prefer adding PM/DEV IDs on the matching node in `home.yml` / `getting-started.yml` / etc. If the same `page_doc` / `output` appears in both, the site YAML wins. See bidgely-doc-gen README for `SEED_SECTION_PAGES` key format.
+
+### Chat widget
+
+Floating chat (bottom-right) talks to the bidgely-doc-gen server: docs are chunked, embedded (LanceDB), and retrieved for RAG. Loaded via `extra_javascript` / `extra_css` in `mkdocs.yml`.
+
+---
+
+## Commands (product-docs)
+
+Install dependencies (Python 3.9+):
 
 ```bash
-git clone https://github.com/bidgely/product-docs.git
-cd product-docs
 pip install -r requirements.txt
 ```
 
-### Preview Locally
+Preview the site locally (live reload):
 
 ```bash
-# Terminal 1: Start the chat API server (from bidgely-doc-gen repo)
-cd ../bidgely-doc-gen && npm run serve
-
-# Terminal 2: Start MkDocs dev server
 mkdocs serve
 ```
 
-Opens at `http://127.0.0.1:8000` with live reload. The chat widget connects to `http://localhost:3001`.
+Default URL: `http://127.0.0.1:8000`.
 
-### Build
+Build static site (warnings as errors):
 
 ```bash
 mkdocs build --strict
 ```
 
-Generates static HTML in `site/`. The `--strict` flag treats warnings (broken links, missing pages) as errors.
+Output directory: `site/`.
 
-### Re-seed Documentation
-
-To regenerate all auto-generated content from the current source code:
+Build without treating warnings as errors:
 
 ```bash
-cd ../bidgely-doc-gen && npm run seed
+mkdocs build
 ```
 
-This updates service docs, reference pages, and (with an LLM available) feature summaries.
+Print MkDocs version:
+
+```bash
+mkdocs --version
+```
+
+---
+
+## Local development (with chat)
+
+**Terminal 1** — chat API + doc index (from a clone of `bidgely-doc-gen`):
+
+```bash
+cd ../bidgely-doc-gen
+npm install
+npm run serve
+```
+
+**Terminal 2** — MkDocs:
+
+```bash
+cd product-docs
+mkdocs serve
+```
+
+The widget expects the chat API at `http://localhost:3001` (configurable in bidgely-doc-gen).
+
+---
+
+## Regenerating generated content (seed)
+
+From **bidgely-doc-gen**, with **bidgely-quill**, **bidgely-quill-fe**, and **product-docs** as sibling directories (or adjust paths in the seed script):
+
+```bash
+cd ../bidgely-doc-gen
+npm install
+npm run seed
+```
+
+This always refreshes (no LLM required):
+
+- `docs/getting-started/technical/cms/data-models.md`
+- `docs/reference/environment-variables.md`
+
+With an LLM configured (`LLM_PROVIDER=ollama` with Ollama running, or `ANTHROPIC_API_KEY` for Anthropic), seed also regenerates feature runbooks, OpenAPI YAML under `docs/assets/openapi/`, API markdown stubs, and any site or **section-confluence** pages that list Confluence page IDs (PM and/or DEV).
+
+Focused seed (environment variables — see bidgely-doc-gen README):
+
+```bash
+SEED_ONLY_FEATURE=recommendations npm run seed
+SEED_OPENAPI_ONLY=true npm run seed
+SEED_SECTION_PAGES=my_section_key npm run seed
+```
+
+After seed, restart `npm run serve` or trigger re-index if you use the chat widget (seed attempts `POST http://localhost:3001/api/index` when the server is up).
+
+---
 
 ## Deployment
 
-### GitHub Pages (automated)
+### GitHub Actions
 
-On push to `main`, GitHub Actions (`.github/workflows/deploy-docs.yml`) builds and deploys the site.
+On push to `main`, `.github/workflows/deploy-docs.yml` builds and deploys the site (e.g. GitHub Pages).
 
 ### Manual (S3 + CloudFront)
 
@@ -186,27 +197,25 @@ aws s3 sync site/ s3://your-docs-bucket --delete
 aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
 ```
 
+---
+
 ## Contributing
 
-### Manual Edits
+### Hand-maintained vs generated
 
-You can edit any markdown file directly. The `getting-started/`, `runbooks/`, overview sections, and introductory content are primarily maintained manually.
+- **Prefer hand edits** for Getting Started narrative, Technical reference prose (except the generated data-models table), runbooks, glossary, and `api/index.md` intros where they are not overwritten by seed.
+- **Seed / LLM** overwrites whole files or major blocks for: `getting-started/technical/cms/data-models.md`, `reference/environment-variables.md`, `features/*.md` runbook bodies (when you run seed with LLM), `assets/openapi/*.yaml`, and Confluence-driven section outputs.
 
-### Auto-Generated Sections
+### Adding a feature to the nav
 
-Sections under headers like `## API Endpoints`, `## Data Model`, `## API Integration`, and `## Feature Summary` are maintained by the seed script and DocGen pipeline. You can edit these, but the next seed/pipeline run may overwrite your changes for those specific sections. Content outside these headers (Overview, Permissions, Workflow, "See also") is preserved.
+1. Add or extend an entry in `docs/_data/feature-map.yml` (`feature_doc`, FE/backend `code_paths`, optional `api_doc` / `openapi_spec`).
+2. Add the page to `mkdocs.yml` under **Features** (and under **API Reference** if it exposes a documented API).
+3. Run `npm run seed` from bidgely-doc-gen (with repos and `.env` as needed).
 
-### Adding a New Service
+---
 
-1. Create a new directory under `docs/services/<service-name>/`
-2. Add markdown files for each domain
-3. Update `docs/_data/feature-map.yml` with code-path-to-doc mappings
-4. Update `mkdocs.yml` nav section
-5. Add the webhook to the new repo's GitHub settings
-6. Run `npm run seed` from bidgely-doc-gen to populate initial content
+## Related repositories
 
-## Related Repositories
-
-- [bidgely-doc-gen](https://github.com/bidgely/bidgely-doc-gen) -- DocGen pipeline + Seed script + Chat API
-- [bidgely-quill](https://github.com/bidgely/bidgely-quill) -- Strapi 5 CMS backend (source repo)
-- [bidgely-quill-fe](https://github.com/bidgely/bidgely-quill-fe) -- React 19 admin frontend (source repo)
+- [bidgely-doc-gen](https://github.com/bidgely/bidgely-doc-gen) — Seed script, chat API, DocGen pipeline
+- [bidgely-quill](https://github.com/bidgely/bidgely-quill) — CMS backend (Strapi)
+- [bidgely-quill-fe](https://github.com/bidgely/bidgely-quill-fe) — DETO web app (React)

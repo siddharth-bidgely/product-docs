@@ -1,36 +1,63 @@
 # Data Migration
 
-!!! abstract "Product Specification"
-    - [Migration Spec 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1208811597)
-    - [Migration Spec 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1224310787)
+!!! abstract "Confluence"
+    - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1208811597)
+    - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1224310787)
 
-## Overview
-Data Migration is a suite of tools and processes for transforming legacy CSV formats (e.g., from old Pingpong/Carrom systems) into the modernized Bidgely Quill CMS structures. It is primarily used during the transition phase of existing utilities to the new Delivery Console platforms, ensuring that existing configurations, surveys, or recommendations seamlessly port over.
+## Overview  
+The Data Migration feature in DETO lets utilities bring recommendation data from legacy CSV or Excel files into the Bidgely Quill CMS. It consolidates titles, images, rules, and score thresholds so that the recommendation engine, dashboards, and customer‑facing content all use a single, centrally managed source. The feature is designed for Product Managers, Customer Success teams, and Enterprise Admins who need to refresh or replace content without writing code.
 
-## Key Capabilities
-- **Bulk Migration Scripts:** Turn-key CLI tools capable of extracting, mapping, and uploading legacy records at scale into active Environments.
-- **Audit Reports:** Generates logs detailing translation errors (e.g., missing API keys or unrecognized identifiers).
-- **Format Translation:** Parses legacy flat files and re-structures them into JSON manifests natively understood by the `job-manifest` and `migration` API edges.
+When the migration wizard becomes available in the DETO UI, you can upload your files, start the migration, and watch the progress—all from the same dashboard. Until then, admins can run the migration through the API, but the user experience is the same: upload, review, run, and monitor.
 
-## User Guide
+## Key Capabilities  
+- **Upload migration files** – Add the five required CSV/Excel files.  
+- **Validate file structure** – The wizard checks that each file is present and correctly formatted.  
+- **Review migration summary** – See how many recommendations, rules, and images will be created or updated.  
+- **Start migration** – Trigger the import process with a single click.  
+- **Monitor progress** – View a real‑time status bar and detailed step logs.  
+- **View results** – After completion, see totals for created, updated, and failed items.  
+- **Handle errors** – Receive clear error messages and suggested fixes.  
+- **Re‑run migration** – If needed, you can re‑execute the job after correcting issues.  
+- **Permission control** – Only users with DELIVERY or FULL_ACCESS rights can run migrations.  
 
-### 1. Preparing the Source Data
-1. Export the legacy CSV datasets from the old CMS or environment DB.
-2. Structure the CSVs into directories matching the entity types (e.g., `sample1/`).
-3. Note your new Environment's **Pilot ID** and **API URL**.
+## User Guide  
 
-![Migration Preparation](../assets/images/1208811597-image-20251128-205017.png)
+### Upload Migration Files  
+1. Open the **Data Migration** page from the DETO dashboard.  
+2. Click **Upload Files**.  
+3. In the file picker, select the five required files:  
+   - `row_id_desc.csv` – Recommendation definitions  
+   - `rule_matrix.csv` – Profile inclusion rules  
+   - `bound_matrix.csv` – Bounds and constraints  
+   - `metadata.xlsx` – Recommendation metadata (titles, descriptions, images)  
+   - `defaultProfileInfo.csv` – Default profile settings  
+4. After selecting all files, click **Validate**.  
+5. The system will display a confirmation that the files were received and are ready for migration.  
 
-### 2. Running a Dry Run
-Before invoking the migration over live data endpoints, validate your schema translations locally.
-1. Run the migration script with `--dry-run`:
-   `npx tsx scripts/migration/migrate.ts --dir sample1 --token YOUR_TOKEN --pilotId 10037 --url http://localhost:1337 --dry-run`
-2. Analyze the generated `cms-data.json` local artifact to confirm field mappings are correct.
+### Run and Monitor Migration  
+1. On the same page, review the **Migration Summary** that lists the number of recommendations, rules, and images that will be processed.  
+2. Click **Start Migration**.  
+3. A progress bar appears with the label **Running Migration**.  
+4. As the migration proceeds, the bar updates and a log panel shows each step (e.g., *Parsing files*, *Transforming data*, *Importing to CMS*).  
+5. When the migration finishes, the status changes to **Completed** and a summary panel shows:  
+   - Total recommendations processed  
+   - Created, updated, and failed counts  
+   - Any error messages that need attention  
+6. If errors occurred, click **View Details** to see which items failed and why.  
+7. Resolve the issues in your source files and repeat the **Start Migration** step if necessary.  
 
-### 3. Full Deployment
-1. Execute the migration script against the live destination environment without `--dry-run`.
-2. Monitor the API logs for 201 Created responses confirming successful backend hydration.
+![Migration Progress](../assets/images/1208811597-image-20251128-205017.png)  
 
-## Related Features
-- [Environment Management](environment-management.md)
-- [Project Management](project-management.md)
+## Configuration Options  
+- **User Permissions** – Only users with DELIVERY or FULL_ACCESS rights can access the Data Migration page and run jobs.  
+- **File Size Limits** – Each file must be 10 MB or smaller. Larger files should be split or compressed before upload.  
+- **Account Type** – The migration wizard automatically detects whether the utility is RESIDENTIAL or SMB; no manual setting is required.  
+- **Error Handling** – The system logs all errors and provides actionable guidance in the results panel.  
+
+If you need to adjust permissions or file size limits, contact your system administrator.
+
+## Related Features  
+- [Recommendations](recommendations.md) – View and edit the recommendations that are populated by the migration.  
+- [Survey Builder](survey-builder.md) – Create surveys that can reference migrated recommendation data.  
+- [Content Management](content-management.md) – Manage the CMS content that the migration imports.  
+- [Workflow Engine](workflow-engine.md) – Automate post‑migration tasks such as publishing or archiving.

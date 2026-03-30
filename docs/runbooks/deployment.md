@@ -1,18 +1,15 @@
-# Deployment Runbook
+# Deployment
 
-## Backend (bidgely-quill)
+!!! note "Coming soon"
 
-| Branch | Target |
-|--------|--------|
-| `master` | Non-prod CMS |
-| `db_migration` | Non-prod DB migrations |
-| `release` | Production CMS |
-| `db_migration_prod` | Production DB migrations |
+    Step-by-step deployment procedures for DETO (bidgely-quill, bidgely-quill-fe, and related infrastructure) are not published in this site yet.
 
-## Frontend (bidgely-quill-fe)
+    **Where to look today:** use your team’s internal runbooks, Jenkins job documentation, and release checklists. High-level branch targets that teams often use:
 
-Deployed via Jenkins pipeline: Docker build -> S3 upload -> CloudFront.
+    | Area | Typical branches (confirm with your team) |
+    |------|---------------------------------------------|
+    | Backend (bidgely-quill) | `master` / non-prod, `release` / production (plus DB migration branches where applicable) |
+    | Frontend (bidgely-quill-fe) | CI/CD pipeline (e.g. Docker → S3 → CloudFront) |
+    | This documentation site | Repository’s GitHub Actions workflow on `main` |
 
-## Documentation Site
-
-Auto-deployed via GitHub Actions on merge to `main` in this repository.
+    When internal runbooks are ready to be externalized, this page will link to them or inline the approved steps.

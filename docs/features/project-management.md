@@ -1,54 +1,89 @@
 # Project Management
 
-!!! abstract "Product Specification"
-    - [DETO Vision](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=931495969)
-    - [Project & Environment Creation](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=847642630)
-    - [Project Details](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=853245955)
+!!! abstract "Confluence"
+    - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=847642630)
+    - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=853245955)
+    - [Confluence 3](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=853475347)
+    - [Confluence 4](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=852557844)
 
-## Overview
-Project Management enables true self-serve, enterprise-grade provisioning of utility pilot projects. By combining infrastructure provisioning, identity access management, and dataset initialization into a single seamless flow, Delivery Engineering teams or Customer Admins can set up an entire project—including development, UAT, and production environments—with "one click." 
+## Overview  
+DETO’s Project Management area is the central hub where utilities and delivery teams can create, configure, and monitor projects that power energy‑usage analytics. It gives a single, guided interface for spinning up a new project, linking it to a utility and environment, and setting up the data ingestion pipeline. The result is a consistent, auditable baseline that reduces manual setup time and keeps stakeholders confident that every project follows the same configuration standards.
 
-This unified Delivery Console workflow eliminates the need for manual hand-offs between separate infrastructure, application, and content operations teams, fulfilling the DETO Vision of deploying a client-ready workspace in hours instead of weeks.
+The feature is designed for Delivery Engineers, Project Managers, Customer Success teams, and Admins. It lets them quickly onboard new utilities, manage existing projects, and keep data pipelines running smoothly without needing to touch backend code.
 
-## Key Capabilities
-- **1-Click Infrastructure Provisioning:** Automatically bootstrap databases, API gateways, CMS instances, and backend services (like Pingpong).
-- **Environment Mapping:** Link the same strategic project across DEV, UAT, and PROD using a centralized Pilot ID mechanism.
-- **Dynamic Utility Configuration:** Pre-populate utility contexts (e.g., fuel types, customer profiles) so the application is interaction-ready on Day 1.
-- **Automated Configuration Ingestion:** Ingest data mappings and backend configuration settings dynamically during the project boot phase.
-- **Config Push Workflows:** Push updated core attributes and pipeline components directly to a matched environment.
+## Key Capabilities  
+- **Create a new project** with a step‑by‑step wizard.  
+- **Edit project metadata** (name, description, image, language, timezone).  
+- **Create a new environment** and trigger 1‑click cloud provisioning.  
+- **Create a new utility** and link it to an environment.  
+- **Configure ingestion settings** (customer type, fuel types, meter types, data source).  
+- **Filter and search projects** by type, region, or name.  
+- **View project details** and status dashboards.  
+- **Monitor environment creation** and ingestion progress.  
+- **Publish or approve projects** for production use.  
+- **Manage project ownership** and audit trails.  
 
-## User Guide
+## User Guide  
 
-### 1. Creating a New Project Workspace
-1. Navigate to the **Delivery Console Dashboard**.
-2. Click **Create New Project**.
-3. In the wizard, provide the core project metadata: **Project Name**, **Pilot ID**, **Country**, and **Customer Type** (e.g., SMB vs Residential).
-4. Configure the **Fuel Type** and **Meter Types** applicable to this utility deployment.
+### Create a New Project  
+1. Open the **Projects Dashboard** from the main menu.  
+2. Click **Create New Project**.  
+3. In the wizard, choose an existing **Utility** or click **Create New Utility**.  
+4. Select an existing **Environment** or click **Create New Environment**.  
+5. Fill in the **Core Attributes**: Project ID, name, description, image URL, language, country, and timezone.  
+6. Configure **Ingestion Settings**: pick customer types, fuel types, meter types, and data source (S3 or SFTP).  
+7. Review the summary and click **Submit Project Request**.  
+8. The system will create the utility (if new), provision the environment, and apply default ingestion configs.  
+![Project Creation Wizard](../assets/images/847642630-Screenshot-202025-08-27-20at-205.13.16-E2-80-AFPM.png)
 
-![Project Creation Overview](../assets/images/847642630-Screenshot-202025-08-27-20at-205.31.50-E2-80-AFPM.png)
+### View and Edit Project Details  
+1. From the **Projects Dashboard**, click **Open Project** on the card you want to edit.  
+2. The **Project Details** page shows all core attributes and ingestion settings.  
+3. To edit a field, click the **Edit** icon next to it, make changes, and click **Save**.  
+4. For bulk changes, edit the values and click **Save All** at the bottom.  
+5. After saving, the page refreshes to show the updated data.  
+![Project Details](../assets/images/847642630-Screenshot-202025-08-27-20at-205.39.03-E2-80-AFPM.png)
 
-### 2. Linking and Provisioning Environments
-1. With the core Project created, navigate to the **Environments** tab.
-2. Click **Add Environment**.
-3. Select the target tier (e.g., *Dev*, *UAT*, or *Prod*).
-4. Provide the environment details, linking it securely to the root Pilot ID.
-5. Click **Provision**. Background workers (integrated with the Environment Manager) will begin spinning up isolated infrastructure instances.
+### Create a New Environment  
+1. While creating or editing a project, click **Create New Environment**.  
+2. Enter the **Environment name**, select the **Utility**, and add an optional description.  
+3. Choose the **AWS Region** from the dropdown.  
+4. Click **Create Environment**.  
+5. The system automatically provisions the cloud stack; you’ll see a progress bar.  
+6. Once completed, the environment appears in the project’s environment list.  
+![Environment Creation](../assets/images/847642630-Screenshot-202025-08-27-20at-205.12.58-E2-80-AFPM.png)
 
-![Adding an Environment](../assets/images/847642630-Screenshot-202025-08-27-20at-205.56.50-E2-80-AFPM.png)
+### Create a New Utility  
+1. In the project wizard, click **Create New Utility**.  
+2. Fill in the **Utility Name**, **Country**, **Address**, **State/Province**, and **Zip/Postal Code**.  
+3. Click **Save Utility**.  
+4. The new utility is linked to the selected environment automatically.  
+![Utility Creation](../assets/images/847642630-Screenshot-202025-08-27-20at-205.31.50-E2-80-AFPM.png)
 
-### 3. Setting Up Ingestion Targets
-1. Once your environment reaches the *Running* state, open the **Project Details** screen.
-2. Select the matched environment and open the **Ingestion Configs** panel.
-3. Configure your automated data connectors.
-4. Save the configuration to ensure the Pingpong data pipelines ingest raw datasets correctly for this specific deployment.
+### Configure Ingestion Settings  
+1. On the **Project Details** page, open the **Ingestion Configuration** section.  
+2. Select **Customer Type** (Residential, SMB, C&I).  
+3. Choose one or more **Fuel Types** (Electric, Gas, Water).  
+4. For each fuel, set the **Fuel Type Units** and **Invoice Fuel Type Units**.  
+5. Pick **Meter Types** (AMI, AMR, NSM).  
+6. Choose **Data Source Type** (S3 or SFTP).  
+   - If **SFTP**, provide **User**, **Password**, **Host Name**, and **Decryption Pathphrase**.  
+7. Click **Save** to apply the configuration.  
+![Ingestion Configuration](../assets/images/847642630-Screenshot-202025-08-27-20at-205.42.55-E2-80-AFPM.png)
 
-![Configuring Core Attributes](../assets/images/853245955-Screenshot-202025-08-28-20at-204.18.01-E2-80-AFPM.png)
+### Monitor Environment Creation Status  
+1. After creating an environment, navigate to the **Environment Creation Status** page.  
+2. A progress bar shows the current state (In‑progress, Completed, Failed).  
+3. Click **Refresh** to pull the latest status.  
+4. If the process is still running, the page will auto‑refresh every minute.  
+5. Once completed, the status turns **Completed** and the environment becomes active.  
+![Environment Status](../assets/images/847642630-Screenshot-202025-08-27-20at-205.56.50-E2-80-AFPM.png)
 
-## Configuration Options
-- **Template Inheritance:** Base project settings on existing robust templates to accelerate setup times for common industry configurations.
-- **Role-Based Provisioning:** Limit environment creation or PROD linkage strictly to senior TPM or Delivery Engineer roles.
+## Configuration Options  
+Project‑level settings such as supported languages, time zones, and default ingestion templates are managed by system administrators. Delivery Engineers can only modify the values presented in the wizard and detail pages. If you need to change global defaults, contact your Admin or use the **Config Registry** feature.
 
-## Related Features
-- [Environment Management](environment-management.md)
-- [Content Management](content-management.md)
-- [Data Migration](data-migration.md)
+## Related Features  
+- [Project Management](project-management.md) – Overview of project lifecycle.  
+- [Recommendations](recommendations.md) – Configure recommendation engines for projects.  
+- [Survey Builder](survey-builder.md) – Create and manage customer surveys.  
+- [CX Visual Editor](cx-visual-editor.md) – Design customer experience flows.

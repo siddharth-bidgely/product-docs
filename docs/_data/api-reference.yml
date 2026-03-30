@@ -1,0 +1,24 @@
+display_name: API Reference
+description: OpenAPI-backed CMS APIs (Swagger UI)
+pages:
+  overview:
+    display_name: Overview
+    page_doc: api/index.md
+  cms:
+    display_name: CMS
+    pages:
+      recommendations_api:
+        display_name: Recommendations API
+        page_doc: api/cms/recommendations-api.md
+      survey_api:
+        display_name: Survey API
+        page_doc: api/cms/survey-api.md
+      data_scenario_api:
+        display_name: Data Scenario API
+        page_doc: api/cms/data-scenario-api.md
+      migration_api:
+        display_name: Migration API
+        page_doc: api/cms/migration-api.md
+      config_registry_api:
+        display_name: Config Registry API
+        page_doc: api/cms/config-registry-api.md

@@ -1,0 +1,398 @@
+openapi: 3.0.3
+info:
+  title: Recommendations API
+  version: 1.0.0
+  description: API specification for the Recommendations feature of the DETO platform.
+servers:
+  - url: https://cms.bidgely.com
+    description: Production CMS
+security:
+  - bearerAuth: []
+paths:
+  /recommendation/v1/model/{pilotId}:
+    get:
+      summary: Retrieve recommendation model for a pilot
+      description: Returns the recommendation model and default profile for the specified pilot, optionally filtered by status.
+      operationId: reco-external-apis_getRecoModel
+      tags:
+        - Recommendations
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      defaultProfile:
+                        type: array
+                        items:
+                          type: string
+                      model:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/RecoModelExternal'
+                    required:
+                      - defaultProfile
+                      - model
+                  updatedAt:
+                    type: string
+                    nullable: true
+                required:
+                  - data
+                  - updatedAt
+        '400':
+          description: Bad request – invalid status parameter
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::recommendation.reco-model-policy
+  /recommendation/v1/metadata/{pilotId}:
+    get:
+      summary: Retrieve metadata for a pilot (v1)
+      description: Returns metadata for the specified pilot. The exact structure is defined by the internal implementation.
+      operationId: reco-external-apis_getRecoMetadata
+      tags:
+        - Recommendations
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::recommendation.reco-metadata-policy
+  /recommendation/v2/metadata/{pilotId}:
+    get:
+      summary: Retrieve metadata for a pilot (v2)
+      description: Returns metadata for the specified pilot. The exact structure is defined by the internal implementation.
+      operationId: reco-external-apis_getRecoMetadataV2
+      tags:
+        - Recommendations
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::recommendation.reco-metadata-policy
+  /recommendation/v1/insight-definition/{pilotId}:
+    get:
+      summary: Retrieve insight definitions for a pilot
+      description: Returns insight definitions and the last updated timestamp for the specified pilot, optionally filtered by status.
+      operationId: reco-external-apis_getInsightDefinition
+      tags:
+        - Recommendations
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InsightDefinition'
+                  updatedAt:
+                    type: string
+                    nullable: true
+                required:
+                  - data
+                  - updatedAt
+        '400':
+          description: Bad request – invalid status parameter
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::recommendation.reco-model-policy
+  /recommendation/v1/last-updated-ts/{pilotId}:
+    get:
+      summary: Retrieve last updated timestamp for a pilot
+      description: Returns the last updated timestamp for the specified pilot and status.
+      operationId: reco-external-apis_getLastUpdatedTS
+      tags:
+        - Recommendations
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                    nullable: true
+                required:
+                  - data
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Recommendation:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 70
+        description:
+          type: string
+        ctaButtonText:
+          type: string
+          maxLength: 30
+        ctaButtonLink:
+          type: string
+        icon:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            alt:
+              type: string
+        shortenedImage:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            alt:
+              type: string
+        fullImage:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            alt:
+              type: string
+        detail:
+          type: string
+        elongatedImage:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            alt:
+              type: string
+        utility:
+          type: object
+          description: Relation (oneToOne) to utility.utility
+        recommendationId:
+          type: string
+        fuelType:
+          type: string
+          default: '[]'
+        featuredContent:
+          type: boolean
+          default: 'false'
+        program:
+          type: boolean
+          default: 'false'
+        channelPaper:
+          type: boolean
+          default: 'true'
+        channelEmail:
+          type: boolean
+          default: 'true'
+        disabled:
+          type: boolean
+          default: 'false'
+        defaultReco:
+          type: boolean
+          default: 'false'
+        channelWeb:
+          type: boolean
+          default: 'true'
+        videoLink:
+          type: string
+        score:
+          type: object
+        applianceProfileExclusion:
+          type: object
+        homeProfileExclusion:
+          type: object
+        ratePlanExclusion:
+          type: object
+        ppExclusion:
+          type: object
+        monthExclusion:
+          type: object
+        insightAssociation:
+          type: object
+        category:
+          type: string
+        verificationStatus:
+          type: string
+          enum:
+            - TODO
+            - READY_FOR_QA
+            - QA_IN_PROGRESS
+            - QA_FAILED
+            - READY_TO_PUBLISH
+          default: TODO
+        editStatus:
+          type: string
+          enum:
+            - DRAFT
+            - MODIFIED
+            - PUBLISHED
+          default: DRAFT
+        actionSavingsPotential:
+          type: number
+        frequency:
+          type: string
+          enum:
+            - one_time
+            - repeat
+        herImage:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            alt:
+              type: string
+        userType:
+          type: string
+        actionType:
+          type: string
+        objective:
+          type: string
+      required:
+        - title
+        - description
+        - recommendationId
+        - fuelType
+        - featuredContent
+        - program
+        - channelPaper
+        - channelEmail
+        - channelWeb
+        - category
+    RecoModelExternal:
+      type: object
+      properties:
+        recommendationId:
+          type: string
+        fuelType:
+          type: string
+        category:
+          type: string
+        applianceTags:
+          type: array
+          items:
+            type: integer
+        disabled:
+          type: boolean
+        defaultReco:
+          type: boolean
+        relevanceScore:
+          type: number
+        exclusions:
+          type: array
+          items:
+            type: string
+      required:
+        - recommendationId
+        - fuelType
+        - category
+        - applianceTags
+        - disabled
+        - defaultReco
+        - relevanceScore
+        - exclusions
+    InsightDefinition:
+      type: object
+      properties:
+        type:
+          type: string
+        applianceTag:
+          type: integer
+        fuelType:
+          type: string
+        recommendations:
+          type: array
+          items:
+            type: string
+        insightId:
+          type: string
+      required:
+        - type
+        - applianceTag
+        - fuelType
+        - recommendations
+        - insightId

@@ -1,0 +1,9 @@
+display_name: Reference
+description: Environment variables, glossary, and static reference
+pages:
+  environment_variables:
+    display_name: Environment Variables
+    page_doc: reference/environment-variables.md
+  glossary:
+    display_name: Glossary
+    page_doc: reference/glossary.md

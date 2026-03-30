@@ -1,0 +1,12 @@
+display_name: Runbooks
+description: Operational procedures
+pages:
+  deployment:
+    display_name: Deployment
+    page_doc: runbooks/deployment.md
+  troubleshooting:
+    display_name: Troubleshooting
+    page_doc: runbooks/troubleshooting.md
+  database:
+    display_name: Database
+    page_doc: runbooks/database.md

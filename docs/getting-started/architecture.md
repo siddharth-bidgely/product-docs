@@ -28,6 +28,10 @@ Provisions and manages deployment environments. Handles infrastructure setup for
 ### Proxy Pulse
 Manages configuration propagation and project orchestration across environments. *(Coming soon)*
 
+## Technical deep dive
+
+For schema-level detail (content types, RBAC, workflows) and component-specific notes, see **[Technical reference](technical/cms/index.md)** under this section.
+
 ## External Integrations
 
 DETO's CMS exposes APIs that are consumed by other Bidgely services:

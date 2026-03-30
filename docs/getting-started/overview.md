@@ -30,3 +30,7 @@ Build customer surveys with branching logic, multi-level questions, and template
 
 ### Workflow Automation
 Design approval workflows visually using a node-based graph editor.
+
+---
+
+For CMS schemas, permissions, and workflow mechanics, see [Technical reference](technical/cms/index.md) in Getting Started.

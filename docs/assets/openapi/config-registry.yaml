@@ -1,0 +1,793 @@
+openapi: 3.0.3
+info:
+  title: Config Registry API
+  version: 1.0.0
+  description: API specification for the Config Registry feature of the DETO platform.
+servers:
+  - url: https://cms.bidgely.com
+    description: Production CMS
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ConfigRegistryConfig:
+      type: object
+      properties:
+        configKey:
+          type: string
+          maxLength: 255
+        configType:
+          type: string
+          maxLength: 255
+        verificationStatus:
+          type: string
+          enum:
+            - TODO
+            - READY_FOR_QA
+            - APPROVED
+            - REJECTED
+          default: TODO
+        deprecated:
+          type: boolean
+          default: false
+        displayName:
+          type: string
+          maxLength: 255
+        configDocumentation:
+          type: string
+        configDataType:
+          type: string
+          enum:
+            - TEXT
+            - INTEGER
+            - FLOAT
+            - BOOLEAN
+            - JSON
+            - DATETIME
+            - COLOR
+          default: TEXT
+        defaultValue:
+          type: string
+        possibleValues:
+          type: object
+        validationRule:
+          type: object
+        version:
+          type: integer
+          default: 1
+        lookups:
+          type: object
+        parentConfig:
+          type: object
+        childConfigs:
+          type: object
+        relatedConfigs:
+          type: object
+        duplicateConfigs:
+          type: object
+        dependsUpon:
+          type: object
+        createdByUser:
+          type: object
+        isMandatoryField:
+          type: boolean
+          default: false
+        utilityConfigurationRequired:
+          type: boolean
+          default: false
+        specialHandlingRequired:
+          type: boolean
+          default: false
+      required:
+        - configKey
+        - configType
+        - verificationStatus
+        - displayName
+        - configDocumentation
+        - configDataType
+        - version
+    ConfigRegistryLookup:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 255
+        displayName:
+          type: string
+          maxLength: 255
+        lookupType:
+          type: object
+        parentLookup:
+          type: object
+        description:
+          type: string
+        configs:
+          type: object
+      required:
+        - code
+        - displayName
+    ConfigRegistryLookupType:
+      type: object
+      properties:
+        code:
+          type: string
+          maxLength: 100
+        displayName:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        parentType:
+          type: object
+        allowMultiSelect:
+          type: boolean
+          default: false
+        isRequired:
+          type: boolean
+          default: false
+      required:
+        - code
+        - displayName
+    ConfigRegistryTemplate:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        module:
+          type: string
+          maxLength: 100
+        items:
+          type: object
+      required:
+        - name
+    ConfigRegistryConfigResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConfigRegistryConfig'
+    ConfigRegistryConfigListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConfigRegistryConfig'
+        meta:
+          type: object
+          properties:
+            page:
+              type: integer
+            pageSize:
+              type: integer
+            pageCount:
+              type: integer
+            total:
+              type: integer
+            hasMore:
+              type: boolean
+    ConfigRegistryValidateRequest:
+      type: object
+      properties:
+        configs:
+          type: array
+          items:
+            type: object
+            properties:
+              configKey:
+                type: string
+              value:
+                type: object
+              configType:
+                type: string
+              entityLevel:
+                type: string
+            required:
+              - configKey
+              - value
+              - configType
+      required:
+        - configs
+    ConfigRegistryValidateResponse:
+      type: object
+      properties:
+        valid:
+          type: boolean
+        summary:
+          type: object
+          properties:
+            total:
+              type: integer
+            passed:
+              type: integer
+            failed:
+              type: integer
+            skipped:
+              type: integer
+        results:
+          type: array
+          items:
+            type: object
+    ConfigRegistryTemplateResponse:
+      type: object
+      properties:
+        fromTemplate:
+          type: object
+          properties:
+            templateId:
+              type: string
+            templateName:
+              type: string
+            module:
+              type: string
+            description:
+              type: string
+            configCount:
+              type: integer
+            configs:
+              type: array
+              items:
+                type: object
+                properties:
+                  documentId:
+                    type: string
+                  configKey:
+                    type: string
+                  displayName:
+                    type: string
+                  configDataType:
+                    type: string
+                  lookups:
+                    type: array
+                    items:
+                      type: object
+                  value:
+                    type: object
+        remaining:
+          type: object
+          properties:
+            configCount:
+              type: integer
+            configs:
+              type: array
+              items:
+                type: object
+                properties:
+                  documentId:
+                    type: string
+                  configKey:
+                    type: string
+                  displayName:
+                    type: string
+                  configDataType:
+                    type: string
+                  lookups:
+                    type: array
+                    items:
+                      type: object
+    ConfigRegistryTemplateCloneResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/ConfigRegistryTemplate'
+        message:
+          type: string
+    ConfigRegistryTemplateDiffResponse:
+      type: object
+      properties:
+        source:
+          type: object
+          properties:
+            documentId:
+              type: string
+            name:
+              type: string
+        target:
+          type: object
+          properties:
+            documentId:
+              type: string
+            name:
+              type: string
+        summary:
+          type: object
+          properties:
+            added:
+              type: integer
+            removed:
+              type: integer
+            modified:
+              type: integer
+            unchanged:
+              type: integer
+        diff:
+          type: object
+          properties:
+            added:
+              type: array
+              items:
+                type: object
+            removed:
+              type: array
+              items:
+                type: object
+            modified:
+              type: array
+              items:
+                type: object
+            unchanged:
+              type: array
+              items:
+                type: object
+paths:
+  /config-registry-configs/config-types:
+    get:
+      summary: Retrieve available config types
+      description: Returns a list of config type identifiers.
+      operationId: config-registry-config_getConfigTypes
+      tags:
+        - Config Registry
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+  /config-registry-config/v1/{id}/submit:
+    post:
+      summary: Submit config for approval
+      description: Submits a configuration identified by `id` for approval workflow.
+      operationId: config-registry-config-apis_submit
+      tags:
+        - Config Registry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryConfigResponse'
+        '400':
+          description: Bad request – validation error
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-config.config-submit-policy
+  /config-registry-config/v1/{id}/approve:
+    post:
+      summary: Approve config
+      description: Approves a configuration identified by `id`.
+      operationId: config-registry-config-apis_approve
+      tags:
+        - Config Registry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryConfigResponse'
+        '400':
+          description: Bad request – validation error
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-config.config-approve-policy
+  /config-registry-config/v1/{id}/reject:
+    post:
+      summary: Reject config
+      description: Rejects a configuration identified by `id`.
+      operationId: config-registry-config-apis_reject
+      tags:
+        - Config Registry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryConfigResponse'
+        '400':
+          description: Bad request – validation error
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-config.config-approve-policy
+  /config-registry-config/v1/{id}/reopen:
+    post:
+      summary: Reopen approved config for edits
+      description: Moves an approved configuration back to the TODO status for editing.
+      operationId: config-registry-config-apis_reopen
+      tags:
+        - Config Registry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryConfigResponse'
+        '400':
+          description: Bad request – validation error
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-config.config-reopen-policy
+  /config-registry/validate:
+    post:
+      summary: Validate config values
+      description: Validates a set of configuration values against their metadata definitions.
+      operationId: config-registry-config-apis_validate
+      tags:
+        - Config Registry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigRegistryValidateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryValidateResponse'
+        '400':
+          description: Bad request – missing or invalid configs array
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+      x-policies:
+        - api::config-registry-config.config-view-policy
+  /config-registry/v1/configs/{id}:
+    get:
+      summary: Retrieve a single config
+      description: Retrieves a configuration by `id` with resolved lookup references.
+      operationId: config-registry-config-apis_getConfig
+      tags:
+        - Config Registry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: expand
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - full
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryConfigResponse'
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '403':
+          description: Forbidden – insufficient permissions
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-config.config-view-policy
+  /config-registry/v1/configs:
+    get:
+      summary: List configs
+      description: Retrieves a paginated list of configurations with optional filters.
+      operationId: config-registry-config-apis_listConfigs
+      tags:
+        - Config Registry
+      parameters:
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: verificationStatus
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: approvalStatus
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: configType
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: component
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: section
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: classification
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: fileType
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: restricted
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: deprecated
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: expand
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - full
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryConfigListResponse'
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+      x-policies:
+        - api::config-registry-config.config-view-policy
+  /config-registry-lookups/v1/create:
+    post:
+      summary: Create a lookup
+      description: Creates a new lookup entry.
+      operationId: config-registry-lookup_createLookup
+      tags:
+        - Config Registry
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryLookup'
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+  /config-registry-lookup-types/v1/all:
+    get:
+      summary: List all lookup types
+      description: Retrieves all lookup type definitions.
+      operationId: config-registry-lookup-type_listAll
+      tags:
+        - Config Registry
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigRegistryLookupType'
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+  /config-registry-lookup-types/v1/ui-schema:
+    get:
+      summary: Retrieve UI schema for lookup types
+      description: Provides the UI schema used for lookup type configuration.
+      operationId: config-registry-lookup-type_uiSchema
+      tags:
+        - Config Registry
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+  /config-registry-lookup-types/v1/{id}/lookups:
+    get:
+      summary: List lookups for a type
+      description: Retrieves all lookups associated with a lookup type identified by `id`.
+      operationId: config-registry-lookup-type_getLookups
+      tags:
+        - Config Registry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfigRegistryLookup'
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+  /config-registry-templates/by-name/{templateName}/configs:
+    get:
+      summary: Retrieve configs by template name
+      description: Retrieves configuration items defined in a template identified by `templateName`. Optionally includes remaining approved configs not in the template.
+      operationId: config-registry-template-apis_getConfigsByTemplateName
+      tags:
+        - Config Registry
+      parameters:
+        - name: templateName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: includeRemaining
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - 'true'
+              - 'false'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryTemplateResponse'
+        '400':
+          description: Bad request – missing templateName
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-config.config-view-policy
+  /config-registry-template/v1/{id}/clone:
+    post:
+      summary: Clone a template
+      description: Creates a copy of a template identified by `id` with optional new name and description.
+      operationId: config-registry-template-apis_clone
+      tags:
+        - Config Registry
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+              required:
+                - name
+                - description
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryTemplateCloneResponse'
+        '400':
+          description: Bad request – missing or invalid body
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-template.template-edit-policy
+  /config-registry-template/v1/diff:
+    get:
+      summary: Diff two templates
+      description: Compares two templates identified by `sourceId` and `targetId` and returns differences.
+      operationId: config-registry-template-apis_diff
+      tags:
+        - Config Registry
+      parameters:
+        - name: sourceId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: targetId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigRegistryTemplateDiffResponse'
+        '400':
+          description: Bad request – missing query parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::config-registry-template.template-view-policy

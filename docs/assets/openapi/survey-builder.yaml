@@ -1,0 +1,294 @@
+openapi: 3.0.3
+info:
+  title: Survey Builder API
+  version: 1.0.0
+  description: API specification for the Survey Builder feature of the DETO platform.
+servers:
+  - url: https://cms.bidgely.com
+    description: Production CMS
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    SurveyCategory:
+      type: object
+      properties:
+        categoryId:
+          type: string
+        label:
+          type: string
+        order:
+          type: integer
+          default: 1
+      required:
+        - categoryId
+        - label
+        - order
+    SurveyQuestion:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        type:
+          type: string
+          enum:
+            - SINGLE
+            - MULTIPLE
+            - MULTIPLE_WITH_SUB_CHOICES
+            - TEXT
+            - NUMBER
+            - IMAGE_UPLOAD
+            - TEXTAREA
+            - BOOLEAN
+            - RANGE
+            - SLIDER
+            - TWO_DIMENSIONS
+            - THREE_DIMENSIONS
+          example: SINGLE
+        img:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            alt:
+              type: string
+        group:
+          type: string
+          enum:
+            - ESSENTIAL
+            - DETAILED
+          example: ESSENTIAL
+        fuelTypes:
+          type: string
+          example: GLOBAL
+        maxLevel:
+          type: integer
+          default: 1
+        questionTemplate:
+          type: string
+          enum:
+            - DEFAULT
+            - DROP_DOWN
+            - SUB_CHOICE_DROP_DOWN
+          example: DEFAULT
+        profileCode:
+          type: string
+          enum:
+            - AP
+            - HP
+            - METADATA
+          example: AP
+        category:
+          type: string
+        info:
+          type: string
+        stateMapper:
+          type: string
+        impactShc:
+          type: boolean
+          default: false
+        impactItemization:
+          type: boolean
+          default: false
+        impactReco:
+          type: boolean
+          default: false
+        utility:
+          type: object
+          description: Relation (oneToOne) to utility.utility
+        choices:
+          type: object
+          description: 'Component: survey.survey-choice'
+        editStatus:
+          type: string
+          enum:
+            - DRAFT
+            - MODIFIED
+            - PUBLISHED
+          example: DRAFT
+        verificationStatus:
+          type: string
+          enum:
+            - TODO
+            - READY_FOR_QA
+            - READY_TO_PUBLISH
+          example: TODO
+      required:
+        - title
+        - type
+        - group
+        - fuelTypes
+        - maxLevel
+        - questionTemplate
+        - profileCode
+        - editStatus
+        - verificationStatus
+    SurveyTemplate:
+      type: object
+      properties:
+        templateType:
+          type: string
+          enum:
+            - defaultSurvey
+            - BillAnalyzer
+          example: defaultSurvey
+        label:
+          type: string
+        templateQuestions:
+          type: object
+          description: 'Component: survey.survey-template-question'
+        utility:
+          type: object
+          description: Relation (manyToOne) to utility.utility
+        verificationStatus:
+          type: string
+          enum:
+            - TODO
+            - READY_FOR_QA
+            - QA_IN_PROGRESS
+            - QA_FAILED
+            - READY_TO_PUBLISH
+          example: TODO
+        editStatus:
+          type: string
+          enum:
+            - DRAFT
+            - MODIFIED
+            - PUBLISHED
+          example: DRAFT
+      required:
+        - templateType
+        - label
+        - templateQuestions
+    SurveyTemplateExternal:
+      type: object
+      properties:
+        surveyId:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: '#/components/schemas/SurveyQuestion'
+      required:
+        - surveyId
+        - questions
+    TemplateResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/SurveyTemplateExternal'
+        updatedAt:
+          type: integer
+          format: int64
+          nullable: true
+      required:
+        - data
+        - updatedAt
+    LastUpdatedTSResponse:
+      type: object
+      properties:
+        data:
+          type: integer
+          format: int64
+          nullable: true
+      required:
+        - data
+paths:
+  /survey-category/ingest:
+    post:
+      summary: Ingest survey categories
+      description: Ingest a batch of survey categories into the system.
+      operationId: survey-category_ingestCategories
+      tags:
+        - Survey Builder
+      responses:
+        '200':
+          description: Successful ingestion
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+  /survey/v1/template/{pilotId}/{templateId}:
+    get:
+      summary: Retrieve a survey template
+      description: Retrieve a survey template for a given pilot and template ID, optionally filtered by status and locale.
+      operationId: survey-template-external-apis_getTemplate
+      tags:
+        - Survey Builder
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: templateId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: locale
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateResponse'
+        '400':
+          description: Bad request — invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::survey-template.survey-template-fetch-policy
+  /survey/v1/last-updated-ts/{pilotId}/{templateId}:
+    get:
+      summary: Retrieve last updated timestamp
+      description: Retrieve the last updated timestamp for a survey template given pilot and template IDs.
+      operationId: survey-template-external-apis_getLastUpdatedTS
+      tags:
+        - Survey Builder
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: templateId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LastUpdatedTSResponse'
+        '400':
+          description: Bad request — invalid parameters
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found

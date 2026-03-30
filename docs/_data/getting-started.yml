@@ -1,0 +1,35 @@
+# Slug-keyed pages (like features: in feature-map.yml). Each node may include:
+#   display_name, description, page_doc, confluence_pm_page_ids, confluence_dev_page_ids, prompt_profile, pages
+display_name: Getting Started
+description: Onboarding, architecture, and technical deep dives
+pages:
+  overview:
+    display_name: Overview
+    page_doc: getting-started/overview.md
+  architecture:
+    display_name: Architecture
+    page_doc: getting-started/architecture.md
+    confluence_dev_page_ids: ["1339392001"]
+  technical_reference:
+    display_name: Technical reference
+    pages:
+      cms:
+        display_name: CMS
+        page_doc: getting-started/technical/cms/index.md
+        confluence_dev_page_ids: ["633110556"]
+        pages:
+          data_models:
+            display_name: Data Models
+            page_doc: getting-started/technical/cms/data-models.md
+          rbac:
+            display_name: RBAC & Permissions
+            page_doc: getting-started/technical/cms/rbac.md
+          workflows:
+            display_name: Workflows
+            page_doc: getting-started/technical/cms/workflows.md
+      environment_manager:
+        display_name: Environment Manager
+        page_doc: getting-started/technical/environment-manager/index.md
+      proxy_pulse:
+        display_name: Proxy Pulse
+        page_doc: getting-started/technical/proxy-pulse/index.md

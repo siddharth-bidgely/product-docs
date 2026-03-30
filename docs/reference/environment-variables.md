@@ -1,6 +1,8 @@
 # Environment Variables Reference
 
-Complete environment variable reference across all services.
+This reference lists variables used to **configure and deploy** DETO and related services. It is written for **operators, DevOps, and environment administrators** who set up instances — not for day-to-day work inside application repositories.
+
+Values shown are taken from example env files and may differ in your environment. Confirm with your platform team before changing production settings.
 
 ## Quill CMS (Backend)
 

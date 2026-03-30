@@ -1,0 +1,14 @@
+# Order of top-level sections (MkDocs tabs). Each id maps to a loader in hooks.py:
+#   home          → home.yml
+#   getting_started → getting-started.yml
+#   features      → feature-map.yml (features.*)
+#   api_reference → api-reference.yml
+#   runbooks      → runbooks.yml
+#   reference     → reference.yml
+order:
+  - home
+  - getting_started
+  - features
+  - api_reference
+  - runbooks
+  - reference

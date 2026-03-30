@@ -1,48 +1,65 @@
 # Environment Management
 
-!!! abstract "Product Specification"
-    - [Environment Setup Phase 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1234796545)
-    - [Architecture & Operations](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1232404485)
-    - [Backend Orchestration](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1233977351)
+!!! abstract "Confluence"
+    - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1234796545)
+    - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1232404485)
+    - [Confluence 3](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1233977351)
 
-## Overview
-Environment Management handles the automated provisioning, validation, and lifecycle orchestration of all necessary cloud infrastructure and persistent data stores. Working heavily behind the scenes when a "Project" is created on the Delivery Console, this service abstracts away complex AWS interactions, database cluster (RDS/Cassandra) table creations, and service deployments.
+## Overview  
+Environment Management lets you create, view, and edit isolated deployment environments—such as dev, uat, or production pilots—directly from the DETO dashboard.  Admins and product managers can spin up a new environment with a single click, supply the required details, and watch the provisioning progress in real time.  Once an environment is ready, you can adjust its settings, export its configuration, or review its status.  The feature is designed to keep your teams focused on business value while the underlying infrastructure is handled automatically.
 
-By automating the "Create SubEnvironment" workflow, the system guarantees a fully operational state—spinning up API endpoints, dashboards, and background workers customized exclusively for the new tenant.
+## Key Capabilities  
+- **Create a new environment** with a wizard that collects name, type, AWS region, server URL, and optional frontend URL.  
+- **Edit existing environments** to change names, URLs, or AWS region.  
+- **View a list of all environments** with key details such as utility, stack name, status, and creation date.  
+- **Export environment data** as a JSON file for backup or migration.  
+- **Monitor environment status** through a status badge that shows “Pending”, “Provisioning”, “Ready”, or “Failed”.  
+- **Delete environments** (future capability, currently gated behind an admin confirmation).  
+- **Filter and sort** the environment table by name, status, or creation date.  
+- **Access detailed logs** for each environment’s provisioning steps.  
 
-## Key Capabilities
-- **Pingpong Microservices Orchestration:** Automates the complete deployment of background services (such as `ingesterJobs`, `eventAnalyserServices`, `emailServices`, and `telematicsServices`).
-- **Data-Store Provisioning:** Automatically provisions specific databases, clusters, keyspaces, and schema tables within RDS and Cassandra.
-- **Analytics Engines:** Bootstraps Disaggregation models:
-  - *Slytherin* (AMI Disaggregation Lambda)
-  - *Basilisk* (NSM Disaggregation Code)
-- **Frontend Assets Configuration:** Customizes FE Web Dashboards (Meraki) without configuration files via specific build-time variable injections (e.g. overriding `clientID` and `pilotID`).
-- **Zero-Touch Config:** Centralized property file provisioning (`uat.default.properties`) mapping all required tenant variables autonomously.
+## User Guide  
 
-## User Guide
+### Create a New Environment  
+1. Open the **Environments** page by selecting **Environment** → **Environments** from the main menu.  
+2. Click the **New Environment** button.  
+3. In the **Create New Environment** dialog, fill in:  
+   - **Type** (dev, uat, prod).  
+   - **Name** (e.g., *uat‑pilot‑01*).  
+   - **AWS Region** (choose from the list).  
+   - **Server URL** (the API endpoint).  
+   - **Frontend URL** (optional).  
+   - If you selected *dev* or *uat*, also provide a **Utility Name** and **Stack Name**.  
+4. Click **Create Environment**.  
+5. The dialog will close, and the new row will appear in the table with a status badge that updates automatically.  
+6. To see detailed progress, click the **Refresh** button on the **Environment Creation Status** page or watch the status badge change to **Ready**.  
 
-### 1. Initiating the Environment Build
-*Note: This process is generally invoked transparently via the Project Management module.*
-1. A Delivery Engineer invokes the **Create SubEnvironment API** payload containing Pilot variables.
-2. The Environment manager establishes the AWS VPC bindings.
-3. The orchestration layer invokes infrastructure-as-code scripts to dynamically allocate cloud capacity.
+_<!-- Screenshot: configure Confluence in .env and re-run seed to download images. -->_
 
-### 2. Monitoring the Deployment
-1. Navigate to the Delivery Console > Environments page.
-2. Observe real-time progress as tasks execute chronologically:
-    1. RDS and Cassandra initialization.
-    2. Data schema deployment.
-    3. Backend build mapping.
-    4. Service deployment on AWS.
-3. Upon completion, the console reports "Available," and tenant-specific URLs are activated.
+### Edit an Existing Environment  
+1. On the **Environments** page, locate the environment you want to modify.  
+2. Click the **Edit** icon in the Actions column.  
+3. In the **Edit Environment** dialog, update any of the editable fields: name, AWS region, data server URL, or frontend URL.  
+4. Click **Save Changes**.  
+5. The table will refresh, and the status badge will reflect any changes.  
 
-### 3. Updating Property Values
-1. Although `uat.default.properties` handles dynamic variables implicitly using naming prefixes, engineers can inject overrides natively within the Environment configurations if non-standard settings are required.
+### Export Environment Configuration  
+1. On the **Environments** page, click the **Export JSON** button.  
+2. A file named *environments.json* will download, containing an array of all environment objects.  
 
-## Configuration Options
-- **Schema Selection:** Choose lightweight or full analytical configurations depending on the project type.
-- **Service Exclusions:** Opt-out of specific workers (like `evTelematicsScheduler`) if EV products are not subscribed for that pilot.
+### View Environment Status  
+1. Each row in the table shows a **Status** chip.  
+2. Hover over the chip for a tooltip that explains the current state.  
+3. For deeper insight, open the **Environment Creation Status** page to see step‑by‑step progress.  
 
-## Related Features
-- [Project Management](project-management.md)
-- [Data Migration](data-migration.md)
+### Delete an Environment (TBD)  
+When the delete feature becomes available, you will see a **Delete** icon in the Actions column.  Clicking it will prompt a confirmation dialog; confirming will remove the environment and free associated resources.  
+
+## Configuration Options  
+Environment creation and editing are driven by the fields shown in the dialogs.  No additional configuration is required from users.  System administrators can adjust global settings—such as default AWS regions or server URL templates—through the platform’s configuration management area (not shown in the UI).  
+
+## Related Features  
+- [Config Registry](config-registry.md) – Manage global configuration values used by environments.  
+- [Workflow Engine](workflow-engine.md) – Automate tasks that run after an environment is provisioned.  
+- [Data Scenarios](data-scenarios.md) – Create sample data sets for testing within a new environment.  
+- [Content Management](content-management.md) – Deploy UI content to the frontend URL of an environment.

@@ -21,7 +21,7 @@ DETO is a suite of tools built for Product Managers, Customer Success teams, and
 | [Getting Started](getting-started/overview.md) | Platform overview and architecture |
 | [Features](features/project-management.md) | Product runbooks for each feature |
 | [API Reference](api/index.md) | External API specifications |
-| [Technical](technical/cms/index.md) | Architecture and data models |
+| [Technical reference](getting-started/technical/cms/index.md) | CMS data models, RBAC, workflows (under Getting Started) |
 | [Runbooks](runbooks/deployment.md) | Operational guides |
 
 ## Platform Components
