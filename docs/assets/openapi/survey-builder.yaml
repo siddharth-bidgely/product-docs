@@ -12,6 +12,7 @@ paths:
   /survey-category/ingest:
     post:
       summary: Ingest survey categories
+      description: Ingests an array of survey categories into the system.
       operationId: survey-category_ingestCategories
       tags:
         - Survey Builder
@@ -32,6 +33,7 @@ paths:
   /survey/v1/template/{pilotId}/{templateId}:
     get:
       summary: Retrieve a survey template for a pilot
+      description: Retrieves a survey template for a specific pilot and template ID, optionally filtered by status, locale, and region.
       operationId: survey-template-external-apis_getTemplate
       tags:
         - Survey Builder
@@ -56,6 +58,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: region
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Successful response
@@ -69,9 +76,13 @@ paths:
                   updatedAt:
                     type: integer
                     nullable: true
+                  region:
+                    type: string
+                    nullable: true
                 required:
                   - data
                   - updatedAt
+                  - region
         '400':
           description: Bad request
         '401':
@@ -83,6 +94,7 @@ paths:
   /survey/v1/last-updated-ts/{pilotId}/{templateId}:
     get:
       summary: Retrieve last updated timestamp for a survey template
+      description: Retrieves the last updated timestamp for a survey template identified by pilot ID and template ID.
       operationId: survey-template-external-apis_getLastUpdatedTS
       tags:
         - Survey Builder
