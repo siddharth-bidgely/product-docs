@@ -14,236 +14,263 @@ Authorization: Bearer <api_token>
 
 Endpoints are protected by Strapi policies that enforce role-based access. Refer to each operation's `x-policies` field in the spec above for specific policy requirements.
 
+
 ## Narrative reference
 
-*Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative.*
+_Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative._
 
 ## Endpoints
 
-### GET `https://cms.bidgely.com/recommendation/v1/model/:pilotId`
-
-**Description:** Retrieves the recommendation model for a specific pilot, including default profile tags and a list of external recommendations.
+### GET /recommendation/v1/model/:pilotId
+**Description:** Retrieve the recommendation model for a specific pilot, including default profile tags and relevance scores.
 
 **Path Parameters:**
 
-| Name    | Type   | Description                      |
-| ------- | ------ | -------------------------------- |
+| Name   | Type   | Description |
+|--------|--------|-------------|
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name   | Type   | Description                                              |
-| ------ | ------ | -------------------------------------------------------- |
-| status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
+| Name | Type   | Description |
+|------|--------|-------------|
+| status | string (enum: `PUBLISHED`, `READY_FOR_QA`) | Content status to filter recommendations. |
 
 **Example Response:**
-
 ```json
 {
   "data": {
     "defaultProfile": [
-      "HEAT_1",          // Home profile tag for heating
-      "ELEC_2",          // Home profile tag for electricity
-      "WATER_3"          // Home profile tag for water
+      "tag1",          // Default home‑profile tag
+      "tag2"           // Default appliance tag
     ],
     "model": [
       {
-        "recommendationId": "rec-12345",
-        "fuelType": ["ELECTRIC", "GAS"],
-        "category": "HEATING",
-        "applianceTags": [17, 42],   // Appliance IDs (e.g., 17 = boiler, 42 = heat pump)
+        "recommendationId": "rec-123",
+        "fuelType": ["ELECTRIC"],
+        "category": "HVAC",
+        "applianceTags": [5, 17],   // Appliance IDs (17 is a secondary tag)
         "disabled": false,
         "defaultReco": true,
-        "relevanceScore": 4.75,
+        "relevanceScore": 0.85,
         "exclusions": [
-          "RP:TIER",          // Rate plan tier exclusion
-          "PP:123:ENROLLED", // Program ID 123 enrollment exclusion
-          "M:5"               // Exclusion for month index 5 (June)
+          "RP:TIER",          // Rate‑plan tier exclusion
+          "PP:123:ENROLLED"   // Program‑plan exclusion
         ]
+      },
+      {
+        "recommendationId": "rec-456",
+        "fuelType": ["GAS"],
+        "category": "Lighting",
+        "applianceTags": [3],
+        "disabled": false,
+        "defaultReco": false,
+        "relevanceScore": 0.62,
+        "exclusions": []
       }
     ]
   },
-  "updatedAt": 1701234567890   // Timestamp of last update
+  "updatedAt": 1672531200000
 }
 ```
 
 **Access Control:** `api::recommendation.reco-model-policy`
 
-***
+---
 
-### GET `https://cms.bidgely.com/recommendation/v1/metadata/:pilotId`
-
-**Description:** Retrieves the metadata for all recommendations for a pilot, filtered by status, locale, and channel.
+### GET /recommendation/v1/metadata/:pilotId
+**Description:** Retrieve the metadata for all recommendations for a pilot, filtered by locale and channel.
 
 **Path Parameters:**
 
-| Name    | Type   | Description                      |
-| ------- | ------ | -------------------------------- |
+| Name   | Type   | Description |
+|--------|--------|-------------|
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name    | Type   | Description                                              |
-| ------- | ------ | -------------------------------------------------------- |
-| status  | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
-| locale  | string | Locale code (e.g., `en`, `fr`).                          |
-| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`).       |
+| Name   | Type   | Description |
+|--------|--------|-------------|
+| status | string (enum: `PUBLISHED`, `READY_FOR_QA`) | Content status to filter recommendations. |
+| locale | string | Locale code (e.g., `en`, `es`). |
+| channel | string (enum: `EMAIL`, `WEB`, `PAPER`, `DEFAULT`) | Channel for which to retrieve metadata. |
 
 **Example Response:**
-
 ```json
 {
   "data": [
     {
-      "recommendationId": "rec-67890",
-      "fuelType": ["WATER"],
-      "category": "WATER_HEATING",
-      "applianceTags": [23],
+      "recommendationId": "rec-456",
+      "fuelType": ["GAS"],
+      "category": "Lighting",
+      "applianceTags": [3],
       "disabled": false,
       "defaultReco": false,
       "featuredContent": true,
       "program": false,
-      "title": "Upgrade to a high-efficiency water heater",
-      "description": "Save up to 30% on your water bills.",
-      "detail": "Detailed explanation of the benefits.",
-      "videoLink": "https://videos.bidgely.com/rec-67890.mp4",
-      "ctaButtonLink": "https://bidgely.com/upgrade",
+      "title": "Save on Lighting",
+      "description": "Reduce your electricity usage",
+      "detail": "Detailed information about the recommendation.",
+      "videoLink": "https://video.example.com/vid1",
+      "ctaButtonLink": "https://bidgely.com/cta",
       "ctaButtonText": "Learn More",
-      "icon": "https://media.bidgely.com/icons/rec-67890.png",
-      "fullImage": "https://media.bidgely.com/images/rec-67890-full.jpg",
-      "shortenedImage": "https://media.bidgely.com/images/rec-67890-short.jpg",
-      "elongatedImage": "https://media.bidgely.com/images/rec-67890-elongated.jpg"
-    }
-  ],
-  "updatedAt": 1701234567890
-}
-```
-
-**Access Control:** `api::recommendation.reco-metadata-policy`
-
-***
-
-### GET `https://cms.bidgely.com/recommendation/v2/metadata/:pilotId`
-
-**Description:** Retrieves the v2 metadata for all recommendations for a pilot, including additional fields such as action savings potential and frequency.
-
-**Path Parameters:**
-
-| Name    | Type   | Description                      |
-| ------- | ------ | -------------------------------- |
-| pilotId | string | Unique identifier for the pilot. |
-
-**Query Parameters:**
-
-| Name    | Type   | Description                                              |
-| ------- | ------ | -------------------------------------------------------- |
-| status  | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
-| locale  | string | Locale code (e.g., `en`, `fr`).                          |
-| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`).       |
-
-**Example Response:**
-
-```json
-{
-  "data": [
+      "icon": "https://media.example.com/icon.png",
+      "fullImage": "https://media.example.com/full.png",
+      "shortenedImage": "https://media.example.com/short.png",
+      "elongatedImage": "https://media.example.com/elongated.png"
+    },
     {
-      "recommendationId": "rec-54321",
+      "recommendationId": "rec-789",
       "fuelType": ["ELECTRIC"],
-      "category": "ELECTRICITY",
-      "applianceTags": [12],
+      "category": "HVAC",
+      "applianceTags": [5],
       "disabled": false,
       "defaultReco": true,
       "featuredContent": false,
       "program": true,
-      "title": "Switch to a smart thermostat",
-      "description": "Reduce your electric bill by 15%.",
-      "detail": "Detailed explanation of the benefits.",
-      "videoLink": "https://videos.bidgely.com/rec-54321.mp4",
-      "ctaButtonLink": "https://bidgely.com/thermostat",
-      "ctaButtonText": "Buy Now",
-      "icon": "https://media.bidgely.com/icons/rec-54321.png",
-      "fullImage": "https://media.bidgely.com/images/rec-54321-full.jpg",
-      "shortenedImage": "https://media.bidgely.com/images/rec-54321-short.jpg",
-      "elongatedImage": "https://media.bidgely.com/images/rec-54321-elongated.jpg",
-      "actionSavingsPotential": 120.50,   // Estimated savings in dollars
-      "frequency": "one_time",           // Frequency of the action
-      "userType": "residential",         // Target user type
-      "actionType": "upgrade",           // Type of action
-      "objective": "energy_efficiency",  // Campaign objective
-      "herImage": "https://media.bidgely.com/images/rec-54321-her.jpg"
+      "title": "Upgrade Your HVAC",
+      "description": "Improve efficiency with a new unit.",
+      "detail": "Detailed information about the recommendation.",
+      "videoLink": "https://video.example.com/vid2",
+      "ctaButtonLink": "https://bidgely.com/cta",
+      "ctaButtonText": "Upgrade Now",
+      "icon": "https://media.example.com/icon2.png",
+      "fullImage": "https://media.example.com/full2.png",
+      "shortenedImage": "https://media.example.com/short2.png",
+      "elongatedImage": "https://media.example.com/elongated2.png"
     }
   ],
-  "updatedAt": 1701234567890
+  "updatedAt": 1672531200000
 }
 ```
 
 **Access Control:** `api::recommendation.reco-metadata-policy`
 
-***
+---
 
-### GET `https://cms.bidgely.com/recommendation/v1/insight-definition/:pilotId`
-
-**Description:** Retrieves insight definitions that map recommendation categories and fuel types to insight IDs for a pilot.
+### GET /recommendation/v2/metadata/:pilotId
+**Description:** Retrieve the v2 metadata for all recommendations for a pilot, including additional fields such as savings potential and user type.
 
 **Path Parameters:**
 
-| Name    | Type   | Description                      |
-| ------- | ------ | -------------------------------- |
+| Name   | Type   | Description |
+|--------|--------|-------------|
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name   | Type   | Description                                              |
-| ------ | ------ | -------------------------------------------------------- |
-| status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
+| Name   | Type   | Description |
+|--------|--------|-------------|
+| status | string (enum: `PUBLISHED`, `READY_FOR_QA`) | Content status to filter recommendations. |
+| locale | string | Locale code (e.g., `en`, `es`). |
+| channel | string (enum: `EMAIL`, `WEB`, `PAPER`, `DEFAULT`) | Channel for which to retrieve metadata. |
 
 **Example Response:**
-
 ```json
 {
   "data": [
     {
-      "type": "PEER",                     // Insight association type
-      "applianceTag": 17,                 // Appliance ID
-      "fuelType": "ELECTRIC",
-      "recommendations": ["rec-11111", "rec-22222"],   // Recommendation IDs
-      "insightId": "T-17-E"               // Generated insight ID
+      "recommendationId": "rec-456",
+      "fuelType": ["GAS"],
+      "category": "Lighting",
+      "applianceTags": [3],
+      "disabled": false,
+      "defaultReco": false,
+      "featuredContent": true,
+      "program": false,
+      "title": "Save on Lighting",
+      "description": "Reduce your electricity usage",
+      "detail": "Detailed information about the recommendation.",
+      "videoLink": "https://video.example.com/vid1",
+      "ctaButtonLink": "https://bidgely.com/cta",
+      "ctaButtonText": "Learn More",
+      "icon": "https://media.example.com/icon.png",
+      "fullImage": "https://media.example.com/full.png",
+      "shortenedImage": "https://media.example.com/short.png",
+      "elongatedImage": "https://media.example.com/elongated.png",
+      "actionSavingsPotential": 120.50,   // Estimated savings in dollars
+      "frequency": "one_time",           // Frequency of the action
+      "userType": "residential",         // Target user type
+      "actionType": "energy_saving",     // Type of action
+      "objective": "Reduce consumption", // Goal of the recommendation
+      "herImage": "https://media.example.com/her.png" // Hero image URL
     }
   ],
-  "updatedAt": 1701234567890
+  "updatedAt": 1672531200000
 }
 ```
 
-**Access Control:** `api::recommendation.reco-model-policy`
+**Access Control:** `api::recommendation.reco-metadata-policy`
 
-***
+---
 
-### GET `https://cms.bidgely.com/recommendation/v1/last-updated-ts/:pilotId`
-
-**Description:** Retrieves the timestamp of the last update for a pilot’s recommendation data.
+### GET /recommendation/v1/insight-definition/:pilotId
+**Description:** Retrieve insight definitions that map recommendations to appliance tags and fuel types for a pilot.
 
 **Path Parameters:**
 
-| Name    | Type   | Description                      |
-| ------- | ------ | -------------------------------- |
+| Name   | Type   | Description |
+|--------|--------|-------------|
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name   | Type   | Description                                              |
-| ------ | ------ | -------------------------------------------------------- |
-| status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
+| Name | Type   | Description |
+|------|--------|-------------|
+| status | string (enum: `PUBLISHED`, `READY_FOR_QA`) | Content status to filter recommendations. |
 
 **Example Response:**
-
 ```json
 {
-  "data": 1701234567890   // Timestamp of the last update (or null if not found)
+  "data": [
+    {
+      "type": "PEER",
+      "applianceTag": 5,
+      "fuelType": "ELECTRIC",
+      "recommendations": [
+        "rec-123",
+        "rec-789"
+      ],
+      "insightId": "5-T"
+    },
+    {
+      "type": "SELF",
+      "applianceTag": 3,
+      "fuelType": "GAS",
+      "recommendations": [
+        "rec-456"
+      ],
+      "insightId": "3-S"
+    }
+  ],
+  "updatedAt": 1672531200000
 }
 ```
 
 **Access Control:** `api::recommendation.reco-model-policy`
 
-### GET `https://cms.bidgely.com/recommendation/v1/model/:pilotId`
+---
 
-### GET `https://cms.bidgely.com/recommendation/v1/model/:pilotId`\n**Description:** Retrieves the recommendation model for a specific pilot, including default profile tags and a list of external recommendations.\n\n**Path Parameters:**\n\n| Name   | Type   | Description          |\n|--------|--------|----------------------|\n| pilotId | string | Unique identifier for the pilot. |\n\n**Query Parameters:**\n\n| Name  | Type   | Description                     |\n|-------|--------|---------------------------------|\n| status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |\n| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`). |\n\n**Example Response:**\n`json\n{\n  \"data\": {\n    \"defaultProfile\": [\n      \"HEAT_1\",          // Home profile tag for heating\n      \"ELEC_2\",          // Home profile tag for electricity\n      \"WATER_3\"          // Home profile tag for water\n    ],\n    \"model\": [\n      {\n        \"recommendationId\": \"rec-12345\",\n        \"fuelType\": [\"ELECTRIC\", \"GAS\"],\n        \"category\": \"HEATING\",\n        \"applianceTags\": [17, 42],   // Appliance IDs (e.g., 17 = boiler, 42 = heat pump)\n        \"disabled\": false,\n        \"defaultReco\": true,\n        \"relevanceScore\": 4.75,\n        \"exclusions\": [\n          \"RP:TIER\",          // Rate plan tier exclusion\n          \"PP:123:ENROLLED\", // Program ID 123 enrollment exclusion\n          \"M:5\"               // Exclusion for month index 5 (June)\n        ]\n      }\n    ]\n  },\n  \"updatedAt\": 1701234567890   // Timestamp of last update\n}\n`\n\n**Access Control:** `api::recommendation.reco-model-policy`
+### GET /recommendation/v1/last-updated-ts/:pilotId
+**Description:** Retrieve the last updated timestamp for the recommendation data of a pilot.
+
+**Path Parameters:**
+
+| Name   | Type   | Description |
+|--------|--------|-------------|
+| pilotId | string | Unique identifier for the pilot. |
+
+**Query Parameters:**
+
+| Name | Type   | Description |
+|------|--------|-------------|
+| status | string (enum: `PUBLISHED`, `READY_FOR_QA`) | Content status to filter recommendations. |
+
+**Example Response:**
+```json
+{
+  "data": 1672531200000
+}
+```
+
+**Access Control:** `api::recommendation.reco-model-policy`

@@ -1,6 +1,5 @@
 # Tab title for the Features section (MkDocs hook). Inner entries use feature_doc (not page_doc).
 # Confluence: confluence_pm_page_ids = product/PM specs; confluence_dev_page_ids = technical/DEV specs.
-# Deprecated: confluence_page_ids (treated as PM if present).
 display_name: Features
 features:
   project-management:
@@ -23,6 +22,22 @@ features:
           - src/features/pilot/
           - src/apis/pilotAPI.ts
           - src/apis/cmsPilotAPI.ts
+
+  content-management:
+    display_name: "Content Management"
+    description: "Manage appliances and home profile attributes used across customer experiences"
+    confluence_pm_page_ids: ["815431723", "633110556"]
+    confluence_dev_page_ids: []
+    feature_doc: features/content-management.md
+    service_docs:
+      - repo: bidgely-quill
+        code_paths:
+          - src/api/appliance/
+          - src/api/appliance-category/
+          - src/api/home-profile-attribute/
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/contentManagement/
 
   recommendations:
     display_name: "Recommendations"
@@ -65,16 +80,16 @@ features:
           - src/apis/surveyQBAPI.ts
           - src/apis/surveyTemplateAPI.ts
 
-  # cx-visual-editor:
-  #   display_name: "CX Visual Editor"
-  #   description: "Visual template editor for customer experience content"
-  #   confluence_pm_page_ids: ["975110165", "1039237136", "1504018492", "1028194310", "1079345206"]
-  #   confluence_dev_page_ids: []
-  #   feature_doc: features/cx-visual-editor.md
-  #   service_docs:
-  #     - repo: bidgely-quill-fe
-  #       code_paths:
-  #         - src/features/contentManagement/wysiwyg/
+  cx-visual-editor:
+    display_name: "CX Visual Editor"
+    description: "Visual template editor for customer experience content"
+    confluence_pm_page_ids: ["975110165", "1039237136", "1504018492", "1028194310", "1079345206"]
+    confluence_dev_page_ids: []
+    feature_doc: features/cx-visual-editor.md
+    service_docs:
+      - repo: bidgely-quill-fe
+        code_paths:
+          - src/features/contentManagement/wysiwyg/
 
   # config-registry:
   #   display_name: "Config Registry"
@@ -125,22 +140,6 @@ features:
   #       code_paths:
   #         - src/api/data-scenario/
   #         - src/api/data-scenario-payload/
-
-  # content-management:
-  #   display_name: "Content Management"
-  #   description: "Manage appliances and home profile attributes used across customer experiences"
-  #   confluence_pm_page_ids: ["815431723", "633110556"]
-  #   confluence_dev_page_ids: []
-  #   feature_doc: features/content-management.md
-  #   service_docs:
-  #     - repo: bidgely-quill
-  #       code_paths:
-  #         - src/api/appliance/
-  #         - src/api/appliance-category/
-  #         - src/api/home-profile-attribute/
-  #     - repo: bidgely-quill-fe
-  #       code_paths:
-  #         - src/features/contentManagement/
 
   # color-management:
   #   display_name: "Color Management"

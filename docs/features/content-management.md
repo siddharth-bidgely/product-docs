@@ -5,79 +5,75 @@
     - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=633110556)
 
 ## Overview  
-The Content Management section of the DETO dashboard lets utilities and Bidgely teams manage every piece of content that lives outside the normal code‑release cycle.  From pilot‑level settings to individual recommendation pages, the CMS provides a single source of truth, a clear review workflow, and real‑time collaboration.  Product managers, customer‑success teams, and enterprise admins can create, edit, publish, and localize content without needing engineering support, while still keeping an audit trail and version history.
+The Content Management System (CMS) is a self‑serve hub that lets utilities and Bidgely teams manage all non‑code assets—such as appliance profiles, home profiles, recommendations, surveys, and media—directly from the DETO dashboard.  By keeping content in one place, the CMS eliminates duplicate files, speeds time‑to‑market, and provides a clear audit trail for every change.  The system is designed for a range of roles: Utility users can edit content within their pilots, Product Managers and Technical Product Managers can publish and configure pilots, Customer Success Managers can review and approve content, and Delivery staff can customize entities at the pilot level.
 
-The system is pilot‑centric: each pilot (a specific utility or program) has its own content space.  Within that space you can manage home and appliance profiles, recommendation text and media, score thresholds, surveys, and more.  All content is stored in a structured format, can be previewed in the CX product, and is released through a controlled publishing pipeline.
+The CMS is built around four core roles:  
+- **Utility** – basic editing of content within assigned pilots.  
+- **PM / TPM** – full lifecycle control, publishing, and pilot configuration.  
+- **CSM** – review, quality assurance, and final approval before publishing.  
+- **Delivery** – future‑ready customization of entities at the pilot level.  
+
+With a single source of truth, decoupled content‑from‑code, and role‑based access, the CMS empowers stakeholders to deliver personalized, localized experiences without engineering involvement.
 
 ## Key Capabilities  
-- **Create, edit, and delete pilots** – set pilot ID, name, and supported locales.  
-- **View a pilot’s content dashboard** – see health status, counts, and quick links.  
-- **Add or modify recommendations** – rich‑text editor, media uploads, targeting rules, and live preview.  
-- **Publish content** – move items through Draft → Pending Review → Approved → Published.  
-- **Bulk operations** – copy, move, delete, or publish multiple items at once.  
-- **Localization** – switch between locales, edit translated text, and track completion.  
-- **Version control** – keep a draft copy, publish a new version, or revert to a previous one.  
-- **Color palette management** – view, edit, and test color schemes with a contrast checker.  
-- **Data scenario management** – view, edit, and import data scenarios for templates and widgets.  
-- **Comments and collaboration** – threaded comments, mentions, and resolve status.  
-- **Role‑based permissions** – control who can create, edit, review, or publish content.
+- Create, edit, and delete pilots (projects).  
+- Manage appliance and home profiles with hierarchical trees.  
+- Build, preview, and publish recommendations.  
+- Configure score thresholds for recommendation ranking.  
+- Localize content for multiple locales.  
+- Track edit status (`DRAFT`, `MODIFIED`, `PUBLISHED`).  
+- Submit recommendations for review and approval.  
+- Bulk save or discard changes across many items.  
+- View live preview of content as it will appear in the CX product.  
+- Add comments and real‑time feedback on recommendations.  
+- Audit trail of every change with user, timestamp, and action.  
+- Role‑based permissions for editing, publishing, and reviewing.  
 
 ## User Guide  
 
-### 1. Create a New Pilot and Access Its Dashboard  
-1. From the main menu, click **Projects**.  
-2. Click **Create New Project**.  
-3. In the wizard, enter a **Pilot ID**, a descriptive **Name**, and choose the **Default Locale**.  
-4. Select any additional **Supported Locales**.  
-5. Click **Create Project**.  
-6. The system opens the new pilot’s **Content Dashboard** automatically.  
-![Pilot creation and dashboard](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)
+### Create a New Pilot  
+1. Open the **CMS Admin Console** from the main menu.  
+2. Click **“Create New Project”**.  
+3. In the **Project Details** form, enter a unique **Pilot ID**, a descriptive **Name**, and select the **Default Locale**.  
+4. Check any additional **Supported Locales** you want to enable.  
+5. Click **Save** to create the pilot.  
+6. After creation, the system shows a **creation status page**.  
+7. Click **“Open Pilot”** to launch the pilot’s content dashboard.  
+8. ![Key Features](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)  
 
-### 2. Create and Publish a Recommendation  
-1. In the pilot’s dashboard, click **Recommendations**.  
-2. Click **Create Recommendation**.  
-3. In the editor, enter the title, body text, and upload any media.  
-4. Use the **Targeting** panel to set audience rules.  
-5. Click **Preview** to see how it will appear in the CX product.  
-6. When satisfied, click **Submit for Review**.  
-7. A reviewer sees the recommendation, can add comments, and clicks **Approve**.  
-8. Finally, click **Publish** to make it live.  
-![Recommendation editor](../assets/images/815431723-Screenshot-202025-02-22-20at-2010.51.10-E2-80-AFPM.png)
+### Edit a Recommendation  
+1. From the pilot dashboard, navigate to **Recommendations**.  
+2. Click **“New Recommendation”** to open the wizard.  
+3. Enter a **Title**, **Description**, and attach any **Media**.  
+4. Choose target rules (locale, fuel type, etc.) in the **Targeting** panel.  
+5. Click **“Save”** to keep the recommendation in **DRAFT** status.  
+6. Click **“Submit for Review”** to move it to **READY_FOR_REVIEW**.  
+7. A CSM or PM reviews the recommendation and clicks **“Approve”**.  
+8. Click **“Publish”** to make the recommendation live.  
+9. ![Workflow State Transitions](../assets/images/815431723-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)  
 
-### 3. Perform Bulk Operations on Recommendations  
-1. In the **Recommendations** list, check the boxes next to the items you want to act on.  
-2. From the bulk‑action toolbar, choose **Copy**, **Move**, **Delete**, or **Publish**.  
-3. Confirm the action in the dialog that appears.  
-4. The selected items are updated in one step.  
-![Bulk operations toolbar](../assets/images/633110556-Screenshot-202025-08-25-20at-2012.07.30-E2-80-AFPM.png)
-
-### 4. Localize Content and Manage Versions  
-1. Open a content item (e.g., a recommendation).  
-2. Click the **Locale** dropdown and select the language you want to edit.  
-3. Make your changes; the editor shows only the fields for that locale.  
-4. Click **Save Draft** to keep the changes private.  
-5. When ready, click **Submit for Review** and follow the review workflow.  
-6. After approval, click **Publish**.  
-7. To revert, open the **Version History** panel, select a previous version, and click **Revert**.  
-![Locale switcher](../assets/images/633110556-Screenshot-202025-08-25-20at-2012.10.33-E2-80-AFPM.png)
-
-### 5. Edit the Color Palette (Optional)  
-1. From the main menu, open **Color Palette**.  
-2. The palette shows all colors for the current pilot and channel (Digital or Paper).  
-3. Click a swatch to edit its hex value or copy it to the clipboard.  
-4. To test contrast, click **Contrast Checker**, choose a background color, and click **Save**.  
-5. The palette updates immediately.  
-![Color palette page](../assets/images/633110556-Screenshot-202025-08-25-20at-2012.12.40-E2-80-AFPM.png)
+### Edit Home Profile  
+1. In the pilot dashboard, open **Home Profile**.  
+2. The screen shows a **tree of attribute groups** (e.g., “Account Type”, “Region”).  
+3. Click an attribute to open its **edit panel**.  
+4. Select a **Default Value** from the dropdown.  
+5. Toggle **Visibility** to include or exclude the attribute from recommendation targeting.  
+6. Use the **Account Type Filter** to restrict the attribute to specific account types.  
+7. After making changes, click **“Save All”** to persist them.  
+8. If you need to revert, click **“Discard All”**.  
+9. ![Benefits](../assets/images/815431723-Screenshot-202025-02-22-20at-2010.51.10-E2-80-AFPM.png)  
 
 ## Configuration Options  
-- **Pilot Settings** – admins can add or remove supported locales, set default locale, and enable or disable specific content types.  
-- **Role‑Based Permissions** – define who can create, edit, review, or publish content.  These settings are managed by system administrators in the **User Management** area.  
-- **Localization Settings** – choose which languages are available for each pilot and set translation workflows.  
-- **Publishing Rules** – configure automatic approval for certain content types or require manual review.  
-- **Audit Trail** – view who made each change and when; this is enabled by default and cannot be disabled.
+- **Pilot Permissions** – set which users can view, edit, or publish content for each pilot.  
+- **Role‑Based Access** – assign users to Utility, PM/TPM, CSM, or Delivery roles.  
+- **Locale Settings** – enable or disable specific locales for a pilot.  
+- **Score Thresholds** – configure thresholds per category to influence recommendation ranking.  
+- **Audit Settings** – view or export the audit trail for compliance.  
+
+If a setting is not visible in the UI, it is managed by system administrators through the configuration registry.
 
 ## Related Features  
-- [Recommendations](recommendations.md) – detailed guidance on recommendation content and targeting.  
-- [Survey Builder](survey-builder.md) – create and manage surveys that can be linked to pilots.  
-- [CX Visual Editor](cx-visual-editor.md) – design and preview CX product pages.  
-- [Data Scenarios](data-scenarios.md) – manage data scenarios that drive dynamic content.
+- [Project Management](project-management.md)  
+- [Recommendations](recommendations.md)  
+- [Survey Builder](survey-builder.md)  
+- [CX Visual Editor](cx-visual-editor.md)

@@ -7,49 +7,95 @@
     - [Confluence 4](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1028194310)
     - [Confluence 5](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=1079345206)
 
-## Overview  
-The CX Visual Editor is a web‑based canvas that lets marketers, product managers, and administrators author and preview Email, HER, and Web templates at the element level. It separates authoring from live rendering, so changes can be tested safely before they go live. The editor supports multiple variants—hierarchy, locale, and scenario—so you can see exactly how a template will look for each audience.  
+## Overview
 
-By editing text, images, colors, and metadata directly in the preview, you can iterate quickly, enforce brand guidelines, and keep a clear audit trail of every change. The editor is part of the broader Content Management experience, but it can be used on its own to fine‑tune templates before they are published.
+Visual template editor for customer experience content
 
-## Key Capabilities  
-- Browse and select templates by channel (Email, HER, Web).  
-- Switch between hierarchy, locale, and scenario variants.  
-- Edit text, images, colors, and metadata in real time.  
-- Preview changes instantly in a sandboxed iframe.  
-- Compare two variants side‑by‑side.  
-- Sign‑off or lock elements for a variant.  
-- View audit trail and compliance checklist.  
-- Reset to default or revert overrides.  
-- Save or cancel edits for the current variant.  
-- Toggle between desktop and mobile preview modes.  
+**CX Template Editor & Data Scenarios – Product Specification Summary**  
+*(Target audience: LLM that will write end‑user documentation for Product Managers, Customer Success, and admins)*  
 
-## User Guide  
+---
 
-### Open and Edit a Template  
-1. From the **CX Visual Editor** page, click the **Templates Sidebar** to see the list of available templates.  
-2. Select a template by clicking its name; the editor loads in the main area.  
-3. In the **Editor Toolbar**, choose the desired **Hierarchy**, **Locale**, and **Scenario** from the dropdowns.  
-4. Click an element in the preview pane; the **Inspector Panel** opens on the right.  
-5. In the **Text** tab, edit the content and watch the preview update after a short debounce.  
-6. Use the **Images** tab to replace a picture or copy its URL.  
-7. In the **Colors** tab, adjust the hex value or toggle an override; the preview shows contrast warnings if needed.  
-8. When finished, click **Save** in the toolbar to persist the changes for the selected variant.  
-![Editing a template](../assets/images/975110165-image-20251002-104113.png)  
+### 1.  Product Overview  
+The **CX Template Editor** is a self‑serve, WYSIWYG tool built into the **DETO** “Content Management” section. It lets users edit the content, images, colors, and layout of all customer‑facing assets – **Emails, Paper Reports (HER), Web Widgets, and SMS templates** – while showing a live, code‑backed preview that reflects the production logic.  
 
-### Compare Two Variants  
-1. In the **Editor Toolbar**, click **Compare** to open the **Compare Dialog**.  
-2. For **Variant A**, select the template, hierarchy, locale, and scenario.  
-3. For **Variant B**, choose a different set of options.  
-4. Click **Run Compare**; the editor shows a side‑by‑side diff of the rendered output.  
-5. Review differences, then close the dialog or adjust variants as needed.  
-![Comparing variants](../assets/images/975110165-image-20251002-133032.png)  
+The companion **Data Scenarios** module supplies realistic data sets that drive the preview. Two levels exist:  
+* **Global Data Scenarios** – managed by PM/DM admins and available to every project.  
+* **Project‑Level Scenarios** – created and maintained by TPMs/Delivery teams for a specific project.  
 
-## Configuration Options  
-The CX Visual Editor’s settings—such as available locales, scenarios, and user permissions—are managed by system administrators through the **Content Management** configuration portal. Users with editor rights can access the editor but cannot change these global options.
+The editor is designed for **element‑level configuration**, **cluster overrides**, **multi‑language editing**, **scenario‑driven previews**, and a **structured approval workflow** that includes audit trails and RBAC.
 
-## Related Features  
-- [Content Management](content-management.md)  
-- [Recommendations](recommendations.md)  
-- [Survey Builder](survey-builder.md)  
-- [Workflow Engine](workflow-engine.md)
+---
+
+### 2.  Business Goals  
+
+| Goal | Why it matters |
+|------|----------------|
+| **Self‑serve content configuration** | Enables TPMs, Delivery teams, and Utility users to tailor channel templates without developer intervention. |
+| **Production‑aligned live editor** | Eliminates mis‑alignments between design tools (e.g., Figma) and the actual code, reducing change‑request cycles and project delays. |
+| **Controlled variations** | Allows project‑specific tweaks while enforcing global brand defaults, preventing untested custom behaviors. |
+| **Reduced QA/UAT cycles** | Utilities can preview templates under multiple data scenarios before launch, catching issues early. |
+| **Governance & auditability** | RBAC, audit trails, and approval workflows give ownership to utilities and provide clear audit trails for project teams. |
+
+---
+
+### 3.  Roles & Permissions (RBAC)
+
+| Role | Primary Permissions | Typical Activities |
+|------|---------------------|--------------------|
+| **Utility User** (DSM, Marketing) | View & edit content of in‑scope templates/elements (when enabled). Sign‑off on components/templates. | Edit text, images, colors; manage brand palette; compare versions; sign‑off. |
+| **TPM / Delivery Engineer** | Full access to Visual Editor. Create & manage project‑level Data Scenarios. | Configure templates, track sign‑offs, audit history, ensure readiness for production. |
+| **PM / DM (Admin)** | Manage Global Data Scenarios (via Administration menu). Clone scenarios for projects. | Set baseline scenarios, maintain global defaults. |
+| **PM / PE** | Access for testing, debugging, and validation. | Verify template rendering, debug issues. |
+| **QA** | Read‑only preview, scenario validation, sign‑off tracking. | Validate final output, confirm sign‑off status. |
+
+---
+
+### 4.  Core User Stories  
+
+| Actor | Goal | Outcome |
+|-------|------|---------|
+| **Utility User** | Edit asset content (text, images, colors, layout) within approved limits. | Customised templates that match brand guidelines. |
+| | Manage brand colors via a single palette. | Consistent look across Web, Email, and Paper. |
+| | Compare different template versions across personas & data scenarios. | Ability to select the best variant. |
+| | Sign‑off on components/templates after internal review. | Internal approvals respected before final release. |
+| **TPM / Delivery Engineer** | Configure content in absence of a Utility user. | Client sees correct personalized output. |
+| | Track utility sign‑offs and audit history. | Clear visibility of progress and accountability. |
+| | Ensure configuration is complete before production rollout. | Reduced risk of incomplete assets. |
+| **PM** | Define Global Data Scenarios. | Standard baseline for all projects. |
+| | Clone & adapt Global Scenarios for project needs. | Preserve defaults while allowing project‑specific variations. |
+| **DE** | Creat
+
+**CX Editor (WYSIWYG) User Guide – Executive Summary**  
+*(600–1200 words – ready for a downstream documentation writer)*  
+
+---
+
+### 1. Overview  
+The **CX Editor** is a browser‑based, WYSIWYG tool that lets teams design, edit, and preview customer‑facing communications across four channels: **Email, HER (Home Energy Report), Web, and SMS**. It is the single point of truth for all template assets, supporting real‑time rendering, localiza
+
+_(Summary truncated — use the Confluence links in the box above for the full spec.)_
+
+## Key Capabilities
+
+- Visual template editor for customer experience content
+- Use the app area: **CX Visual Editor**
+
+## User Guide
+
+### Using this feature
+
+1. Open the [Confluence specification](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=975110165) for detailed workflows and screenshots.
+2. In the platform, use the navigation entry for **CX Visual Editor** to access the main screens described there.
+3. For access or environment issues, contact your system administrator.
+
+![Main screen](../assets/images/975110165-image-20251002-104113.png)
+
+## Configuration Options
+
+Configuration is managed by system administrators.
+
+## Related Features
+
+- [Project Management](project-management.md)
+- [Environment Management](environment-management.md)
