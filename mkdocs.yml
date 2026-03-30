@@ -1,4 +1,5 @@
 site_name: DocGen - DETO
+site_url: https://siddharth-bidgely.github.io/product-docs/
 site_description: Product documentation for Bidgely's DETO platform — self-serve delivery tools for energy utilities
 
 theme:

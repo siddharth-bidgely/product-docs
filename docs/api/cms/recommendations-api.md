@@ -1,6 +1,6 @@
 # Recommendations API
 
-<swagger-ui src="/assets/openapi/recommendations.yaml"/>
+<swagger-ui src="../../assets/openapi/recommendations.yaml"/>
 
 ## Authentication
 

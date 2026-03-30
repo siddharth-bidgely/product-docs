@@ -1,6 +1,6 @@
 # Data Migration API
 
-<swagger-ui src="/assets/openapi/data-migration.yaml"/>
+<swagger-ui src="../../assets/openapi/data-migration.yaml"/>
 
 ## Authentication
 

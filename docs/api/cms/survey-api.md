@@ -1,6 +1,6 @@
 # Survey Builder API
 
-<swagger-ui src="/assets/openapi/survey-builder.yaml"/>
+<swagger-ui src="../../assets/openapi/survey-builder.yaml"/>
 
 ## Authentication
 

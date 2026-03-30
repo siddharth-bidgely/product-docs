@@ -1,6 +1,6 @@
 # Data Scenarios API
 
-<swagger-ui src="/assets/openapi/data-scenarios.yaml"/>
+<swagger-ui src="../../assets/openapi/data-scenarios.yaml"/>
 
 ## Authentication
 

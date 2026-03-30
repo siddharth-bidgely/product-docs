@@ -1,6 +1,6 @@
 # Config Registry API
 
-<swagger-ui src="/assets/openapi/config-registry.yaml"/>
+<swagger-ui src="../../assets/openapi/config-registry.yaml"/>
 
 ## Authentication
 
