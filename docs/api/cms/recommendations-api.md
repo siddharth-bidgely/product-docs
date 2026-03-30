@@ -14,29 +14,30 @@ Authorization: Bearer <api_token>
 
 Endpoints are protected by Strapi policies that enforce role-based access. Refer to each operation's `x-policies` field in the spec above for specific policy requirements.
 
-
 ## Narrative reference
 
-_Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative._
+*Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative.*
 
 ## Endpoints
 
 ### GET `https://cms.bidgely.com/recommendation/v1/model/:pilotId`
+
 **Description:** Retrieves the recommendation model for a specific pilot, including default profile tags and a list of external recommendations.
 
 **Path Parameters:**
 
-| Name   | Type   | Description          |
-|--------|--------|----------------------|
+| Name    | Type   | Description                      |
+| ------- | ------ | -------------------------------- |
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name  | Type   | Description                     |
-|-------|--------|---------------------------------|
+| Name   | Type   | Description                                              |
+| ------ | ------ | -------------------------------------------------------- |
 | status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
 
 **Example Response:**
+
 ```json
 {
   "data": {
@@ -68,26 +69,28 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** `api::recommendation.reco-model-policy`
 
----
+***
 
 ### GET `https://cms.bidgely.com/recommendation/v1/metadata/:pilotId`
+
 **Description:** Retrieves the metadata for all recommendations for a pilot, filtered by status, locale, and channel.
 
 **Path Parameters:**
 
-| Name   | Type   | Description          |
-|--------|--------|----------------------|
+| Name    | Type   | Description                      |
+| ------- | ------ | -------------------------------- |
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name   | Type   | Description                                 |
-|--------|--------|---------------------------------------------|
-| status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
-| locale | string | Locale code (e.g., `en`, `fr`).             |
-| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`). |
+| Name    | Type   | Description                                              |
+| ------- | ------ | -------------------------------------------------------- |
+| status  | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
+| locale  | string | Locale code (e.g., `en`, `fr`).                          |
+| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`).       |
 
 **Example Response:**
+
 ```json
 {
   "data": [
@@ -118,26 +121,28 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** `api::recommendation.reco-metadata-policy`
 
----
+***
 
 ### GET `https://cms.bidgely.com/recommendation/v2/metadata/:pilotId`
+
 **Description:** Retrieves the v2 metadata for all recommendations for a pilot, including additional fields such as action savings potential and frequency.
 
 **Path Parameters:**
 
-| Name   | Type   | Description          |
-|--------|--------|----------------------|
+| Name    | Type   | Description                      |
+| ------- | ------ | -------------------------------- |
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name   | Type   | Description                                 |
-|--------|--------|---------------------------------------------|
-| status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
-| locale | string | Locale code (e.g., `en`, `fr`).             |
-| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`). |
+| Name    | Type   | Description                                              |
+| ------- | ------ | -------------------------------------------------------- |
+| status  | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
+| locale  | string | Locale code (e.g., `en`, `fr`).                          |
+| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`).       |
 
 **Example Response:**
+
 ```json
 {
   "data": [
@@ -174,24 +179,26 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** `api::recommendation.reco-metadata-policy`
 
----
+***
 
 ### GET `https://cms.bidgely.com/recommendation/v1/insight-definition/:pilotId`
+
 **Description:** Retrieves insight definitions that map recommendation categories and fuel types to insight IDs for a pilot.
 
 **Path Parameters:**
 
-| Name   | Type   | Description          |
-|--------|--------|----------------------|
+| Name    | Type   | Description                      |
+| ------- | ------ | -------------------------------- |
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name   | Type   | Description                     |
-|--------|--------|---------------------------------|
+| Name   | Type   | Description                                              |
+| ------ | ------ | -------------------------------------------------------- |
 | status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
 
 **Example Response:**
+
 ```json
 {
   "data": [
@@ -209,24 +216,26 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** `api::recommendation.reco-model-policy`
 
----
+***
 
 ### GET `https://cms.bidgely.com/recommendation/v1/last-updated-ts/:pilotId`
+
 **Description:** Retrieves the timestamp of the last update for a pilot’s recommendation data.
 
 **Path Parameters:**
 
-| Name   | Type   | Description          |
-|--------|--------|----------------------|
+| Name    | Type   | Description                      |
+| ------- | ------ | -------------------------------- |
 | pilotId | string | Unique identifier for the pilot. |
 
 **Query Parameters:**
 
-| Name   | Type   | Description                     |
-|--------|--------|---------------------------------|
+| Name   | Type   | Description                                              |
+| ------ | ------ | -------------------------------------------------------- |
 | status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |
 
 **Example Response:**
+
 ```json
 {
   "data": 1701234567890   // Timestamp of the last update (or null if not found)
@@ -234,3 +243,7 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 ```
 
 **Access Control:** `api::recommendation.reco-model-policy`
+
+### GET `https://cms.bidgely.com/recommendation/v1/model/:pilotId`
+
+### GET `https://cms.bidgely.com/recommendation/v1/model/:pilotId`\n**Description:** Retrieves the recommendation model for a specific pilot, including default profile tags and a list of external recommendations.\n\n**Path Parameters:**\n\n| Name   | Type   | Description          |\n|--------|--------|----------------------|\n| pilotId | string | Unique identifier for the pilot. |\n\n**Query Parameters:**\n\n| Name  | Type   | Description                     |\n|-------|--------|---------------------------------|\n| status | string | External content status (`PUBLISHED` or `READY_FOR_QA`). |\n| channel | string | Channel type (`EMAIL`, `WEB`, `PAPER`, `DEFAULT`). |\n\n**Example Response:**\n`json\n{\n  \"data\": {\n    \"defaultProfile\": [\n      \"HEAT_1\",          // Home profile tag for heating\n      \"ELEC_2\",          // Home profile tag for electricity\n      \"WATER_3\"          // Home profile tag for water\n    ],\n    \"model\": [\n      {\n        \"recommendationId\": \"rec-12345\",\n        \"fuelType\": [\"ELECTRIC\", \"GAS\"],\n        \"category\": \"HEATING\",\n        \"applianceTags\": [17, 42],   // Appliance IDs (e.g., 17 = boiler, 42 = heat pump)\n        \"disabled\": false,\n        \"defaultReco\": true,\n        \"relevanceScore\": 4.75,\n        \"exclusions\": [\n          \"RP:TIER\",          // Rate plan tier exclusion\n          \"PP:123:ENROLLED\", // Program ID 123 enrollment exclusion\n          \"M:5\"               // Exclusion for month index 5 (June)\n        ]\n      }\n    ]\n  },\n  \"updatedAt\": 1701234567890   // Timestamp of last update\n}\n`\n\n**Access Control:** `api::recommendation.reco-model-policy`
