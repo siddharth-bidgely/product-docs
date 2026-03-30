@@ -31,7 +31,7 @@
       </div>
       <div class="chat-messages" id="chat-messages">
         <div class="chat-message assistant">
-          Hi! Ask me anything about the Bidgely Quill documentation.
+          Hi! Ask me anything about DETO.
         </div>
       </div>
       <div class="chat-input-area">
@@ -56,6 +56,10 @@
         togglePanel();
       }
     });
+
+    if (typeof marked !== "undefined") {
+      marked.setOptions({ gfm: true, breaks: true });
+    }
   }
 
   function togglePanel() {
@@ -72,7 +76,12 @@
     const messages = document.getElementById("chat-messages");
     const div = document.createElement("div");
     div.className = "chat-message " + role;
-    div.innerHTML = formatMarkdown(content);
+    if (role === "user") {
+      div.textContent = content;
+    } else {
+      div.classList.add("chat-message-md");
+      div.innerHTML = renderAssistantMarkdown(content);
+    }
 
     if (sources && sources.length > 0) {
       const srcDiv = document.createElement("div");
@@ -144,16 +153,57 @@
     }
   }
 
-  function formatMarkdown(text) {
-    return text
+  function renderAssistantMarkdown(text) {
+    if (typeof marked === "undefined" || typeof DOMPurify === "undefined") {
+      return escapeHtml(text).replace(/\n/g, "<br>");
+    }
+    var raw = marked.parse(text || "");
+    var safe = DOMPurify.sanitize(raw, {
+      ADD_ATTR: ["target", "rel"],
+      ALLOWED_TAGS: [
+        "a",
+        "b",
+        "blockquote",
+        "br",
+        "code",
+        "del",
+        "div",
+        "em",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+        "hr",
+        "i",
+        "li",
+        "ol",
+        "p",
+        "pre",
+        "s",
+        "span",
+        "strong",
+        "sub",
+        "sup",
+        "table",
+        "tbody",
+        "td",
+        "th",
+        "thead",
+        "tr",
+        "ul",
+      ],
+    });
+    return safe.replace(/<a /g, '<a target="_blank" rel="noopener noreferrer" ');
+  }
+
+  function escapeHtml(s) {
+    return String(s)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
-      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-      .replace(/`([^`]+)`/g, "<code>$1</code>")
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
-      .replace(/\n\* /g, "\n&bull; ")
-      .replace(/\n/g, "<br>");
+      .replace(/"/g, "&quot;");
   }
 
   // Initialize when DOM is ready

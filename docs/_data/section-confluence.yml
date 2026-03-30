@@ -1,5 +1,5 @@
 # Optional extra Confluence → markdown targets (legacy). Prefer putting
-# confluence_pm_page_ids / confluence_dev_page_ids on the matching page in home.yml, getting-started.yml,
+# confluence_pm_page_ids / confluence_dev_page_ids on the matching page in getting-started.yml,
 # api-reference.yml, runbooks.yml, or reference.yml (same shape as feature-map).
 #
 # Seed merges legacy entries with site YAML; if the same output path appears in both,
@@ -8,7 +8,7 @@
 # Example:
 # pages:
 #   gs_extra:
-#     output: getting-started/overview.md
+#     output: index.md
 #     title: "Platform overview"
 #     confluence_pm_page_ids: ["123456789"]
 #     confluence_dev_page_ids: []

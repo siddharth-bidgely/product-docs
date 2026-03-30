@@ -20,7 +20,6 @@ from typing import Any
 import yaml
 
 DEFAULT_ORDER = [
-    "home",
     "getting_started",
     "features",
     "api_reference",
@@ -70,15 +69,6 @@ def pages_dict_to_mkdocs_nav(pages: dict[str, Any]) -> list[Any]:
     return out
 
 
-def _nav_home(docs_dir: Path) -> dict[str, Any]:
-    data = _load_yaml(docs_dir / "_data/home.yml")
-    tab = data.get("display_name")
-    doc = data.get("page_doc")
-    if not tab or not doc:
-        raise ValueError("home.yml requires display_name and page_doc")
-    return {str(tab): str(doc)}
-
-
 def _nav_section_file(docs_dir: Path, filename: str) -> dict[str, Any]:
     data = _load_yaml(docs_dir / "_data" / filename)
     tab = data.get("display_name")
@@ -123,7 +113,6 @@ def _nav_reference(docs_dir: Path) -> dict[str, Any]:
 
 
 _BUILDERS = {
-    "home": _nav_home,
     "getting_started": _nav_getting_started,
     "features": _nav_features,
     "api_reference": _nav_api_reference,

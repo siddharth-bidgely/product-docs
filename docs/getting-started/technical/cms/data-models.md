@@ -131,6 +131,14 @@ Complete data model reference for all content types in the CMS service.
 | module | string | No | maxLength: 100 |
 | items | component (config-registry-component.template-item, repeatable) | No | --- |
 
+## Content limit
+
+**Content limit** (`singleType`, draft & publish: no)
+
+| Field | Type | Required | Constraints |
+|-------|------|----------|-------------|
+| recommendations | json | No | --- |
+
 ## Data Scenario Payload
 
 **Data Scenario Payload** (`collectionType`, draft & publish: no)
@@ -214,9 +222,9 @@ Complete data model reference for all content types in the CMS service.
 
 | Field | Type | Required | Constraints |
 |-------|------|----------|-------------|
-| title | string | Yes | maxLength: 70 |
+| title | string | Yes | --- |
 | description | text | Yes | --- |
-| ctaButtonText | string | No | maxLength: 30 |
+| ctaButtonText | string | No | --- |
 | ctaButtonLink | string | No | --- |
 | icon | media (images, files) | No | --- |
 | shortenedImage | media (images, files) | No | --- |
@@ -354,6 +362,7 @@ Complete data model reference for all content types in the CMS service.
 | supportedLocales | json | Yes | --- |
 | defaultLocale | string | Yes | default: `en-US` |
 | surveyTemplates | relation (oneToMany -> survey-template.survey-template) | No | --- |
+| sourcePilotId | string | No | --- |
 
 ## Utility Appliance Profile
 

@@ -7,11 +7,13 @@ Documentation stays aligned with the codebases through:
 1. **Seed script** ([bidgely-doc-gen](https://github.com/bidgely/bidgely-doc-gen)) — Parses `bidgely-quill` and `bidgely-quill-fe`, regenerates consolidated data models, environment variable tables, feature runbooks (with Confluence + FE context), OpenAPI YAML, and optional section pages from Confluence.
 2. **DocGen pipeline** — LangGraph-based flow that can propose markdown updates from PRs and open PRs on this repo (see bidgely-doc-gen).
 
+**Production deployment** (GitHub Pages + Actions, AWS CodeBuild, Secrets Manager, end-to-end checklist) is documented in the **bidgely-doc-gen** repo: [`artifacts/PRODUCTION_DEPLOYMENT.md`](https://github.com/bidgely/bidgely-doc-gen/blob/master/artifacts/PRODUCTION_DEPLOYMENT.md) (adjust org/repo if you fork).
+
 ## Information architecture
 
 | Area | Audience | Notes |
 |------|----------|--------|
-| **Getting Started** | PM, CS, admins | Overview, high-level architecture, **Technical reference** (CMS data models, RBAC, workflows, Environment Manager, Proxy Pulse) |
+| **Getting Started** | PM, CS, admins | Platform overview (`index.md`), architecture, **Technical reference** (CMS data models, RBAC, workflows, Environment Manager, Proxy Pulse) |
 | **Features** | DETO web app users | App-focused runbooks (no APIs in-page); seed uses PM/DEV Confluence + FE routes and internal TSX excerpts to infer UI flows — use **API Reference** for HTTP contracts |
 | **API Reference** | Integrators, partners, automation | OpenAPI-backed CMS APIs (Swagger UI) |
 | **Runbooks** | Ops | Placeholders until internal runbooks are published here |
@@ -23,11 +25,10 @@ Documentation stays aligned with the codebases through:
 mkdocs.yml
 hooks.py                         # Builds nav from docs/_data/*.yml
 docs/
-├── index.md
+├── index.md                     # Platform overview (first page under Getting Started)
 ├── _data/
 │   ├── site-nav.yml             # Order of top-level sections (tabs)
-│   ├── home.yml                 # Home tab → index.md
-│   ├── getting-started.yml      # Getting Started tree (titles + doc paths)
+│   ├── getting-started.yml      # Getting Started tree (includes index.md + nested pages)
 │   ├── feature-map.yml          # Features tab: each feature → display_name, feature_doc, seed fields
 │   ├── api-reference.yml        # API Reference tree (Swagger wrapper pages)
 │   ├── runbooks.yml             # Runbooks tab
@@ -38,7 +39,6 @@ docs/
 │   ├── css/chat-widget.css
 │   └── openapi/                 # Generated OpenAPI YAML (seed)
 ├── getting-started/
-│   ├── overview.md
 │   ├── architecture.md
 │   └── technical/               # Former top-level “Technical” section
 │       ├── cms/                 # index, data-models (generated), rbac, workflows
@@ -58,9 +58,9 @@ The **site navigation** is not maintained inside `mkdocs.yml`. `hooks.py` runs o
 
 ### Site nav order (`docs/_data/site-nav.yml`)
 
-Lists `order` of section ids: `home`, `getting_started`, `features`, `api_reference`, `runbooks`, `reference`. Omit the file to use the default order in `hooks.py`.
+Lists `order` of section ids: `getting_started`, `features`, `api_reference`, `runbooks`, `reference`. Omit the file to use the default order in `hooks.py`.
 
-### Unified page schema (Home, Getting Started, API Reference, Runbooks, Reference)
+### Unified page schema (Getting Started, API Reference, Runbooks, Reference)
 
 These files mirror **feature-map** entries: `display_name`, optional `description`, optional `confluence_pm_page_ids` and `confluence_dev_page_ids` (product vs technical Confluence sources), optional `prompt_profile` (passed to the section Confluence LLM in bidgely-doc-gen). Legacy `confluence_page_ids` is still accepted and treated as PM-only. The only deliberate difference from a feature row is the path field:
 
@@ -69,7 +69,7 @@ These files mirror **feature-map** entries: `display_name`, optional `descriptio
 | Markdown output | `feature_doc` | `page_doc` |
 | Nested children | N/A (flat `features:` map) | Nested slug-keyed `pages:` maps |
 
-**Section root** (each of `home.yml`, `getting-started.yml`, …): `display_name` (MkDocs tab title), optional `description`, and either `page_doc` alone (`home.yml`) or a `pages:` object.
+**Section root** (each of `getting-started.yml`, …): `display_name` (MkDocs tab title), optional `description`, and a slug-keyed `pages:` object (see `getting-started.yml` for nested structure).
 
 **Each page node** under `pages:`: slug key (stable id for tooling), `display_name` (nav label), optional `description`, optional `page_doc`, optional `confluence_pm_page_ids` / `confluence_dev_page_ids`, optional `prompt_profile`, and optional nested `pages:` for sub-groups. If a node has both `page_doc` and `pages`, the index file is listed first in the nav (same pattern as CMS under Technical reference).
 
@@ -87,7 +87,7 @@ Top-level `display_name` sets the **Features** tab title (default was “Feature
 
 ### Section Confluence (`docs/_data/section-confluence.yml`)
 
-Optional **legacy** `pages:` entries (`output`, `title`, `confluence_pm_page_ids` / `confluence_dev_page_ids` or deprecated `confluence_page_ids`, `prompt_profile`). Prefer adding PM/DEV IDs on the matching node in `home.yml` / `getting-started.yml` / etc. If the same `page_doc` / `output` appears in both, the site YAML wins. See bidgely-doc-gen README for `SEED_SECTION_PAGES` key format.
+Optional **legacy** `pages:` entries (`output`, `title`, `confluence_pm_page_ids` / `confluence_dev_page_ids` or deprecated `confluence_page_ids`, `prompt_profile`). Prefer adding PM/DEV IDs on the matching node in `getting-started.yml` / `api-reference.yml` / etc. If the same `page_doc` / `output` appears in both, the site YAML wins. See bidgely-doc-gen README for `SEED_SECTION_PAGES` key format.
 
 ### Chat widget
 
@@ -187,7 +187,7 @@ After seed, restart `npm run serve` or trigger re-index if you use the chat widg
 
 ### GitHub Actions
 
-On push to `main`, `.github/workflows/deploy-docs.yml` builds and deploys the site (e.g. GitHub Pages).
+On push to `master`, `.github/workflows/deploy-docs.yml` builds and deploys the site (e.g. GitHub Pages).
 
 ### Manual (S3 + CloudFront)
 

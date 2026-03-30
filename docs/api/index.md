@@ -1,6 +1,6 @@
 # API Reference
 
-This section is the **integration surface** for DETO: OpenAPI-backed APIs consumed by other Bidgely services, partners, and automation. **DETO web app users** (PM, CS, admins) should start with [Getting Started](../getting-started/overview.md) and [Features](../features/project-management.md) instead — those pages describe the product and UI, not HTTP contracts.
+This section is the **integration surface** for DETO: OpenAPI-backed APIs consumed by other Bidgely services, partners, and automation. **DETO web app users** (PM, CS, admins) should start with [Getting Started](../index.md) and [Features](../features/project-management.md) instead — those pages describe the product and UI, not HTTP contracts.
 
 DETO exposes several core services. The CMS APIs documented here cover recommendations, surveys, configuration, data scenarios, and migrations.
 

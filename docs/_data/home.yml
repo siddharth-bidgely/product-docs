@@ -1,8 +1,0 @@
-# Same fields as a feature-map entry, except the markdown path is page_doc (not feature_doc).
-# confluence_pm_page_ids / confluence_dev_page_ids: when non-empty, seed refreshes from Confluence.
-display_name: Home
-description: DETO documentation landing page
-page_doc: index.md
-confluence_pm_page_ids: ["931495969"]
-# confluence_dev_page_ids: []
-# prompt_profile: getting-started

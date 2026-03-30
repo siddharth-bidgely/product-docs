@@ -7,83 +7,61 @@
     - [Confluence 4](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=852557844)
 
 ## Overview  
-DETO’s Project Management area is the central hub where utilities and delivery teams can create, configure, and monitor projects that power energy‑usage analytics. It gives a single, guided interface for spinning up a new project, linking it to a utility and environment, and setting up the data ingestion pipeline. The result is a consistent, auditable baseline that reduces manual setup time and keeps stakeholders confident that every project follows the same configuration standards.
-
-The feature is designed for Delivery Engineers, Project Managers, Customer Success teams, and Admins. It lets them quickly onboard new utilities, manage existing projects, and keep data pipelines running smoothly without needing to touch backend code.
+The DETO web application gives delivery teams a single, unified dashboard to create, manage, and monitor projects for energy utilities.  From the Projects Dashboard you can launch a wizard that provisions all the required cloud resources in one click, view detailed project metadata, and push configuration changes to the pilot environment.  The interface is designed for Delivery Engineers, Product Managers, and Customer Success teams, so you can focus on business logic rather than infrastructure.
 
 ## Key Capabilities  
-- **Create a new project** with a step‑by‑step wizard.  
-- **Edit project metadata** (name, description, image, language, timezone).  
-- **Create a new environment** and trigger 1‑click cloud provisioning.  
-- **Create a new utility** and link it to an environment.  
-- **Configure ingestion settings** (customer type, fuel types, meter types, data source).  
-- **Filter and search projects** by type, region, or name.  
-- **View project details** and status dashboards.  
-- **Monitor environment creation** and ingestion progress.  
-- **Publish or approve projects** for production use.  
-- **Manage project ownership** and audit trails.  
+- **Create new projects** with a guided wizard that sets up utilities, environments, and ingestion pipelines.  
+- **Edit project attributes** (name, description, image, language, time zone).  
+- **Configure ingestion** parameters for customer type, fuel, meter, and data source.  
+- **View project environments** (UAT, Prod, Dev, Non‑Prod) and their status.  
+- **Push configuration updates** to a selected environment with a confirmation step.  
+- **Track environment creation status** in real time while provisioning.  
+- **Navigate between project details, setup, and status pages** from the dashboard.  
+- **Access related tools** such as Recommendations, Survey Builder, and Content Management.
 
 ## User Guide  
 
 ### Create a New Project  
-1. Open the **Projects Dashboard** from the main menu.  
-2. Click **Create New Project**.  
-3. In the wizard, choose an existing **Utility** or click **Create New Utility**.  
-4. Select an existing **Environment** or click **Create New Environment**.  
-5. Fill in the **Core Attributes**: Project ID, name, description, image URL, language, country, and timezone.  
-6. Configure **Ingestion Settings**: pick customer types, fuel types, meter types, and data source (S3 or SFTP).  
-7. Review the summary and click **Submit Project Request**.  
-8. The system will create the utility (if new), provision the environment, and apply default ingestion configs.  
-![Project Creation Wizard](../assets/images/847642630-Screenshot-202025-08-27-20at-205.13.16-E2-80-AFPM.png)
+1. Open the **Projects Dashboard** and click the **Create New Project** button.  
+   ![Projects Dashboard](../assets/images/847642630-Screenshot-202025-08-27-20at-205.13.53-E2-80-AFPM.png)  
+2. In the wizard’s first step, select a **Utility** or click **Create New Utility** to add one.  
+   ![Utility & Environment Selection](../assets/images/847642630-Screenshot-202025-08-27-20at-205.31.50-E2-80-AFPM.png)  
+3. Choose an **Environment**: either use an existing one or click **Create New Environment** and pick an AWS region.  
+4. In the second step, fill in the **Core Attributes** such as Project ID, Name, Description, Image URL, Language, Country, and Timezone.  
+   ![Core Attributes](../assets/images/847642630-Screenshot-202025-08-27-20at-205.47.20-E2-80-AFPM.png)  
+5. In the final step, set the **Ingestion Configuration** – customer type, fuel type, meter type, and data source.  
+   ![Ingestion Configuration](../assets/images/847642630-Screenshot-202025-08-27-20at-205.56.50-E2-80-AFPM.png)  
+6. Review the summary and click **Submit Project Request** to provision the infrastructure.  
+   ![Submit Project Request](../assets/images/847642630-Screenshot-202025-08-27-20at-208.21.34-E2-80-AFPM.png)  
 
 ### View and Edit Project Details  
-1. From the **Projects Dashboard**, click **Open Project** on the card you want to edit.  
-2. The **Project Details** page shows all core attributes and ingestion settings.  
-3. To edit a field, click the **Edit** icon next to it, make changes, and click **Save**.  
-4. For bulk changes, edit the values and click **Save All** at the bottom.  
-5. After saving, the page refreshes to show the updated data.  
-![Project Details](../assets/images/847642630-Screenshot-202025-08-27-20at-205.39.03-E2-80-AFPM.png)
+1. From the dashboard, click **Open Project** on the desired project card.  
+   ![Project Attributes](../assets/images/853245955-Screenshot-202025-08-28-20at-203.14.27-E2-80-AFPM.png)  
+2. The **Project Attributes** section shows the current name, description, image, and other metadata.  
+3. To change any attribute, click the **Edit** icon next to the field, update the value, and click **Save**.  
+4. Scroll down to the **Project Environments** list to see UAT, Prod, Dev, and Non‑Prod environments and their current status.  
+   ![Project Environments](../assets/images/853245955-Screenshot-202025-08-28-20at-203.18.15-E2-80-AFPM.png)  
+5. Switch to the **Project Setup** tab to adjust ingestion or other configuration settings.  
+   ![Project Setup](../assets/images/853245955-Screenshot-202025-08-28-20at-203.27.41-E2-80-AFPM.png)  
+6. After making changes, click **Save** to persist the updates locally.  
 
-### Create a New Environment  
-1. While creating or editing a project, click **Create New Environment**.  
-2. Enter the **Environment name**, select the **Utility**, and add an optional description.  
-3. Choose the **AWS Region** from the dropdown.  
-4. Click **Create Environment**.  
-5. The system automatically provisions the cloud stack; you’ll see a progress bar.  
-6. Once completed, the environment appears in the project’s environment list.  
-![Environment Creation](../assets/images/847642630-Screenshot-202025-08-27-20at-205.12.58-E2-80-AFPM.png)
-
-### Create a New Utility  
-1. In the project wizard, click **Create New Utility**.  
-2. Fill in the **Utility Name**, **Country**, **Address**, **State/Province**, and **Zip/Postal Code**.  
-3. Click **Save Utility**.  
-4. The new utility is linked to the selected environment automatically.  
-![Utility Creation](../assets/images/847642630-Screenshot-202025-08-27-20at-205.31.50-E2-80-AFPM.png)
-
-### Configure Ingestion Settings  
-1. On the **Project Details** page, open the **Ingestion Configuration** section.  
-2. Select **Customer Type** (Residential, SMB, C&I).  
-3. Choose one or more **Fuel Types** (Electric, Gas, Water).  
-4. For each fuel, set the **Fuel Type Units** and **Invoice Fuel Type Units**.  
-5. Pick **Meter Types** (AMI, AMR, NSM).  
-6. Choose **Data Source Type** (S3 or SFTP).  
-   - If **SFTP**, provide **User**, **Password**, **Host Name**, and **Decryption Pathphrase**.  
-7. Click **Save** to apply the configuration.  
-![Ingestion Configuration](../assets/images/847642630-Screenshot-202025-08-27-20at-205.42.55-E2-80-AFPM.png)
-
-### Monitor Environment Creation Status  
-1. After creating an environment, navigate to the **Environment Creation Status** page.  
-2. A progress bar shows the current state (In‑progress, Completed, Failed).  
-3. Click **Refresh** to pull the latest status.  
-4. If the process is still running, the page will auto‑refresh every minute.  
-5. Once completed, the status turns **Completed** and the environment becomes active.  
-![Environment Status](../assets/images/847642630-Screenshot-202025-08-27-20at-205.56.50-E2-80-AFPM.png)
+### Push Configuration Updates  
+1. In the **Project Configs** section, modify any setting you need to change.  
+   ![Make Changes](../assets/images/853245955-Screenshot-202025-08-28-20at-204.17.29-E2-80-AFPM.png)  
+2. Click the **Push Updates** button to apply the changes to the pilot environment.  
+   ![Push Updates Button](../assets/images/853245955-Screenshot-202025-08-28-20at-204.18.01-E2-80-AFPM.png)  
+3. A confirmation dialog appears listing the pending changes. Review the list.  
+   ![Confirmation Popup](../assets/images/853245955-Screenshot-202025-08-28-20at-204.18.22-E2-80-AFPM.png)  
+4. Click **Confirm** to start the push.  
+   ![Confirm Push](../assets/images/853245955-Screenshot-202025-08-28-20at-204.19.12-E2-80-AFPM.png)  
+5. After the push completes, a result dialog shows the status of each configuration item.  
+   ![Result Popup](../assets/images/853245955-Screenshot-202025-08-28-20at-204.23.31-E2-80-AFPM.png)  
 
 ## Configuration Options  
-Project‑level settings such as supported languages, time zones, and default ingestion templates are managed by system administrators. Delivery Engineers can only modify the values presented in the wizard and detail pages. If you need to change global defaults, contact your Admin or use the **Config Registry** feature.
+Project‑level configuration is controlled by the DETO system administrators.  Delivery teams can request changes through the dashboard, but any global settings (e.g., default ingestion parameters, environment templates, or cluster‑wide overrides) are managed by the admin console and not directly editable in the wizard.
 
 ## Related Features  
-- [Project Management](project-management.md) – Overview of project lifecycle.  
-- [Recommendations](recommendations.md) – Configure recommendation engines for projects.  
-- [Survey Builder](survey-builder.md) – Create and manage customer surveys.  
-- [CX Visual Editor](cx-visual-editor.md) – Design customer experience flows.
+- [Project Management](../docs/project-management.md)  
+- [Recommendations](../docs/recommendations.md)  
+- [Survey Builder](../docs/survey-builder.md)  
+- [Content Management](../docs/content-management.md)

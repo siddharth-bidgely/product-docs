@@ -4,68 +4,64 @@
     - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=948535302)
 
 ## Overview  
-The Survey Builder is the central hub for creating, editing, and publishing customer‑facing surveys. It lets product managers, delivery engineers, and utilities keep all questions, branching logic, and translations in one place, so every pilot uses consistent wording and data mapping. The builder is self‑serve: you can add new questions, reorder them, set up conditional paths, and preview the final experience without needing engineering help. Once a template is ready, it can be approved and published to a utility’s survey channel, and any changes are tracked through a clear status workflow.
+Survey Builder is the central hub inside DETO where product managers, delivery engineers, and utility teams can create, edit, and publish customer‑facing surveys.  It replaces a fragmented, engineering‑heavy process with a single, self‑serve interface that keeps all questions, branching logic, and profile mappings in one place.  The result is faster turnaround, consistent wording across pilots, and a clear audit trail of changes.
 
 ## Key Capabilities  
-- Create a new survey template from scratch or clone an existing one.  
+- Create a new survey template from a default starter.  
 - Import questions from the Master Question Bank.  
-- Add, edit, or delete questions and answer choices.  
-- Reorder questions with drag‑and‑drop.  
-- Define branching rules that skip or show questions based on prior answers.  
-- Edit question text and metadata for specific locales.  
-- Preview the survey as a customer would see it.  
-- Save drafts, submit for review, and publish or unpublish templates.  
-- Track changes and view a history of edits.  
-- Delete or discard unsaved changes.  
-- Manage template names and titles.  
-- View and edit the list of questions in a tree view.  
+- Add, edit, or delete questions and reorder them.  
+- Define branching rules that show or hide questions based on earlier answers.  
+- Override question text for a specific pilot without affecting the master bank.  
+- Preview the survey flow, including all branching paths.  
+- Publish or unpublish a template for a utility.  
+- Track status changes (DRAFT → READY_FOR_REVIEW → READY_TO_PUBLISH → PUBLISHED).  
+- View and edit question metadata such as HP/AP mappings and fuel‑type tags.  
+- Manage unsaved changes and discard edits.  
+- Filter questions by fuel type or tags.  
 
 ## User Guide  
 
 ### Create a New Survey Template  
-1. From the Survey home page, click **Create New Template**.  
-2. In the dialog, choose a **Template Type** (e.g., *Default Survey*) and enter a **Template Name**.  
-3. Click **Create** to open the template editor.  
-4. In the left pane, click **Import from Question Bank**.  
-5. Search for a question, then click **Add** to insert it into the canvas.  
-6. Drag questions to reorder them.  
-7. Double‑click a question to edit its **Display Text** or **Answer Choices**.  
-8. When finished, click **Save** to keep a draft.  
+1. Open the **Survey** area and click **Create New Template**.  
+   ![Create new template](../assets/images/948535302-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)  
+2. In the dialog, choose a **Template Type** (e.g., Home Profile Survey) and enter a **Template Name**.  
+3. Click **Create**. The new template appears in the list with status **DRAFT**.  
+4. Open the template by double‑clicking it.  
+5. The **Survey Template Editor** opens with an empty question list.  
 
-### Edit an Existing Template  
-1. Open the template from the list.  
-2. Click the **Edit** icon (pencil) next to the template name.  
-3. Use the **Add Question** button to insert new items or the **Delete** icon to remove one.  
-4. Drag questions to change the flow.  
-5. Click a question to open its **Edit Dialog**; modify text, choices, or metadata.  
-6. If you need to change a child question, click the **Add Child Question** button under the parent choice.  
-7. Click **Save** when all edits are complete.  
+### Import Questions from the Master Question Bank  
+1. In the template editor, click **Import from Question Bank**.  
+2. A drawer slides in from the right, showing a searchable list of published questions.  
+3. Use the search bar to find the desired question.  
+4. Drag the question into the main editor area or click **Add** next to it.  
+5. The question appears in the template with its default text and choices.  
+6. Repeat until all needed questions are added.  
 
-### Define Branching Logic  
-1. In the template editor, select a question that has multiple choices.  
-2. Click the **Branching** tab next to the canvas.  
-3. Click **Add Rule**.  
-4. Choose the **Parent Question**, the **Answer** that triggers the rule, and the **Target Question** to jump to.  
-5. Repeat to add multiple rules.  
-6. Click **Preview Flow** to see how the survey will navigate.  
-7. If satisfied, click **Save** to persist the rules.  
+### Add Branching Logic  
+1. Select a question that should trigger a branch.  
+2. Click **Add Branching Rule** (or the **+** icon next to the question).  
+3. In the rule dialog, choose the **Parent Question** (the one you selected).  
+4. Pick the **Trigger Choice** that will activate the branch.  
+5. Select the **Child Question** that should appear when the trigger is chosen.  
+6. Click **Save Rule**.  
+7. Repeat for additional branches.  
 
-### Preview and Publish  
-1. With the template open, click **Preview** at the top of the editor.  
-2. Complete the survey in the preview window to verify text, branching, and layout.  
-3. Close the preview and return to the editor.  
-4. Click **Submit for Review**; the template moves to *READY_FOR_REVIEW*.  
-5. A reviewer (TPM/CSM) approves the template, changing its status to *READY_TO_PUBLISH*.  
-6. Click **Publish** to make the survey live for the utility.  
-7. The status updates to *PUBLISHED*; you can still edit and re‑publish if needed.  
-
-![Survey Flow Diagram](../assets/images/948535302-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)
+### Preview and Publish the Survey  
+1. Click **Preview** to see the survey as a customer would.  
+2. Navigate through the flow, ensuring all branches work as expected.  
+3. If satisfied, click **Publish**.  
+4. The template status changes to **PUBLISHED** and becomes available to the utility.  
 
 ## Configuration Options  
-Template settings such as default locale, approval workflow, and publishing permissions are managed by system administrators. Users can only change question content, branching, and ordering within the builder.  
+- **Status Workflow**: The system automatically moves templates through the review stages.  
+- **Unsaved Changes**: Any edits are stored locally until you click **Save** or **Publish**.  
+- **Permissions**:  
+  - Product Managers can create, edit, and publish.  
+  - Delivery Engineers can clone and modify templates for new pilots.  
+  - Utility users can view and request changes.  
 
 ## Related Features  
-- [Project Management](project-management.md)  
-- [Recommendations](recommendations.md)  
-- [CX Visual Editor](cx-visual-editor.md)  
-- [Config Registry](config-registry.md)
+- [Survey Builder](survey-builder.md) – the core survey creation tool.  
+- [Recommendations](recommendations.md) – generate insights based on survey responses.  
+- [CX Visual Editor](cx-visual-editor.md) – design customer experience flows.  
+- [Config Registry](config-registry.md) – manage global configuration settings.

@@ -26,8 +26,8 @@
 .chat-panel {
   position: fixed;
   top: 0;
-  right: -420px;
-  width: 400px;
+  right: -540px;
+  width: 520px;
   height: 100vh;
   background: var(--md-default-bg-color, #fff);
   color: var(--md-default-fg-color, #333);
@@ -92,6 +92,7 @@
   background: var(--md-primary-fg-color, #4051b5);
   color: white;
   border-bottom-right-radius: 4px;
+  white-space: pre-wrap;
 }
 
 .chat-message.assistant {
@@ -106,6 +107,90 @@
   padding: 2px 4px;
   border-radius: 3px;
   font-size: 13px;
+}
+
+.chat-message-md {
+  overflow-wrap: anywhere;
+}
+
+.chat-message-md p {
+  margin: 0 0 0.65em;
+}
+
+.chat-message-md p:last-child {
+  margin-bottom: 0;
+}
+
+.chat-message-md h1,
+.chat-message-md h2,
+.chat-message-md h3,
+.chat-message-md h4 {
+  margin: 0.75em 0 0.4em;
+  font-size: 1em;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.chat-message-md h1 {
+  font-size: 1.1em;
+}
+
+.chat-message-md ul,
+.chat-message-md ol {
+  margin: 0.35em 0 0.65em;
+  padding-left: 1.35em;
+}
+
+.chat-message-md li {
+  margin: 0.2em 0;
+}
+
+.chat-message-md pre {
+  margin: 0.5em 0;
+  padding: 10px 12px;
+  overflow-x: auto;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.06);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.chat-message-md pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.chat-message-md blockquote {
+  margin: 0.5em 0;
+  padding-left: 10px;
+  border-left: 3px solid rgba(0, 0, 0, 0.15);
+  color: var(--md-default-fg-color--light, #666);
+}
+
+.chat-message-md table {
+  border-collapse: collapse;
+  font-size: 12px;
+  margin: 0.5em 0;
+  max-width: 100%;
+}
+
+.chat-message-md th,
+.chat-message-md td {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 4px 8px;
+  text-align: left;
+}
+
+.chat-message-md a {
+  color: var(--md-primary-fg-color, #4051b5);
+  text-decoration: underline;
+}
+
+.chat-message-md hr {
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0.75em 0;
 }
 
 .chat-sources {
@@ -201,4 +286,17 @@
 
 [data-md-color-scheme="slate"] .chat-message.assistant code {
   background: rgba(255, 255, 255, 0.12);
+}
+
+[data-md-color-scheme="slate"] .chat-message-md pre {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-md-color-scheme="slate"] .chat-message-md th,
+[data-md-color-scheme="slate"] .chat-message-md td {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+[data-md-color-scheme="slate"] .chat-message-md blockquote {
+  border-left-color: rgba(255, 255, 255, 0.2);
 }

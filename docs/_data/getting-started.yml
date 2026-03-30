@@ -3,9 +3,10 @@
 display_name: Getting Started
 description: Onboarding, architecture, and technical deep dives
 pages:
-  overview:
-    display_name: Overview
-    page_doc: getting-started/overview.md
+  platform_overview:
+    display_name: Platform overview
+    page_doc: index.md
+    confluence_pm_page_ids: ["931495969"]
   architecture:
     display_name: Architecture
     page_doc: getting-started/architecture.md

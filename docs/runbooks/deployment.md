@@ -10,6 +10,6 @@
     |------|---------------------------------------------|
     | Backend (bidgely-quill) | `master` / non-prod, `release` / production (plus DB migration branches where applicable) |
     | Frontend (bidgely-quill-fe) | CI/CD pipeline (e.g. Docker → S3 → CloudFront) |
-    | This documentation site | Repository’s GitHub Actions workflow on `main` |
+    | This documentation site | Repository’s GitHub Actions workflow on `master` |
 
     When internal runbooks are ready to be externalized, this page will link to them or inline the approved steps.

@@ -65,43 +65,43 @@ features:
           - src/apis/surveyQBAPI.ts
           - src/apis/surveyTemplateAPI.ts
 
-  cx-visual-editor:
-    display_name: "CX Visual Editor"
-    description: "Visual template editor for customer experience content"
-    confluence_pm_page_ids: ["975110165", "1039237136", "1504018492", "1028194310", "1079345206"]
-    confluence_dev_page_ids: []
-    feature_doc: features/cx-visual-editor.md
-    service_docs:
-      - repo: bidgely-quill-fe
-        code_paths:
-          - src/features/contentManagement/wysiwyg/
+  # cx-visual-editor:
+  #   display_name: "CX Visual Editor"
+  #   description: "Visual template editor for customer experience content"
+  #   confluence_pm_page_ids: ["975110165", "1039237136", "1504018492", "1028194310", "1079345206"]
+  #   confluence_dev_page_ids: []
+  #   feature_doc: features/cx-visual-editor.md
+  #   service_docs:
+  #     - repo: bidgely-quill-fe
+  #       code_paths:
+  #         - src/features/contentManagement/wysiwyg/
 
-  config-registry:
-    display_name: "Config Registry"
-    description: "Centralized configuration management for configs, lookups, and templates"
-    confluence_pm_page_ids: ["1330413583", "1331101711"]
-    confluence_dev_page_ids: []
-    context_docs:
-      - repo: bidgely-quill
-        paths:
-          - docs/config-registry/ARCHITECTURE.md
-          - docs/config-registry/README.md
-          - docs/config-registry/API-REFERENCE.md
-          - docs/config-registry-workflow.md
-    feature_doc: features/config-registry.md
-    api_doc: api/cms/config-registry-api.md
-    openapi_spec: assets/openapi/config-registry.yaml
-    service_docs:
-      - repo: bidgely-quill
-        code_paths:
-          - src/api/config-registry-config/
-          - src/api/config-registry-lookup/
-          - src/api/config-registry-lookup-type/
-          - src/api/config-registry-template/
-          - src/api/config/
-      - repo: bidgely-quill-fe
-        code_paths:
-          - src/features/config-registry/
+  # config-registry:
+  #   display_name: "Config Registry"
+  #   description: "Centralized configuration management for configs, lookups, and templates"
+  #   confluence_pm_page_ids: ["1330413583", "1331101711"]
+  #   confluence_dev_page_ids: []
+  #   context_docs:
+  #     - repo: bidgely-quill
+  #       paths:
+  #         - docs/config-registry/ARCHITECTURE.md
+  #         - docs/config-registry/README.md
+  #         - docs/config-registry/API-REFERENCE.md
+  #         - docs/config-registry-workflow.md
+  #   feature_doc: features/config-registry.md
+  #   api_doc: api/cms/config-registry-api.md
+  #   openapi_spec: assets/openapi/config-registry.yaml
+  #   service_docs:
+  #     - repo: bidgely-quill
+  #       code_paths:
+  #         - src/api/config-registry-config/
+  #         - src/api/config-registry-lookup/
+  #         - src/api/config-registry-lookup-type/
+  #         - src/api/config-registry-template/
+  #         - src/api/config/
+  #     - repo: bidgely-quill-fe
+  #       code_paths:
+  #         - src/features/config-registry/
 
   # config-tools:
   #   display_name: "Config Tools"
