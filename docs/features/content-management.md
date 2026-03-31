@@ -6,94 +6,90 @@
 
 ## Overview
 
-Content Management in DETO is the workspace where business teams manage pilot-specific content and supporting configuration without waiting for a code release. It acts as a single source of truth for utility content such as **Recommendations**, **Appliance Profile**, **Home Profile**, and related pilot settings. This helps teams move faster, reduce spreadsheet-based handoffs, and keep changes organized by project.
+Content Management in DETO is a pilot-based workspace for managing utility content without waiting for a normal release cycle. It gives business users a single place to maintain recommendation content and foundational pilot settings such as **Appliance Profile** and **Home Profile**. This helps teams move faster, reduce manual handoffs, and keep content changes organized by project.
 
-The feature is designed around **Projects**. Each pilot has its own isolated content, locales, and workflow states, so teams can safely work on one utility’s setup without affecting another. Depending on your role, you can create and update content, submit it for review, approve it for publishing, and manage pilot-level setup.
+Everything in this area is tied to the currently selected pilot or project. That means the content, supported locales, profiles, and publishing workflow are all managed in the context of one pilot at a time. What you can view or change depends on both your role and the pilots you have been assigned.
 
-A key benefit of Content Management is controlled publishing. Teams can work on **DRAFT** or **MODIFIED** content while the current **PUBLISHED** version remains unchanged. This supports review, collaboration, and safer rollout planning across production and QA use cases.
+For most teams, the main value of Content Management is controlled content operations: create and edit safely, keep draft and published versions separate, route items through review, and publish only when approved. This is especially important for recommendations, where copy, targeting context, localization, and approval status all need to stay aligned.
 
 ## Key Capabilities
 
-- Create a new pilot from scratch or by cloning an existing one
-- Switch between assigned **Projects** and work within pilot-specific content
-- View a pilot’s **content dashboard** for content counts, health, and localization status
-- Edit **Recommendations** with separate working and published versions
-- Move recommendation content through review states such as **TODO**, **READY_FOR_REVIEW**, and **READY_TO_PUBLISH**
-- Publish or unpublish recommendations, based on role permissions
-- Manage **Appliance Profile** defaults, visibility, and fuel type settings
-- Manage **Home Profile** defaults, visibility, and account type filters
-- Save or discard individual changes, or use bulk **Save all** and **Discard all**
-- Work with localized content using **Default Locale** and **Supported Locales**
-- Add comments and feedback as part of the review process
-- Configure **Score Thresholds** for recommendation scoring, where permitted
+- Create and edit pilot-specific content in a self-serve workspace
+- Work within a selected pilot so each utility project stays isolated
+- Manage recommendation content through **Draft**, **Modified**, **Ready for QA**, **Ready to Publish**, and **Published** states
+- Save changes without affecting live content immediately
+- Discard unwanted edits before they are published
+- Submit content for review and track verification status
+- Publish or unpublish content if your role allows it
+- Manage localized content for the pilot’s default and supported locales
+- Configure foundational targeting data in **Appliance Profile**
+- Configure home attributes and targeting controls in **Home Profile**
+- Use bulk save or discard actions in profile areas where multiple edits are pending
+- Preview content before release to validate quality and completeness
 
 ## User Guide
 
-### Create a new project
+### Edit recommendation content and move it through review
 
-1. Sign in to the CMS Admin Console and open **Projects**.
-2. In the **Projects List**, click **Create New Project**.
-3. Choose whether to start from a **Source Pilot** or create a new project with a one-click setup.
-4. Enter the required project details, including **Pilot ID**, **Name**, **Default Locale**, and **Supported Locales**.
-5. Click **Create Project** to start setup.
-6. Review the project creation status page and wait for the setup to complete.
-7. When the project is ready, open it to land on the pilot’s **content dashboard**.
-
-![Content management overview](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)
-
-### Edit and publish recommendations
-
-1. Open **Projects** and select the pilot you want to manage.
-2. From the pilot’s **content dashboard**, open **Recommendations**.
-3. Find the recommendation you want to work on and open it for editing.
-4. Update the content you need, such as recommendation text, localized content, media, or targeting-related details available to your role.
-5. Click **Save** or **SAVE_UPDATES** to keep your changes. If you do not want to keep them, use **Discard** or **DISCARD_UPDATES**.
-6. Check the item’s status. New content typically starts as **DRAFT**, while edits to live content appear as **MODIFIED**.
-7. If your role supports review handoff, submit the item so it moves from **TODO** to **READY_FOR_REVIEW**.
-8. After approval, a publishing role can move the item to **READY_TO_PUBLISH** and click **PUBLISH**. If needed, authorized users can also **UNPUBLISH** content.
+1. Open the pilot you want to work on from the **Projects** area, then go to the recommendation content area within **Content Management**.
+2. Find the recommendation you want to update, or create a new one if your role allows content creation.
+3. Edit the content fields you need, such as localized copy, descriptions, or other recommendation details. As you work, the item may show an in-progress state such as **Unsaved**.
+4. Click **Save** to keep your changes as a working version. Saved new content is typically treated as **Draft**, while updates to live content are typically treated as **Modified**.
+5. Review the item status before moving forward. Use preview where available to confirm the content looks correct before review.
+6. When the content is ready for review, click **Submit for Review**. The item moves into the review stage, shown in the workflow as **Ready for QA** or **Ready for Review**, depending on the screen wording used in your environment.
+7. If you are a reviewer or approver, open the item, validate the content, and move it to **Ready to Publish** when it has passed review.
+8. If your role includes publishing rights, click **Publish** to make the approved version live. If changes should not proceed, use **Discard** or **Unpublish** where available.
 
 ![Recommendation workflow states](../assets/images/815431723-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)
 
 ### Update Appliance Profile for a pilot
 
-1. Open **Projects** and select the pilot you want to update.
-2. From the pilot area, open **Appliance Profile**.
-3. Browse the category tree and expand the sections you want to review.
-4. Select an appliance and update its available settings, such as default values, visibility, or fuel type options.
-5. Repeat the same action for other appliances if you are making multiple changes.
-6. Click **Save** for a single item, or use **Save all** to keep multiple edits together.
-7. If you need to undo pending changes, click **Discard** for one item or **Discard all** for bulk changes.
+1. Select the correct pilot from **Projects** before making any profile changes.
+2. Open **Appliance Profile** from the Content Management area.
+3. Browse the appliance tree and expand categories or subcategories to find the appliance you want to update.
+4. For the selected appliance, set the default values you need using the available dropdowns and controls.
+5. Turn recommendation targeting visibility on or off for that appliance as needed.
+6. Update fuel type availability if that option is shown for the appliance.
+7. Click **Save** to keep the change for that appliance, or click **Discard** to remove the pending edit. If you have several pending changes, use the bulk save or bulk discard option when available.
 
-![CMS within Delivery Console](../assets/images/633110556-Screenshot-202025-08-19-20at-204.24.52-E2-80-AFPM.png)
+![Content management capabilities overview](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)
 
 ### Update Home Profile for recommendation targeting
 
-1. Open the relevant pilot from **Projects**.
-2. Go to **Home Profile**.
-3. Expand the attribute groups to find the home attribute you want to manage.
-4. Update the attribute settings, such as default value, visibility, or account type filtering.
-5. Review your pending edits before saving.
-6. Click **Save** to keep a single change, or use **Save all** if you updated several attributes.
-7. Use **Discard** or **Discard all** if you want to remove unsaved changes.
+1. Open the correct pilot, then go to **Home Profile**.
+2. Expand the attribute groups to locate the home attribute you want to manage.
+3. Select the attribute and review its current default value and targeting settings.
+4. Update the default value using the available selection control.
+5. Turn recommendation targeting visibility on or off for that attribute if needed.
+6. Apply any available **Account Type** filter settings to control where the attribute is used.
+7. Click **Save** for the individual change, or use **Save all** if you have updated multiple attributes. Use **Discard** or **Discard all** to remove pending edits you do not want to keep.
 
-![Role-based workflow and controls](../assets/images/633110556-Screenshot-202025-08-21-20at-203.44.10-E2-80-AFPM.png)
+### Understand content states and testing visibility
+
+1. When reviewing recommendation content, check both the editing state and the review state before deciding what action to take.
+2. Treat **Draft** as new saved content that is not live, and **Modified** as saved changes to content that already has a live version.
+3. Treat **Ready for QA** as content prepared for testing or review, and **Ready to Publish** as approved content waiting for final release.
+4. Treat **Published** as the live version used in production.
+5. Use **Discard** when you want to abandon pending changes instead of moving them forward.
+6. If a team says they cannot see a change in production, confirm whether the item is actually **Published**. Production only uses published content.
+7. If a team is validating in a QA-style environment, confirm whether the item has at least reached **Ready for QA**, since pre-release environments may surface content in that state for testing.
+
+![Content status workflow](../assets/images/633110556-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)
 
 ## Configuration Options
 
-Content Management is primarily configured at the project level.
+Content Management is controlled by role and pilot assignment.
 
-- **Project setup:** When creating a project, you define **Default Locale** and **Supported Locales**.
-- **Pilot isolation:** All content and settings are scoped to the selected project.
-- **Roles and permissions:** What you can view, edit, submit, publish, or configure depends on your assigned role and project access.
-- **Utility role:** Typically limited to reading assigned content, editing allowed content, saving changes, discarding changes, switching projects, and submitting for review.
-- **PM / TPM / CSM roles:** Can generally do everything Utility users can do, plus publish, unpublish, delete, manage pilot setup, edit profiles, configure **Score Thresholds**, and manage exclusions.
-- **Localization:** Locale-specific content can be maintained as part of normal authoring. The dashboard may also show localization completeness or status.
+- **Pilot access:** Users only see the pilots they are assigned to.
+- **Utility role:** Can typically read content, create or edit allowed content, save changes, discard changes, switch pilots, and submit items for review. This role does not publish content and may have limits on profile editing and advanced configuration.
+- **PM / TPM role:** Can manage content lifecycle actions, including publishing, unpublishing, deleting content, editing **Appliance Profile**, editing **Home Profile**, configuring **Score Thresholds**, and managing pilot setup.
+- **CSM role:** Supports review and quality control and is described as having the same permissions as PM / TPM in this feature area.
 
-If a setting or action is not visible, it is usually controlled by your role or by project access assigned by an administrator.
+If a button, page, or action is missing, it is usually due to role permissions or pilot assignment. Configuration is managed by system administrators.
 
 ## Related Features
 
+- [Project Management](project-management.md)
 - [Recommendations](recommendations.md)
 - [Survey Builder](survey-builder.md)
-- [Color Management](color-management.md)
-- [Project Management](project-management.md)
+- [CX Visual Editor](cx-visual-editor.md)

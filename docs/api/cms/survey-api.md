@@ -22,7 +22,7 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 ## Endpoints
 
 ### POST /survey-category/ingest
-**Description:** Ingests survey category data into the CMS.
+**Description:** Ingests survey category data into the CMS (content management system).
 
 **Path Parameters:** None
 
@@ -35,27 +35,26 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 {}
 ```
 
-**Access Control:** No route-specific policy information was provided in the available evidence.
+**Access Control:** No route-specific policy was provided in the available context.
 
 ---
 
 ### GET /survey/v1/template/:pilotId/:templateId
-**Description:** Returns the external survey template for a utility pilot, including a flattened list of survey questions localized for the requested locale.
+**Description:** Returns a flattened external survey template for a pilot, including localized question content and the template last-updated timestamp.
 
 **Path Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier used to resolve the utility configuration. |
-| templateId | string | Yes | Survey template type identifier. Known values from the data model include `defaultSurvey` and `BillAnalyzer`. |
+| pilotId | string | Yes | Pilot identifier used to resolve the utility. |
+| templateId | string | Yes | Survey template type. Known values from the data model include `defaultSurvey` and `BillAnalyzer`. |
 
 **Query Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| status | string | No | Content status to fetch. If set to published, the published template is returned; otherwise the handler prefers a draft template that is ready for quality assurance and falls back to published. |
-| locale | string | No | Locale for localized question text, info, and choice labels. The handler normalizes this through the default-locale utility and validates that the utility supports it. |
-| region | string | No | Region value echoed back in the response. |
+| status | string | No | External content status used to choose which template version to return. If `published`, the published template is returned; otherwise the handler prefers a draft template that is `READY_FOR_QA` and falls back to published. |
+| locale | string | No | Locale for localized labels and question text. The locale is normalized by the server and must be supported by the pilot's utility. |
 
 **Example Response:**
 ```json
@@ -64,7 +63,7 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
     "surveyId": "defaultSurvey",
     "questions": [
       {
-        "documentId": "sq_01f8c2a9",
+        "documentId": "8f2d7d8a-2f6e-4d8d-9f8a-1b2c3d4e5f60",
         "id": "Q1",
         "order": 1,
         "type": "SINGLE",
@@ -75,11 +74,11 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
         },
         "state": null,
         "text": "What type of home do you live in?",
-        "info": "Choose the option that best matches your residence.",
+        "info": "Select the option that best matches your residence.",
         "parent": null,
         "answerType": "NON_BOOLEAN",
-        "stateMapper": null,
-        "profileCode": "METADATA",
+        "stateMapper": "home_type",
+        "profileCode": "AP",
         "fuelTypes": [
           "GLOBAL"
         ],
@@ -113,7 +112,7 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
         ]
       },
       {
-        "documentId": "sq_7b2d4e10",
+        "documentId": "1a2b3c4d-5e6f-4789-9abc-def012345678",
         "id": "Q1a",
         "order": 2,
         "type": "BOOLEAN",
@@ -132,7 +131,7 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
           ]
         },
         "answerType": "BOOLEAN",
-        "stateMapper": null,
+        "stateMapper": "ownership_status",
         "profileCode": "METADATA",
         "fuelTypes": [
           "GLOBAL"
@@ -168,8 +167,7 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
       }
     ]
   },
-  "updatedAt": 1735689600000,
-  "region": "us-west-2"
+  "updatedAt": 1735689600000
 }
 ```
 
@@ -178,20 +176,20 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 ---
 
 ### GET /survey/v1/last-updated-ts/:pilotId/:templateId
-**Description:** Returns the cached last-updated timestamp for a survey template and content status.
+**Description:** Returns the cached last-updated timestamp for a survey template and status.
 
 **Path Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
-| templateId | string | Yes | Survey template type identifier. |
+| pilotId | string | Yes | Pilot identifier. |
+| templateId | string | Yes | Survey template type. Known values from the data model include `defaultSurvey` and `BillAnalyzer`. |
 
 **Query Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| status | string | No | Content status used when looking up the cached timestamp. |
+| status | string | No | External content status used when looking up the cached timestamp. |
 
 **Example Response:**
 ```json
@@ -200,6 +198,6 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 }
 ```
 
-**Access Control:** No route-specific policy information was provided in the available evidence.
+**Access Control:** No route-specific policy was provided in the available context.
 
 ---

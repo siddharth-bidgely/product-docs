@@ -6,106 +6,108 @@
 
 ## Overview
 
-The **Recommendations** area in DETO is the pilot-specific workspace for managing recommendation content that appears to end customers. It gives business users a structured way to create, update, review, and publish recommendations without relying on release cycles or manual file handling. Each pilot has its own isolated set of recommendations, so teams can safely tailor content for a specific utility or program.
+The **Recommendations** area in DETO is where teams create, review, update, and publish recommendation content for a specific **Project** (pilot). It gives utility teams and internal stakeholders a structured way to manage recommendation content without relying on spreadsheets, file sharing, or release cycles. Each pilot keeps its own isolated content, so changes in one project do not affect another.
 
-This area is designed for governed content operations, not direct live editing. Recommendations move through clear lifecycle states such as **Draft**, **Modified**, **Published**, **TODO**, **READY_FOR_REVIEW**, and **READY_TO_PUBLISH**. That means you can work on changes, collaborate with reviewers, and keep the currently published version intact until the new version is approved.
+This area is designed for controlled content operations. You can create new recommendations, edit existing ones, manage draft and published versions separately, collaborate through comments, work across supported locales, and configure recommendation score thresholds. The workflow is role-based, so what you can see and do depends on your permissions and the current status of the recommendation.
 
-Recommendations also support localization, media management, targeting-related metadata, comments, preview, and bulk-style editing patterns. Product Managers, Customer Success teams, and Enterprise Admins benefit from faster turnaround, better quality control, and a clearer approval process.
+Recommendations also follow a governed lifecycle. In practice, this means you can safely make changes in a working version while the live **Published** version remains unchanged until an authorized user publishes the update. This helps teams review content, validate it, and release it with less risk.
 
 ## Key Capabilities
 
-- View all recommendations for the selected pilot in a central list
-- See summary counts for **Draft**, **Modified**, **Published**, and **Disabled** items
-- Create a new recommendation with content, metadata, and media
-- Edit an existing recommendation without overwriting the live published version
-- Switch between **Draft/Modified** and **Published** views for the same recommendation
-- Manage localized content for supported pilot locales
-- Add or update images using a URL or file upload
-- Use comments to collaborate during review
-- Navigate quickly between recommendations with **Previous** and **Next**
-- Refresh the list to load the latest saved content
-- Configure recommendation score thresholds by category
-- Upload recommendations in bulk when that option is enabled for your process
+- View all recommendations for the selected **Project**
+- See recommendation counts by status, including **Draft**, **Modified**, **Published**, and **Disabled**
+- Create a new recommendation with structured content fields
+- Edit recommendations in a dedicated editor
+- Work with separate working and live versions of the same recommendation
+- Filter and manage recommendation records in a table view
+- Save changes or discard unsaved updates
+- Navigate between recommendations using **Previous** and **Next**
+- Add and review comments for collaboration and approval
+- Manage localized content for supported locales
+- Upload and crop recommendation images
+- Configure **Score Thresholds** by category when you have permission
 
 ## User Guide
 
-### Open and review recommendations for a pilot
+### Open and review recommendations for a project
 
-1. Open **Projects** and select the pilot you want to work in.
-2. From the pilot’s content dashboard, open **Recommendations**.
-3. Review the summary cards at the top of the page to understand how many recommendations are currently **Draft**, **Modified**, **Published**, or **Disabled**.
-4. Use the recommendations table to browse the available items for that pilot.
-5. Apply filters or search in the table to narrow the list by status or recommendation attributes.
-6. If you need the latest saved data, click **Refresh**. If you have unsaved row edits, save or discard them first before refreshing.
-7. Click a recommendation row to open it in the edit view.
+1. Open **Projects** from the main menu.
+2. Select the project you want to work in. You will land on that project’s **Content Dashboard**.
+3. Open **Recommendations** from the dashboard.
+4. Review the summary card at the top of the page. This shows counts such as **Total**, **Disabled**, **Draft**, **Modified**, and **Published**.
+5. Use the recommendations table to browse available items for the selected project.
+6. If needed, use table filters to narrow the list by status or recommendation attributes.
+7. Click **Refresh** to reload the list when you want the latest saved content. If you have unsaved table changes, refresh may be unavailable until those changes are resolved.
 
-![Recommendations workflow overview](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)
+![Recommendations overview](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)
 
 ### Create a new recommendation
 
 1. In **Recommendations**, click **Add New**.
-2. Enter the core recommendation details, such as title, description, category, and any required content fields.
-3. Set the recommendation options that apply to the pilot, such as channels, featured content, program flags, or other business attributes shown on the form.
-4. Add images as needed. You can either paste an **Image URL** and click **Load URL**, or choose **Upload File** and provide an image from your device.
-5. If the pilot supports multiple locales, switch locale and enter translated text and locale-specific media where needed.
-6. Review the preview to confirm the recommendation looks correct before saving.
-7. Click **Save** to create the recommendation as a working version. New items begin as **Draft**.
-8. After saving, continue editing, submit the item for review, or leave it in draft until it is ready.
+2. Enter the core recommendation details, such as title, description, category, and other required business fields.
+3. Choose the appropriate targeting and delivery settings, such as fuel type, channel options, and any other visible recommendation attributes available in the form.
+4. Add images where needed. You can either paste an **Image URL** and click **Load URL**, or click **Upload File** to add an image from your computer.
+5. If the image needs adjustment, use the crop step to fit the required dimensions before continuing.
+6. If you want to reuse existing content, use the copy-from-existing option in the form to start from another recommendation version instead of building from scratch.
+7. Save your work. A new recommendation is typically created as **Draft** and then opens in the edit view for further updates and workflow actions.
 
-![Recommendations module in Delivery Console](../assets/images/633110556-Screenshot-202025-08-19-20at-204.24.52-E2-80-AFPM.png)
+![Recommendation workflow](../assets/images/815431723-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)
 
-### Edit an existing recommendation and manage versions
+### Edit a recommendation and manage versions
 
-1. Open **Recommendations** and select the recommendation you want to update.
-2. At the top of the edit page, confirm the **Recommendation ID** and current status chip, such as **Draft**, **Modified**, **Published**, or **Disabled**.
-3. If the recommendation already has a live version, use the tabs to switch between the working version and **Published**. This helps you compare what is live with what is being changed.
-4. Update the content, metadata, targeting-related fields, or images as needed.
-5. If you need to move through the list quickly, use **Previous** or **Next** to open adjacent recommendations.
-6. If you try to switch tabs with unsaved changes, confirm whether you want to stay on the page or switch and lose those edits.
-7. Save your changes. For unpublished items, the recommendation remains **Draft**. For already published items, your saved changes become **Modified** while the published version stays live.
-8. When the content is ready, follow your team’s review process to move it from **TODO** to **READY_FOR_REVIEW**, then to **READY_TO_PUBLISH**, and finally **Publish** if your role allows it.
+1. From the recommendations table, open the recommendation you want to update.
+2. At the top of the editor, confirm the **Recommendation ID** and current status chip, such as **Draft**, **Modified**, or **Published**.
+3. If the recommendation has both a working version and a live version, use the tabs to switch between **Draft** or **Modified** and **Published**.
+4. Update the content fields you need to change. Depending on the recommendation state and your role, some versions may be read-only.
+5. If you switch tabs while you still have unsaved changes, review the **Unsaved Changes** prompt carefully before continuing.
+6. Use **Previous** or **Next** to move through recommendations without returning to the table.
+7. Save your updates. For a new item, the recommendation remains **Draft**. For a previously published item, your saved changes become **Modified** until they are published.
+8. If you decide not to keep your changes, use the available discard action to revert the working copy.
+
+### Collaborate with comments and review status
+
+1. Open a recommendation in the edit view.
+2. Click the comments icon near the top of the page. The badge shows how many comments already exist.
+3. Review the recommendation summary in the comments view so you can confirm you are discussing the correct item.
+4. Add comments to capture review feedback, questions, or approval notes.
+5. Return to the recommendation editor and make any requested updates.
+6. Move the recommendation through the review workflow according to your role. Common workflow states include **TODO**, **READY_FOR_REVIEW**, and **READY_TO_PUBLISH**.
+7. If you are authorized to publish, publish the recommendation when review is complete. If you are not authorized, submit it for the next reviewer instead.
+
+![Role-based workflow](../assets/images/633110556-Screenshot-202025-08-21-20at-203.44.10-E2-80-AFPM.png)
+
+### Configure recommendation score thresholds
+
+1. Open the project you want to manage.
+2. Go to **Recommendation Score Thresholds**.
+3. Review the guidance at the top of the page. This explains that **Max** and **Min** values help create a score gradient across recommendations in the same category.
+4. In the table, review each category’s **Category Name**, **Max**, **Min**, **Number of Recos**, and calculated **Step**.
+5. Edit the **Max** and **Min** values for the categories you want to adjust.
+6. Check that each value is valid. Values must stay between 0 and 1, and **Min** must be lower than **Max**.
+7. Click **Save all** to keep your changes.
+8. If you want to abandon pending edits, click **Discard all** and confirm the prompt.
 
 ![Content status workflow](../assets/images/633110556-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)
 
-### Review comments and collaborate
-
-1. Open a recommendation in the edit view.
-2. Click the comments icon near the top of the page. The badge on the icon shows how many comments already exist.
-3. Review the recommendation summary shown in the comments view so you can confirm you are discussing the correct item.
-4. Read existing comment threads to understand requested changes, review notes, or approval feedback.
-5. Add a new comment to ask a question, document a decision, or request updates from another team member.
-6. Return to the recommendation editor and make the requested changes.
-7. Save the recommendation and continue the review cycle until the item is approved for publishing.
-
-![RBAC workflow reference](../assets/images/633110556-Screenshot-202025-08-21-20at-203.44.10-E2-80-AFPM.png)
-
-### Update recommendation score thresholds
-
-1. Open the selected pilot and go to **Recommendation Score Thresholds**.
-2. Review the table of recommendation categories and the current **Min**, **Max**, **Number of Recos**, and calculated **Step** values.
-3. Edit the **Min** and **Max** values for the categories you want to adjust.
-4. Check that each edited row remains valid. Values must stay between 0 and 1, and **Min** must be lower than **Max**.
-5. Use the calculated **Step** value to understand how scores will be distributed across recommendations in that category.
-6. Click **Save all** to keep your changes, or **Discard all** to remove unsaved edits.
-7. If you choose to discard, confirm the action in the warning dialog.
-
-![Workflow state transitions](../assets/images/815431723-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)
-
 ## Configuration Options
 
-Recommendations are controlled within the currently selected pilot, so available options depend on that pilot’s setup and your role.
+Recommendations are managed within the currently selected **Project**, so project selection is the first level of configuration.
 
-Common configuration areas include:
+Common user-visible configuration includes:
 
-- **Pilot selection**: all recommendation content is scoped to the active pilot
-- **Locales**: the pilot defines the default locale and supported locales for localized content
-- **Workflow permissions**:  
-  - **Utility** users can typically read, edit, save, discard, switch pilots, and submit for review  
-  - **PM / TPM / CSM** users can also publish, unpublish, delete, manage lifecycle actions, edit exclusions, and configure related recommendation settings
-- **Score thresholds**: available to users with permission to manage recommendation scoring
-- **Related targeting metadata**: recommendation behavior may depend on settings maintained in **Appliance Profile** and **Home Profile**
+- **Default Locale** and **Supported Locales** for localized recommendation content
+- Recommendation content fields such as title, description, call-to-action text, links, images, and channel settings
+- Recommendation metadata such as category and targeting-related attributes
+- **Score Thresholds** by category
+- Workflow status progression, based on role and current recommendation state
 
-If a control is disabled or not visible, it is usually restricted by role or by the current recommendation state. If you are unsure whether a setting should be available, contact your system administrator.
+Permissions affect what actions are available. For example:
+
+- Utility users can typically create, edit, save, discard, submit for review, and delete recommendations in assigned projects
+- PM, TPM, and CSM users can typically do all of the above and also publish, unpublish, and manage broader recommendation configuration
+- Some areas, such as **Reco Exclusions**, project profiles, or score settings, may be hidden if your role does not allow access
+
+If an option is not visible, it is usually controlled by your assigned role or project access.
 
 ## Related Features
 

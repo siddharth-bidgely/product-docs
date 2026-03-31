@@ -12,7 +12,7 @@ paths:
   /recommendation/v1/model/{pilotId}:
     get:
       summary: Get recommendation model
-      description: Returns the external recommendation model and default profile for the specified pilot.
+      description: Returns the recommendation model and default profile for the specified pilot.
       operationId: reco-external-apis_getRecoModel
       tags:
         - Recommendations
@@ -67,13 +67,13 @@ paths:
         - name: locale
           in: query
           required: false
-          description: Locale used for localized recommendation metadata.
+          description: Locale used to resolve localized recommendation content.
           schema:
             type: string
         - name: channel
           in: query
           required: false
-          description: Channel filter for recommendation metadata.
+          description: Channel filter applied to recommendation metadata.
           schema:
             type: string
             enum:
@@ -119,13 +119,13 @@ paths:
         - name: locale
           in: query
           required: false
-          description: Locale used for localized recommendation metadata.
+          description: Locale used to resolve localized recommendation content.
           schema:
             type: string
         - name: channel
           in: query
           required: false
-          description: Channel filter for recommendation metadata.
+          description: Channel filter applied to recommendation metadata.
           schema:
             type: string
             enum:
@@ -151,7 +151,7 @@ paths:
   /recommendation/v1/insight-definition/{pilotId}:
     get:
       summary: Get insight definitions
-      description: Returns insight definitions derived from recommendations for the specified pilot.
+      description: Returns insight definitions derived from enabled recommendations for the specified pilot.
       operationId: reco-external-apis_getInsightDefinition
       tags:
         - Recommendations
@@ -185,8 +185,8 @@ paths:
         - api::recommendation.reco-model-policy
   /recommendation/v1/last-updated-ts/{pilotId}:
     get:
-      summary: Get recommendation last updated timestamp
-      description: Returns the cached last updated timestamp for recommendation data for the specified pilot.
+      summary: Get recommendation cache timestamp
+      description: Returns the last updated timestamp for recommendation cache data for the specified pilot.
       operationId: reco-external-apis_getLastUpdatedTS
       tags:
         - Recommendations
@@ -492,6 +492,19 @@ components:
         - fullImage
         - shortenedImage
         - elongatedImage
+    GetRecoMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecoMetadataExternal'
+        updatedAt:
+          type: integer
+          nullable: true
+      required:
+        - data
+        - updatedAt
     RecoMetadataExternalV2:
       allOf:
         - $ref: '#/components/schemas/RecoMetadataExternal'
@@ -519,19 +532,6 @@ components:
             - actionType
             - objective
             - herImage
-    GetRecoMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RecoMetadataExternal'
-        updatedAt:
-          type: integer
-          nullable: true
-      required:
-        - data
-        - updatedAt
     GetRecoMetadataV2Response:
       type: object
       properties:

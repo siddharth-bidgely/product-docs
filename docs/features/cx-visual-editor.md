@@ -9,116 +9,110 @@
 
 ## Overview
 
-The **CX Visual Editor** is the visual editing workspace in **Content Management** for managing customer-facing communications across **Email**, **Paper Reports (HER)**, **Web**, and **SMS**. It is designed for business users who need to update content, review how it will appear to customers, and validate changes before launch. Instead of working from static mockups, you edit directly in a live, production-aligned preview experience.
+The **CX Visual Editor** is the DETO workspace for reviewing and updating customer-facing communication templates with a live preview. It is designed for teams who manage content across **Email**, **HER / Paper**, **Web**, and **SMS**, and who need to see how changes will actually look before they are approved for use.
 
-This area is especially useful when you need to tailor communications by **project**, **cluster**, **locale**, **fuel type**, or customer context. The editor combines three core jobs in one place: selecting the right template, previewing it with realistic **Data Scenarios**, and updating content in the **Content Inspector**. It also supports governance through **Signoff**, **Undo Signoff**, comparison, and review tracking.
+You use this area from **Content Management** to select a template, choose the right editing context, update content in the inspector, and review the result in the preview area. The editor supports work at different scopes such as **Project** or **Cluster**, as well as different **Locales**, **Fuel Types**, and **Data Scenarios** so you can validate realistic customer variations.
 
-For utilities and delivery teams, this means faster iteration, fewer surprises during QA, and clearer ownership of approvals. You can make focused edits to a full template or a specific element, test the result in different scenarios, and confirm readiness with audit-friendly review steps.
+The feature is especially useful for controlled customization and review. In addition to editing text, images, and metadata, teams can compare variants, track sign-off progress, and review audit history. This helps reduce rework and makes approval workflows clearer for utility teams, Customer Success, and project stakeholders.
 
 ## Key Capabilities
 
-- Browse templates by channel in the **Template Selector Sidebar**
-- Search for templates and narrow the list by fuel badge such as **EL**, **GAS**, **WATER**, or **DF**
-- Select a full template or a specific element for focused editing
-- Preview content using realistic **Data Scenarios**
-- Switch between **Desktop mode** and **Mobile mode** where supported
-- Change the active **Config level** and **Locale** before editing
-- Edit **Text**, **Images**, **Colors**, and **Metadata** in the **Content Inspector**
-- See modified fields highlighted so unsaved changes are easy to spot
-- Save or cancel changes for the current variant
-- Compare two variants side by side using **Compare**
-- Complete approval steps with **Signoff** and **Undo Signoff**
-- Review progress and history through **Checklist** and **Audit**
+- Browse templates by **channel** in the left sidebar.
+- Search for a template and narrow the list by **fuel type**.
+- Select **Project** or **Cluster** context before making edits.
+- Switch **Locale** and **Data Scenario** to preview different customer conditions.
+- Preview a **Full Template** or focus on a specific **element/section**.
+- Toggle between **Desktop** and **Mobile** preview where supported.
+- Edit content in the **Text**, **Images**, and **Metadata** tabs.
+- Save changes and immediately review the updated preview.
+- Cancel unsaved changes before they are applied.
+- Compare two variants side by side using **Compare**.
+- Sign off an element or template as part of approval workflow.
+- Review progress and accountability through **Checklist** and **Audit**.
 
 ## User Guide
 
-### Browse and open a template
+### Open the editor and select a template
 
 1. Open **Content Management** and select **CX Visual Editor**.
-2. Confirm the correct project is selected before you begin editing.
-3. In the **Template Selector Sidebar**, browse templates by channel such as **Email**, **Paper**, **Web**, or **SMS**.
-4. Use the search bar if you already know the template name, or scan the list for the correct fuel badge such as **EL**, **GAS**, **WATER**, or **DF**.
-5. Expand a template to view its available elements if you want to work on a specific section instead of the full template.
-6. Click the template name to load it into the **Template Editor & Preview tool**.
-7. If you need more room, click **Collapse** on the sidebar. Click **Expand** to bring it back.
+2. If your project is not already active, choose the correct project context first.
+3. In the left **Templates** sidebar, browse templates grouped under **Email**, **HER**, **Web**, or **SMS**.
+4. Use the **Search** bar to find a template by name if the list is long.
+5. If needed, use the fuel filter to narrow templates to **EL**, **GAS**, or **DF**.
+6. Click a template to load it into the editor.
+7. If you want more workspace, use the sidebar collapse control. Expand it again when you need to switch templates.
 
 ![Template selector sidebar](../assets/images/975110165-image-20251002-132504.png)
 
-### Preview a template with the right scenario and device mode
+### Set the preview context and review the output
 
-1. After opening a template, review the **Preview Toolbar** at the top of the preview area.
-2. Check the current template name, channel badge, **Config level**, and **Locale** to make sure you are viewing the correct variant.
-3. Use the **Data Scenario selector** to choose the customer condition you want to test, such as a default or high-usage scenario.
-4. Use the **Element selector for preview** to switch between **Full Template** and a specific element.
-5. Click **Desktop** or **Mobile** to review the layout in the appropriate preview mode. Some channels, such as paper reports, may not support **Mobile mode**.
-6. Wait for the preview to refresh, then review the **Visual Preview Canvas** carefully.
-7. Repeat with other scenarios or modes to confirm the template behaves correctly across customer conditions.
+1. After selecting a template, go to the top toolbar and choose the correct **Hierarchy** such as **Project** or **Cluster**.
+2. Select the required **Locale**, such as English or Spanish.
+3. Choose a **Data Scenario** to preview realistic customer data conditions.
+4. In the element selector, choose **Full Template** to review the whole communication, or select a specific section such as **Header**.
+5. Use the preview mode control to switch between **Desktop** and **Mobile** when available.
+6. Review the center preview area to confirm the content, layout, and personalization look correct.
+7. If the preview refreshes, wait for it to finish loading before changing to another scenario or section.
 
-![Preview toolbar and scenario controls](../assets/images/975110165-image-20251002-140703.png)
+![Preview toolbar and context selectors](../assets/images/975110165-image-20251002-140703.png)
 
-### Edit text, images, colors, or metadata
+### Edit text, images, or metadata and save changes
 
-1. Select the template or element you want to update.
-2. In the right-side **Content Inspector**, choose the tab that matches the type of change:
+1. In the right-side inspector, confirm you are editing the correct **Full Template** or selected element.
+2. Open the tab you need:
    - **Text** for copy updates
-   - **Images** for image or video replacements
-   - **Colors** for visual styling
-   - **Metadata** for display or behavior settings
-3. In **Text**, update the relevant **String Resources**. Modified fields are highlighted so you can see what changed.
-4. In **Images**, update the asset value and use **Upload** or **Preview** where available to verify the replacement.
-5. In **Colors**, update the value you want to change. Template-level color changes can affect multiple elements in the template.
-6. In **Metadata**, adjust settings such as show or hide options, layout choices, or numeric values that affect rendering.
-7. Review the preview after each change to confirm the result.
-8. Click **Save** when you are satisfied, or click **Cancel** to discard unsaved edits.
+   - **Images** for image links and previews
+   - **Metadata** for behavior or layout settings
+3. Update one field at a time. Modified fields are highlighted so you can see what has changed.
+4. Watch the preview area as you edit to confirm the result looks right.
+5. If a field shows guidance or limits, review that information before saving.
+6. Click **Save** to apply your updates for the current hierarchy, locale, and scenario context.
+7. If you decide not to keep your edits, click **Cancel** and confirm if prompted.
 
-![Content inspector](../assets/images/975110165-image-20251002-180041.png)
+![Text editing in the inspector](../assets/images/975110165-image-20251002-182413.png)
 
 ### Compare two variants side by side
 
-1. Open the template you want to review.
-2. Click **Compare** from the toolbar.
-3. In the comparison setup, choose the settings for the left side and right side.
-4. For each side, select the template variant you want to compare, including the relevant **Config level**, **Locale**, and **Data Scenario**.
-5. Run the comparison to open a split preview.
-6. Review both sides together to check differences in content, layout, localization, or scenario behavior.
-7. Use this view for before-and-after review, hierarchy checks, or scenario validation.
-8. Exit comparison mode when you are ready to return to single-template editing.
+1. Open a template in the editor and set up your primary view.
+2. Click **Compare** in the toolbar.
+3. In the comparison setup, choose the second variant you want to review. This can differ by template, hierarchy, locale, or scenario.
+4. Run the comparison to open a split preview.
+5. Review both sides together to check differences in content, localization, or scenario behavior.
+6. Use compare mode for before-and-after review, cluster versus project review, or scenario testing.
+7. Exit compare mode when you are ready to return to single-template editing.
 
 ![Comparison mode preview](../assets/images/975110165-image-20251021-210327.png)
 
-### Sign off content and track approval status
+### Sign off completed work
 
 1. Open the template or element that is ready for review.
-2. Confirm you are on the correct **Config level**, **Locale**, and **Data Scenario** before approving anything.
-3. Review the content in the preview and verify all required edits are saved.
-4. In the **Content Inspector**, click **Signoff**.
-5. Confirm the action if prompted.
-6. Check the related status in **Checklist** to verify the item is now tracked as signed off.
-7. If the content needs to be reopened for changes, use **Undo Signoff**.
-8. Review **Audit** when you need to confirm who changed, saved, or signed off the content.
+2. Confirm the correct **Hierarchy**, **Locale**, and **Data Scenario** are selected so you are approving the right variant.
+3. Review the latest preview carefully before approval.
+4. In the inspector area, use **Signoff** when the content is complete and approved.
+5. Confirm the action if a confirmation message appears.
+6. If your role allows it, you can also undo sign-off when further changes are required.
+7. Use **Checklist** and **Audit** to track what has been completed and who performed each action.
 
-![Sign-off workflow](../assets/images/975110165-image-20251007-092032.png)
+![Sign-off workflow example](../assets/images/975110165-image-20251007-092032.png)
 
 ## Configuration Options
 
-The **CX Visual Editor** is variant-aware, so what you can edit depends on the selections you make in the editor.
+The options you see in the editor depend on your role and the selected template.
 
-Common options visible to users include:
+- **Hierarchy / Cluster**: Controls whether changes apply broadly at the project level or to a more specific cluster context.
+- **Locale**: Lets you edit and review language-specific variants.
+- **Data Scenario**: Changes the preview dataset so you can validate realistic customer conditions.
+- **Element selector**: Switch between **Full Template** and individual sections.
+- **Preview mode**: **Desktop** and **Mobile** are available where the channel supports them.
+- **Inspector tabs**:
+  - **Text** for copy and labels
+  - **Images** for image references and previews
+  - **Metadata** for display and behavior settings
+- **Save** and **Cancel**: Manage unsaved changes. The editor does not auto-save.
+- **Signoff**: Available only to users with approval permissions.
+- **Checklist** and **Audit**: Available based on role and workflow setup.
 
-- **Config level**: Choose whether you are working at a broader project level or a more specific cluster level.
-- **Locale**: Select the language or regional version you want to edit and preview.
-- **Data Scenario selector**: Choose the mock customer context used for preview.
-- **Element selector for preview**: Switch between the full template and a specific element.
-- **Preview mode**: Use **Desktop mode** or **Mobile mode** where supported by the channel.
-- **Fuel filtering**: Use fuel badges and filters to find the correct template variant.
-
-Permissions are role-based. In general:
-- Utility users can review, edit enabled content, and perform **Signoff**
-- Delivery teams have broader editing access and can manage **Project-Level Scenarios**
-- Admin users manage **Global Data Scenarios**
-- QA users typically have read-only preview and validation access
-
-If an option is unavailable, hidden, or locked, configuration is managed by system administrators or restricted by your role.
+Color management may be handled separately through the dedicated palette workflow rather than directly in this editor. If you do not see an option you expect, configuration is managed by system administrators.
 
 ## Related Features
 

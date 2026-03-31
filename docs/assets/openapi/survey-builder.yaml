@@ -11,20 +11,22 @@ security:
 paths:
   /survey-category/ingest:
     post:
-      summary: Ingest survey categories
-      description: Triggers survey category ingestion.
+      summary: POST /survey-category/ingest
+      description: Ingests survey categories for partner-facing survey builder workflows.
       operationId: survey-category_ingestCategories
       tags:
         - Survey Builder
       responses:
         '200':
           description: Successful response
+        '400':
+          description: Bad request
         '401':
           description: Unauthorized — invalid or missing Bearer token
   /survey/v1/template/{pilotId}/{templateId}:
     get:
       summary: Get external survey template
-      description: Returns a flattened external survey template for the specified pilot and template, optionally filtered by content status and localized by locale and region.
+      description: Returns a flattened external survey template for the specified pilot and template, optionally filtered by content status and locale.
       operationId: survey-template-external-apis_getTemplate
       tags:
         - Survey Builder
@@ -47,19 +49,13 @@ paths:
         - name: status
           in: query
           required: false
-          description: External content status used to choose published content or draft-ready content.
+          description: External content status used to choose published content or draft-ready content fallback behavior.
           schema:
             type: string
         - name: locale
           in: query
           required: false
-          description: Locale used to localize question text, info, and choices.
-          schema:
-            type: string
-        - name: region
-          in: query
-          required: false
-          description: Region echoed back in the response.
+          description: Locale used to localize template question titles, question text, info, and choices.
           schema:
             type: string
       responses:
@@ -73,15 +69,14 @@ paths:
                   data:
                     $ref: '#/components/schemas/ExternalSurveyTemplate'
                   updatedAt:
-                    type: string
+                    type: integer
+                    format: int64
                     nullable: true
-                  region:
-                    type: string
                 required:
                   - data
                   - updatedAt
         '400':
-          description: Bad request — utility, locale, or template validation failed
+          description: Bad request — utility not found, locale unsupported, or template not found
         '401':
           description: Unauthorized — invalid or missing Bearer token
         '404':
@@ -91,7 +86,7 @@ paths:
   /survey/v1/last-updated-ts/{pilotId}/{templateId}:
     get:
       summary: Get survey template last updated timestamp
-      description: Returns the cached last updated timestamp for the specified pilot and template.
+      description: Returns the cached last-updated timestamp for the specified pilot, template, and optional external content status.
       operationId: survey-template-external-apis_getLastUpdatedTS
       tags:
         - Survey Builder
@@ -126,10 +121,13 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: string
+                    type: integer
+                    format: int64
                     nullable: true
                 required:
                   - data
+        '400':
+          description: Bad request
         '401':
           description: Unauthorized — invalid or missing Bearer token
         '404':
@@ -293,74 +291,22 @@ components:
         - templateType
         - label
         - templateQuestions
-    ExternalQuestionChoiceRead:
+    ExternalSurveyTemplate:
       type: object
       properties:
-        selected:
+        surveyId:
           type: string
-          nullable: true
-        unselected:
-          type: string
-          nullable: true
-      required:
-        - selected
-        - unselected
-    ExternalQuestionChoiceWrite:
-      type: object
-      properties:
-        selected:
-          type: string
-          nullable: true
-        unselected:
-          type: string
-          nullable: true
-      required:
-        - selected
-        - unselected
-    ExternalQuestionChoice:
-      type: object
-      properties:
-        value:
-          type: string
-        order:
-          type: integer
-        text:
-          type: string
-          nullable: true
-        read:
-          $ref: '#/components/schemas/ExternalQuestionChoiceRead'
-        write:
-          $ref: '#/components/schemas/ExternalQuestionChoiceWrite'
-      required:
-        - value
-        - order
-        - text
-        - read
-        - write
-    ExternalQuestionCategory:
-      type: object
-      properties:
-        id:
-          type: string
-        label:
-          type: string
-          nullable: true
-      required:
-        - id
-        - label
-    ExternalQuestionParent:
-      type: object
-      properties:
-        id:
-          type: string
-        value:
+          enum:
+            - defaultSurvey
+            - BillAnalyzer
+        questions:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/ExternalSurveyQuestion'
       required:
-        - id
-        - value
-    ExternalQuestion:
+        - surveyId
+        - questions
+    ExternalSurveyQuestion:
       type: object
       properties:
         documentId:
@@ -391,7 +337,7 @@ components:
             - DETAILED
         category:
           allOf:
-            - $ref: '#/components/schemas/ExternalQuestionCategory'
+            - $ref: '#/components/schemas/ExternalSurveyCategoryRef'
           nullable: true
         state:
           nullable: true
@@ -403,20 +349,23 @@ components:
           nullable: true
         parent:
           allOf:
-            - $ref: '#/components/schemas/ExternalQuestionParent'
+            - $ref: '#/components/schemas/ExternalSurveyParent'
           nullable: true
         answerType:
           type: string
+          enum:
+            - BOOLEAN
+            - NON_BOOLEAN
         stateMapper:
           type: string
           nullable: true
         profileCode:
           type: string
-          nullable: true
           enum:
             - AP
             - HP
             - METADATA
+          nullable: true
         fuelTypes:
           type: array
           nullable: true
@@ -431,7 +380,7 @@ components:
           type: array
           nullable: true
           items:
-            $ref: '#/components/schemas/ExternalQuestionChoice'
+            $ref: '#/components/schemas/ExternalSurveyChoice'
       required:
         - documentId
         - id
@@ -448,18 +397,69 @@ components:
         - profileCode
         - fuelTypes
         - choices
-    ExternalSurveyTemplate:
+    ExternalSurveyCategoryRef:
       type: object
       properties:
-        surveyId:
+        id:
           type: string
-          enum:
-            - defaultSurvey
-            - BillAnalyzer
-        questions:
+        label:
+          type: string
+          nullable: true
+      required:
+        - id
+        - label
+    ExternalSurveyParent:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
           type: array
           items:
-            $ref: '#/components/schemas/ExternalQuestion'
+            type: string
       required:
-        - surveyId
-        - questions
+        - id
+        - value
+    ExternalSurveyChoice:
+      type: object
+      properties:
+        value:
+          type: string
+        order:
+          type: integer
+        text:
+          type: string
+          nullable: true
+        read:
+          $ref: '#/components/schemas/ExternalSurveyChoiceReadWriteSelected'
+        write:
+          $ref: '#/components/schemas/ExternalSurveyChoiceWrite'
+      required:
+        - value
+        - order
+        - text
+        - read
+        - write
+    ExternalSurveyChoiceReadWriteSelected:
+      type: object
+      properties:
+        selected:
+          type: string
+          nullable: true
+        unselected:
+          nullable: true
+      required:
+        - selected
+        - unselected
+    ExternalSurveyChoiceWrite:
+      type: object
+      properties:
+        selected:
+          type: string
+          nullable: true
+        unselected:
+          type: string
+          nullable: true
+      required:
+        - selected
+        - unselected
