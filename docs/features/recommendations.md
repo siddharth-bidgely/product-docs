@@ -1,8 +1,8 @@
 # Recommendations
 
 !!! abstract "Confluence"
-    - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=815431723)
-    - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=633110556)
+\- [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=815431723)
+\- [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=633110556)
 
 ## Overview
 
@@ -14,18 +14,24 @@ Recommendations also follow a governed lifecycle. In practice, this means you ca
 
 ## Key Capabilities
 
-- View all recommendations for the selected **Project**
-- See recommendation counts by status, including **Draft**, **Modified**, **Published**, and **Disabled**
-- Create a new recommendation with structured content fields
-- Edit recommendations in a dedicated editor
-- Work with separate working and live versions of the same recommendation
-- Filter and manage recommendation records in a table view
-- Save changes or discard unsaved updates
-- Navigate between recommendations using **Previous** and **Next**
-- Add and review comments for collaboration and approval
-- Manage localized content for supported locales
-- Upload and crop recommendation images
-- Configure **Score Thresholds** by category when you have permission
+## Key Capabilities
+
+* View all recommendations for the selected **Project**
+* See recommendation counts by status, including **Draft**, **Modified**, **Published**, and **Disabled**
+* Create a new recommendation with structured content fields
+* Edit recommendations in a dedicated editor
+* Work with separate working and live versions of the same recommendation
+* Filter and manage recommendation records in a table view
+* Save changes or discard unsaved updates
+* Navigate between recommendations using **Previous** and **Next**
+* Add and review comments for collaboration and approval
+* Manage localized content for supported locales
+* Upload and crop recommendation images
+* Configure **Score Thresholds** by category when you have permission
+* View recommendation model details with region context when region-specific content is being used
+* See recommendation counts for a project by content status
+
+## User Guide
 
 ## User Guide
 
@@ -64,6 +70,21 @@ Recommendations also follow a governed lifecycle. In practice, this means you ca
 7. Save your updates. For a new item, the recommendation remains **Draft**. For a previously published item, your saved changes become **Modified** until they are published.
 8. If you decide not to keep your changes, use the available discard action to revert the working copy.
 
+### Review recommendation counts by status
+
+1. Open the project you want to review.
+2. Go to **Recommendations**.
+3. Use the visible status views, filters, or summary counts to focus on the recommendation state you want to review.
+4. Check the count shown for that status to understand how many recommendations currently match it.
+5. Refresh the page or list if recent saves, publishes, or status changes are not yet reflected in what you are viewing.
+
+### Work with region-specific recommendation context
+
+1. Open the project and navigate to the recommendation content or model view used by your team.
+2. If your workflow includes region-specific recommendation handling, confirm that you are reviewing the correct region context for the project.
+3. Review recommendation content carefully, especially when comparing outputs across regions, because the region context may affect how recommendation data is interpreted downstream.
+4. If you are unsure which region should apply, confirm the expected setup with your project or implementation team before making content decisions.
+
 ### Collaborate with comments and review status
 
 1. Open a recommendation in the edit view.
@@ -71,7 +92,7 @@ Recommendations also follow a governed lifecycle. In practice, this means you ca
 3. Review the recommendation summary in the comments view so you can confirm you are discussing the correct item.
 4. Add comments to capture review feedback, questions, or approval notes.
 5. Return to the recommendation editor and make any requested updates.
-6. Move the recommendation through the review workflow according to your role. Common workflow states include **TODO**, **READY_FOR_REVIEW**, and **READY_TO_PUBLISH**.
+6. Move the recommendation through the review workflow according to your role. Common workflow states include **TODO**, **READY\_FOR\_REVIEW**, and **READY\_TO\_PUBLISH**.
 7. If you are authorized to publish, publish the recommendation when review is complete. If you are not authorized, submit it for the next reviewer instead.
 
 ![Role-based workflow](../assets/images/633110556-Screenshot-202025-08-21-20at-203.44.10-E2-80-AFPM.png)
@@ -91,27 +112,30 @@ Recommendations also follow a governed lifecycle. In practice, this means you ca
 
 ## Configuration Options
 
+## Configuration Options
+
 Recommendations are managed within the currently selected **Project**, so project selection is the first level of configuration.
 
 Common user-visible configuration includes:
 
-- **Default Locale** and **Supported Locales** for localized recommendation content
-- Recommendation content fields such as title, description, call-to-action text, links, images, and channel settings
-- Recommendation metadata such as category and targeting-related attributes
-- **Score Thresholds** by category
-- Workflow status progression, based on role and current recommendation state
+* **Default Locale** and **Supported Locales** for localized recommendation content
+* Recommendation content fields such as title, description, call-to-action text, links, images, and channel settings
+* Recommendation metadata such as category and targeting-related attributes
+* **Score Thresholds** by category
+* Workflow status progression, based on role and current recommendation state
+* Region context, where applicable, for recommendation model views and downstream recommendation handling
 
 Permissions affect what actions are available. For example:
 
-- Utility users can typically create, edit, save, discard, submit for review, and delete recommendations in assigned projects
-- PM, TPM, and CSM users can typically do all of the above and also publish, unpublish, and manage broader recommendation configuration
-- Some areas, such as **Reco Exclusions**, project profiles, or score settings, may be hidden if your role does not allow access
+* Utility users can typically create, edit, save, discard, submit for review, and delete recommendations in assigned projects
+* PM, TPM, and CSM users can typically do all of the above and also publish, unpublish, and manage broader recommendation configuration
+* Some areas, such as **Reco Exclusions**, project profiles, or score settings, may be hidden if your role does not allow access
 
 If an option is not visible, it is usually controlled by your assigned role or project access.
 
 ## Related Features
 
-- [Project Management](project-management.md)
-- [Content Management](content-management.md)
-- [Survey Builder](survey-builder.md)
-- [CX Visual Editor](cx-visual-editor.md)
+* [Project Management](project-management.md)
+* [Content Management](content-management.md)
+* [Survey Builder](survey-builder.md)
+* [CX Visual Editor](cx-visual-editor.md)
