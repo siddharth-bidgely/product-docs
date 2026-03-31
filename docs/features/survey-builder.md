@@ -1,7 +1,7 @@
 # Survey Builder
 
 !!! abstract "Confluence"
-    - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=948535302)
+\- [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=948535302)
 
 ## Overview
 
@@ -13,18 +13,23 @@ A key benefit of this feature is separation of concerns. The Question Bank acts 
 
 ## Key Capabilities
 
-- Create and maintain a centralized **Question Bank** for reusable survey questions.
-- Search and review existing questions before adding new ones.
-- Create new questions with details such as question type, category, profile code, fuel applicability, and answer choices.
-- Edit question text and answer choice text, including pilot-specific updates.
-- Manage localized survey content by switching between supported languages.
-- Build **Survey Templates** from approved questions in the Question Bank.
-- Import questions into a template using **Import from Question Bank**.
-- Reorder questions in a template to control survey flow.
-- Add or remove questions from a template as business needs change.
-- Configure branching by linking a parent question, trigger answer, and child question.
-- Preview and test survey flow before deployment.
-- Move questions and templates through review and publishing statuses such as **Draft**, **Modified**, **Ready for Review**, and **Published**.
+## Key Capabilities
+
+* Create and maintain a centralized **Question Bank** for reusable survey questions.
+* Search and review existing questions before adding new ones.
+* Create new questions with details such as question type, category, profile code, fuel applicability, and answer choices.
+* Edit question text and answer choice text, including pilot-specific updates.
+* Manage localized survey content by switching between supported languages.
+* Build **Survey Templates** from approved questions in the Question Bank.
+* Import questions into a template using **Import from Question Bank**.
+* Reorder questions in a template to control survey flow.
+* Add or remove questions from a template as business needs change.
+* Configure branching by linking a parent question, trigger answer, and child question.
+* Preview and test survey flow before deployment.
+* Track the latest update timestamp for a survey template by pilot and template, including by content status when needed.
+* Move questions and templates through review and publishing statuses such as **Draft**, **Modified**, **Ready for Review**, and **Published**.
+
+## User Guide
 
 ## User Guide
 
@@ -85,23 +90,35 @@ A key benefit of this feature is separation of concerns. The Question Bank acts 
 7. Move the template into the appropriate review status.
 8. Publish the template only after business review is complete.
 
+### Check when a survey template was last updated
+
+1. Open the survey template in the pilot context you want to review.
+2. Use the available last-updated view or reporting option for that template, if enabled in your environment.
+3. Select a content status if you need to check the latest update for a specific version, such as a working or published state.
+4. Review the returned timestamp to confirm when that template version was last changed.
+5. Confirm that you are checking the correct pilot and template combination, since the timestamp is tied to both.
+6. Use this information during review, publishing, or troubleshooting to verify whether the latest expected changes are included.
+
+## Configuration Options
+
 ## Configuration Options
 
 Survey Builder configuration depends on your role and the level you are working in.
 
-- **Question Bank vs. Template level:** Questions are maintained in the Question Bank, while survey flow is managed in templates.
-- **Global vs. pilot customization:** Global content supports standardization, while pilot-level work allows project-specific wording and template changes.
-- **Locale selection:** If multiple languages are supported for the selected pilot, you can switch locale while editing question text and answer labels.
-- **Fuel applicability:** Questions can be marked as applicable to **Global**, **Electric**, **Gas**, or **Water** contexts.
-- **Profile mapping fields:** Some question forms include fields such as **Profile Code**, **State Mapper**, and answer-level mapping fields. These should be completed according to your organization’s survey design standards.
-- **Review workflow:** Available actions depend on the item’s current status and your role in the approval process.
-- **Edit permissions:** Some records may become read-only depending on their current review state.
+* **Question Bank vs. Template level:** Questions are maintained in the Question Bank, while survey flow is managed in templates.
+* **Global vs. pilot customization:** Global content supports standardization, while pilot-level work allows project-specific wording and template changes.
+* **Locale selection:** If multiple languages are supported for the selected pilot, you can switch locale while editing question text and answer labels.
+* **Fuel applicability:** Questions can be marked as applicable to **Global**, **Electric**, **Gas**, or **Water** contexts.
+* **Profile mapping fields:** Some question forms include fields such as **Profile Code**, **State Mapper**, and answer-level mapping fields. These should be completed according to your organization’s survey design standards.
+* **Review workflow:** Available actions depend on the item’s current status and your role in the approval process.
+* **Edit permissions:** Some records may become read-only depending on their current review state.
+* **Last updated checks:** When reviewing template freshness, the latest update is evaluated for the selected **pilot** and **template** together, and may also depend on the content status you choose.
 
 If a setting or action is unavailable, configuration is managed by system administrators or restricted by workflow permissions.
 
 ## Related Features
 
-- [Project Management](project-management.md)
-- [Content Management](content-management.md)
-- [CX Visual Editor](cx-visual-editor.md)
-- [Config Registry](config-registry.md)
+* [Project Management](project-management.md)
+* [Content Management](content-management.md)
+* [CX Visual Editor](cx-visual-editor.md)
+* [Config Registry](config-registry.md)

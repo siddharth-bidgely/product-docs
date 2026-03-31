@@ -14,14 +14,16 @@ Authorization: Bearer <api_token>
 
 Endpoints are protected by Strapi policies that enforce role-based access. Refer to each operation's `x-policies` field in the spec above for specific policy requirements.
 
-
 ## Narrative reference
 
-_Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative._
+*Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative.*
+
+## Endpoints
 
 ## Endpoints
 
 ### POST /survey-category/ingest
+
 **Description:** Ingests survey category data into the content management system.
 
 **Path Parameters:** None
@@ -31,32 +33,35 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 **Request Body:** Not documented from the available controller context.
 
 **Example Response:**
+
 ```json
 {}
 ```
 
 **Access Control:** No route-specific policy was provided in the available evidence.
 
----
+***
 
 ### GET /survey/v1/template/:pilotId/:templateId
+
 **Description:** Returns the external survey template for a pilot ID and template ID, including a flattened list of localized survey questions and the template last-updated timestamp.
 
 **Path Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier used to resolve the utility record. |
-| templateId | string | Yes | Survey template type to fetch, such as `defaultSurvey` or `BillAnalyzer`. |
+| Name       | Type   | Required | Description                                                               |
+| ---------- | ------ | -------: | ------------------------------------------------------------------------- |
+| pilotId    | string |      Yes | Utility pilot identifier used to resolve the utility record.              |
+| templateId | string |      Yes | Survey template type to fetch, such as `defaultSurvey` or `BillAnalyzer`. |
 
 **Query Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| status | string | No | Content status to fetch. If `published`, the published template is returned; otherwise the handler prefers a draft template that is `READY_FOR_QA` and falls back to published. |
-| locale | string | No | Locale for localized question text and choices. The locale is normalized through the server default-locale utility and must be supported by the utility. |
+| Name   | Type   | Required | Description                                                                                                                                                                     |
+| ------ | ------ | -------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| status | string |       No | Content status to fetch. If `published`, the published template is returned; otherwise the handler prefers a draft template that is `READY_FOR_QA` and falls back to published. |
+| locale | string |       No | Locale for localized question text and choices. The locale is normalized through the server default-locale utility and must be supported by the utility.                        |
 
 **Example Response:**
+
 ```json
 {
   "data": {
@@ -173,31 +178,34 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** Protected by policy `api::survey-template.survey-template-fetch-policy`.
 
----
+***
 
-### GET /survey/v1/last-updated-ts/:pilotId/:templateId
-**Description:** Returns the cached last-updated timestamp for a survey template for the given pilot ID, template ID, and content status.
+### GET /survey/v1/last-updated-ts/:pilot\_Id/:template\_Id
+
+**Description:** Returns the cached last-updated timestamp for a survey template for the given pilot ID, template ID, and content status. The response also echoes the resolved pilot ID.
 
 **Path Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
-| templateId | string | Yes | Survey template type, such as `defaultSurvey` or `BillAnalyzer`. |
+| Name         | Type   | Required | Description                                                      |
+| ------------ | ------ | -------: | ---------------------------------------------------------------- |
+| pilot\_Id    | string |      Yes | Utility pilot identifier. Returned in the response as `pilotId`. |
+| template\_Id | string |      Yes | Survey template type, such as `defaultSurvey` or `BillAnalyzer`. |
 
 **Query Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| status | string | No | Content status used when looking up the cached timestamp. |
+| Name   | Type   | Required | Description                                               |
+| ------ | ------ | -------: | --------------------------------------------------------- |
+| status | string |       No | Content status used when looking up the cached timestamp. |
 
 **Example Response:**
+
 ```json
 {
-  "data": 1735689600000
+  "data": 1735689600000,
+  "pilotId": "utility_123"
 }
 ```
 
 **Access Control:** No route-specific policy was provided in the available evidence.
 
----
+***

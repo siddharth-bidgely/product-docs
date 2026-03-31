@@ -1,8 +1,8 @@
 # Recommendations
 
 !!! abstract "Confluence"
-    - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=815431723)
-    - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=633110556)
+\- [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=815431723)
+\- [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=633110556)
 
 ## Overview
 
@@ -14,18 +14,24 @@ This area is especially useful when multiple teams contribute to content. Utilit
 
 ## Key Capabilities
 
-- View all recommendations for the selected pilot in a central list.
-- See content counts by status, including **Draft**, **Modified**, **Published**, and **Disabled**.
-- Create a new recommendation from scratch.
-- Edit an existing recommendation in a structured form.
-- Work with separate draft/modified and published versions of the same recommendation.
-- Navigate between recommendations using **Previous**, **Next**, or the **Recommendation ID** selector.
-- Add and review comments for collaboration and approval workflows.
-- Manage localized content for supported locales, including text and media.
-- Upload and crop images for recommendation content.
-- Filter and manage recommendation data in a table-style editing experience.
-- Save or discard unsaved changes, including bulk save/discard behavior in supported areas.
-- Configure recommendation score thresholds by category.
+## Key Capabilities
+
+* View all recommendations for the selected pilot in a central list.
+* See content counts by status, including **Draft**, **Modified**, **Published**, and **Disabled**.
+* Check the total number of recommendations available for a pilot for a selected content status.
+* Create a new recommendation from scratch.
+* Edit an existing recommendation in a structured form.
+* Work with separate draft/modified and published versions of the same recommendation.
+* Navigate between recommendations using **Previous**, **Next**, or the **Recommendation ID** selector.
+* Add and review comments for collaboration and approval workflows.
+* Manage localized content for supported locales, including text and media.
+* Work with recommendation data in the context of the selected region when regionalized recommendation models are used.
+* Upload and crop images for recommendation content.
+* Filter and manage recommendation data in a table-style editing experience.
+* Save or discard unsaved changes, including bulk save/discard behavior in supported areas.
+* Configure recommendation score thresholds by category.
+
+## User Guide
 
 ## User Guide
 
@@ -78,6 +84,14 @@ This area is especially useful when multiple teams contribute to content. Utilit
 
 ![Role-based workflow context](../assets/images/633110556-Screenshot-202025-08-21-20at-203.44.10-E2-80-AFPM.png)
 
+### Review recommendation totals for a pilot
+
+1. Open the pilot where you want to review recommendation coverage.
+2. Select the recommendation status you want to evaluate, such as the live or working content set used by your team.
+3. Review the total recommendation count returned for that pilot and status.
+4. Use this count to validate content readiness, compare recommendation volume across pilots, or confirm that expected recommendations are available before downstream review.
+5. If your pilot uses regionalized recommendation models, make sure you are reviewing the count in the same regional context as the recommendation data you are validating.
+
 ### Update recommendation score thresholds
 
 1. Open **Recommendation Score Thresholds** from the Recommendations area.
@@ -92,28 +106,31 @@ This area is especially useful when multiple teams contribute to content. Utilit
 
 ## Configuration Options
 
+## Configuration Options
+
 Recommendations are configured at the pilot level, so what you can edit depends on the selected project and your role.
 
 Common user-visible configuration areas include:
 
-- **Supported Locales** and **Default Locale** for localized recommendation content.
-- Recommendation fields such as title, description, call-to-action text, channels, media, and category.
-- Recommendation status and review progression, based on your permissions.
-- **Recommendation Score Thresholds** for category-level scoring behavior.
-- Related targeting inputs that come from **Home Profile** and **Appliance Profile**.
+* **Supported Locales** and **Default Locale** for localized recommendation content.
+* Recommendation fields such as title, description, call-to-action text, channels, media, and category.
+* Recommendation status and review progression, based on your permissions.
+* **Recommendation Score Thresholds** for category-level scoring behavior.
+* Related targeting inputs that come from **Home Profile** and **Appliance Profile**.
+* Regional recommendation context, where supported for the pilot, so recommendation data can be reviewed for the selected region.
 
 Permission notes:
 
-- **Utility** users can typically create, edit, save, discard, switch pilots, and submit recommendations for review.
-- **Utility** users cannot publish or unpublish recommendations, and cannot edit certain advanced exclusion settings.
-- **PM**, **TPM**, and **CSM** users can manage the full lifecycle, including publishing, unpublishing, deleting, and related pilot configuration.
-- When a recommendation is in **READY_FOR_REVIEW**, Utility users cannot continue editing it.
+* **Utility** users can typically create, edit, save, discard, switch pilots, and submit recommendations for review.
+* **Utility** users cannot publish or unpublish recommendations, and cannot edit certain advanced exclusion settings.
+* **PM**, **TPM**, and **CSM** users can manage the full lifecycle, including publishing, unpublishing, deleting, and related pilot configuration.
+* When a recommendation is in **READY\_FOR\_REVIEW**, Utility users cannot continue editing it.
 
 If a setting or action is unavailable, it is usually controlled by role permissions or by the recommendation’s current workflow state. If needed, configuration is managed by system administrators.
 
 ## Related Features
 
-- [Project Management](project-management.md)
-- [Content Management](content-management.md)
-- [Survey Builder](survey-builder.md)
-- [CX Visual Editor](cx-visual-editor.md)
+* [Project Management](project-management.md)
+* [Content Management](content-management.md)
+* [Survey Builder](survey-builder.md)
+* [CX Visual Editor](cx-visual-editor.md)

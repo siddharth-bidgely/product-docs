@@ -212,7 +212,7 @@ components:
           description: Relation (oneToOne) to utility.utility
         choices:
           type: object
-          description: 'Component: survey.survey-choice'
+          description: Component: survey.survey-choice
         editStatus:
           type: string
           enum:
@@ -250,7 +250,7 @@ components:
           type: string
         templateQuestions:
           type: object
-          description: 'Component: survey.survey-template-question'
+          description: Component: survey.survey-template-question
         utility:
           type: object
           description: Relation (manyToOne) to utility.utility
@@ -461,8 +461,11 @@ components:
         data:
           type: integer
           nullable: true
+        pilotId:
+          type: string
       required:
         - data
+        - pilotId
     ErrorResponse:
       type: object
       properties:
