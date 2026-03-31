@@ -14,29 +14,33 @@ Authorization: Bearer <api_token>
 
 Endpoints are protected by Strapi policies that enforce role-based access. Refer to each operation's `x-policies` field in the spec above for specific policy requirements.
 
-
 ## Narrative reference
 
-_Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative._
+*Narrative descriptions complement the OpenAPI widget above; if they differ, treat the machine-readable YAML as authoritative.*
+
+## Endpoints
 
 ## Endpoints
 
 ### GET /recommendation/v1/model/:pilotId
-**Description:** Returns the recommendation model for a utility pilot, including the default profile, transformed recommendation records, and the last-updated timestamp for the requested external content status.
+
+**Description:** Returns the recommendation model for a utility pilot, including the default profile, transformed recommendation records, the last-updated timestamp for the requested external content status, and the requested region.
 
 **Path Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| Name    | Type   | Required | Description               |
+| ------- | ------ | -------: | ------------------------- |
+| pilotId | string |      Yes | Utility pilot identifier. |
 
 **Query Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| status | string | Yes | External content status to resolve. The code supports `PUBLISHED` and `READY_FOR_QA`. |
+| Name   | Type   | Required | Description                                                                           |
+| ------ | ------ | -------: | ------------------------------------------------------------------------------------- |
+| status | string |      Yes | External content status to resolve. The code supports `PUBLISHED` and `READY_FOR_QA`. |
+| region | string |      Yes | Region identifier passed through in the response, such as `US`, `CA`, or `EU`.        |
 
 **Example Response:**
+
 ```json
 {
   "data": {
@@ -84,32 +88,35 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
       }
     ]
   },
-  "updatedAt": 1735689600000
+  "updatedAt": 1735689600000,
+  "region": "US"
 }
 ```
 
 **Access Control:** Protected by policy `api::recommendation.reco-model-policy`.
 
----
+***
 
 ### GET /recommendation/v1/metadata/:pilotId
+
 **Description:** Returns recommendation metadata for a utility pilot in version 1 format, filtered by external content status, locale, and channel.
 
 **Path Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| Name    | Type   | Required | Description               |
+| ------- | ------ | -------: | ------------------------- |
+| pilotId | string |      Yes | Utility pilot identifier. |
 
 **Query Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| status | string | Yes | External content status to resolve. |
-| locale | string | Yes | Locale to return metadata for, such as `en` or `es`. |
-| channel | string | Yes | Delivery channel filter. Supported values are `EMAIL`, `WEB`, `PAPER`, and `DEFAULT`. |
+| Name    | Type   | Required | Description                                                                           |
+| ------- | ------ | -------: | ------------------------------------------------------------------------------------- |
+| status  | string |      Yes | External content status to resolve.                                                   |
+| locale  | string |      Yes | Locale to return metadata for, such as `en` or `es`.                                  |
+| channel | string |      Yes | Delivery channel filter. Supported values are `EMAIL`, `WEB`, `PAPER`, and `DEFAULT`. |
 
 **Example Response:**
+
 ```json
 {
   "data": [
@@ -144,26 +151,28 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** Protected by policy `api::recommendation.reco-metadata-policy`.
 
----
+***
 
 ### GET /recommendation/v2/metadata/:pilotId
+
 **Description:** Returns recommendation metadata for a utility pilot in version 2 format, including the version 1 fields plus additional action-classification fields.
 
 **Path Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| Name    | Type   | Required | Description               |
+| ------- | ------ | -------: | ------------------------- |
+| pilotId | string |      Yes | Utility pilot identifier. |
 
 **Query Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| status | string | Yes | External content status to resolve. |
-| locale | string | Yes | Locale to return metadata for, such as `en` or `es`. |
-| channel | string | Yes | Delivery channel filter. Supported values are `EMAIL`, `WEB`, `PAPER`, and `DEFAULT`. |
+| Name    | Type   | Required | Description                                                                           |
+| ------- | ------ | -------: | ------------------------------------------------------------------------------------- |
+| status  | string |      Yes | External content status to resolve.                                                   |
+| locale  | string |      Yes | Locale to return metadata for, such as `en` or `es`.                                  |
+| channel | string |      Yes | Delivery channel filter. Supported values are `EMAIL`, `WEB`, `PAPER`, and `DEFAULT`. |
 
 **Example Response:**
+
 ```json
 {
   "data": [
@@ -204,24 +213,26 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** Protected by policy `api::recommendation.reco-metadata-policy`.
 
----
+***
 
 ### GET /recommendation/v1/insight-definition/:pilotId
+
 **Description:** Returns insight definitions for a utility pilot, grouped from recommendation insight associations by appliance category, association type, and fuel type.
 
 **Path Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| Name    | Type   | Required | Description               |
+| ------- | ------ | -------: | ------------------------- |
+| pilotId | string |      Yes | Utility pilot identifier. |
 
 **Query Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| status | string | Yes | External content status to resolve. The code supports `PUBLISHED` and `READY_FOR_QA`. |
+| Name   | Type   | Required | Description                                                                           |
+| ------ | ------ | -------: | ------------------------------------------------------------------------------------- |
+| status | string |      Yes | External content status to resolve. The code supports `PUBLISHED` and `READY_FOR_QA`. |
 
 **Example Response:**
+
 ```json
 {
   "data": [
@@ -251,24 +262,26 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** Protected by policy `api::recommendation.reco-model-policy`.
 
----
+***
 
 ### GET /recommendation/v1/last-updated-ts/:pilotId
+
 **Description:** Returns the cached last-updated timestamp for recommendation content for a utility pilot and external content status.
 
 **Path Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| Name    | Type   | Required | Description               |
+| ------- | ------ | -------: | ------------------------- |
+| pilotId | string |      Yes | Utility pilot identifier. |
 
 **Query Parameters:**
 
-| Name | Type | Required | Description |
-|---|---|---:|---|
-| status | string | Yes | External content status to resolve. |
+| Name   | Type   | Required | Description                         |
+| ------ | ------ | -------: | ----------------------------------- |
+| status | string |      Yes | External content status to resolve. |
 
 **Example Response:**
+
 ```json
 {
   "data": 1735689600000
@@ -277,4 +290,34 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 
 **Access Control:** Protected by policy `api::recommendation.reco-model-policy`.
 
----
+***
+
+### GET /recommendation/v1/count/:pilotId
+
+**Description:** Returns the number of recommendations available for a utility pilot for the requested external content status.
+
+**Path Parameters:**
+
+| Name    | Type   | Required | Description               |
+| ------- | ------ | -------: | ------------------------- |
+| pilotId | string |      Yes | Utility pilot identifier. |
+
+**Query Parameters:**
+
+| Name   | Type   | Required | Description                         |
+| ------ | ------ | -------: | ----------------------------------- |
+| status | string |      Yes | External content status to resolve. |
+
+**Example Response:**
+
+```json
+{
+  "data": {
+    "count": 42
+  }
+}
+```
+
+**Access Control:** Protected by policy `api::recommendation.reco-model-policy`.
+
+***
