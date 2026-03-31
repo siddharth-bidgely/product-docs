@@ -12,7 +12,7 @@ paths:
   /recommendation/v1/model/{pilotId}:
     get:
       summary: Get recommendation model
-      description: Returns the recommendation model and default profile for the specified pilot.
+      description: Returns the external recommendation model and default profile tags for the specified pilot.
       operationId: reco-external-apis_getRecoModel
       tags:
         - Recommendations
@@ -25,7 +25,7 @@ paths:
             type: string
         - name: status
           in: query
-          required: false
+          required: true
           description: External content status used to select recommendation content.
           schema:
             type: string
@@ -60,20 +60,20 @@ paths:
             type: string
         - name: status
           in: query
-          required: false
+          required: true
           description: External content status used to select recommendation content.
           schema:
             type: string
         - name: locale
           in: query
-          required: false
-          description: Locale used to resolve localized recommendation content.
+          required: true
+          description: Locale used for localized recommendation content.
           schema:
             type: string
         - name: channel
           in: query
-          required: false
-          description: Channel filter applied to recommendation metadata.
+          required: true
+          description: Channel filter for recommendation metadata.
           schema:
             type: string
             enum:
@@ -99,7 +99,7 @@ paths:
   /recommendation/v2/metadata/{pilotId}:
     get:
       summary: Get recommendation metadata v2
-      description: Returns recommendation metadata for the specified pilot using the v2 response shape.
+      description: Returns recommendation metadata for the specified pilot using the v2 response shape with additional action fields.
       operationId: reco-external-apis_getRecoMetadataV2
       tags:
         - Recommendations
@@ -112,20 +112,20 @@ paths:
             type: string
         - name: status
           in: query
-          required: false
+          required: true
           description: External content status used to select recommendation content.
           schema:
             type: string
         - name: locale
           in: query
-          required: false
-          description: Locale used to resolve localized recommendation content.
+          required: true
+          description: Locale used for localized recommendation content.
           schema:
             type: string
         - name: channel
           in: query
-          required: false
-          description: Channel filter applied to recommendation metadata.
+          required: true
+          description: Channel filter for recommendation metadata.
           schema:
             type: string
             enum:
@@ -164,7 +164,7 @@ paths:
             type: string
         - name: status
           in: query
-          required: false
+          required: true
           description: External content status used to select recommendation content.
           schema:
             type: string
@@ -186,7 +186,7 @@ paths:
   /recommendation/v1/last-updated-ts/{pilotId}:
     get:
       summary: Get recommendation cache timestamp
-      description: Returns the last updated timestamp for recommendation cache data for the specified pilot.
+      description: Returns the last updated timestamp for recommendation cache data for the specified pilot and status.
       operationId: reco-external-apis_getLastUpdatedTS
       tags:
         - Recommendations
@@ -199,13 +199,13 @@ paths:
             type: string
         - name: status
           in: query
-          required: false
-          description: External content status used to select recommendation content.
+          required: true
+          description: External content status used to look up the cache timestamp.
           schema:
             type: string
       responses:
         '200':
-          description: Last updated timestamp returned successfully.
+          description: Timestamp returned successfully.
           content:
             application/json:
               schema:
@@ -216,8 +216,6 @@ paths:
           description: Unauthorized — invalid or missing Bearer token
         '404':
           description: Resource not found
-      x-policies:
-        - api::recommendation.reco-model-policy
 components:
   securitySchemes:
     bearerAuth:
@@ -492,19 +490,6 @@ components:
         - fullImage
         - shortenedImage
         - elongatedImage
-    GetRecoMetadataResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/RecoMetadataExternal'
-        updatedAt:
-          type: integer
-          nullable: true
-      required:
-        - data
-        - updatedAt
     RecoMetadataExternalV2:
       allOf:
         - $ref: '#/components/schemas/RecoMetadataExternal'
@@ -532,6 +517,19 @@ components:
             - actionType
             - objective
             - herImage
+    GetRecoMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecoMetadataExternal'
+        updatedAt:
+          type: integer
+          nullable: true
+      required:
+        - data
+        - updatedAt
     GetRecoMetadataV2Response:
       type: object
       properties:

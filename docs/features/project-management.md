@@ -9,112 +9,126 @@
 
 ## Overview
 
-Project Management in DETO helps delivery teams create, organize, and maintain customer projects from initial setup through ongoing updates. It brings together the key business objects used in Delivery Console—**Utility**, **Environment**, and **Project**—so you can stand up a new customer setup with a guided flow instead of managing each part separately.
+Project Management is the workspace in DETO for creating, organizing, and maintaining projects and their environments. It brings together the key setup steps that delivery teams typically need at the start of a new utility or pilot rollout: choosing or creating a utility, selecting or creating an environment, entering project details, defining ingestion settings, and then managing the project after it is created.
 
-This area is most useful for Delivery Engineers, Product Managers, Customer Success teams, and Enterprise Admins who need visibility into project setup and status. You can start from the **Projects Dashboard**, create a new project with required business and ingestion details, review project information on **Project Details**, manage setup sections such as **Pipeline Components** and **Application Scope**, and track provisioning progress through **Environment Creation Status**.
-
-A key benefit of this feature is that project setup is staged and controlled. You can enter project information, rely on default setup where supported, review changes before applying them, and monitor whether a new environment is still **Inprogress** or ready for use.
+This area is most useful for Delivery Engineers, Product Managers, Customer Success teams, and Enterprise Admins who need a clear view of project status and setup progress without relying on separate tools. After creation, the same area also supports ongoing work such as reviewing project attributes, managing mapped environments, updating setup sections, enabling application scope, configuring pipeline components, and pushing approved changes to an environment.
 
 ## Key Capabilities
 
-- View all projects from the **Projects Dashboard** in recent-first order.
-- Search and filter projects by name, **Project Type**, and **Region**.
-- Start **Create new Project** from the dashboard.
-- Create or select a **Utility** during project setup.
-- Choose **Use Existing Environment** or **Create new Environment** in the project wizard.
-- Enter **Core attributes Information** such as project name, description, language, country, and timezone.
-- Use **Autogenerate** to assign a region-based 5-digit **Project ID**.
-- Configure **Ingestion Configuration Information** including customer type, fuel type, units, meter type, and data source.
-- Review project information and mapped environments on **Project Details**.
-- Manage post-creation setup in **Core Attributes**, **Ingestion Configs**, **Pipeline Components**, and **Application Scope**.
-- Use **Push Updates** to review and apply saved configuration changes to the target environment.
-- Track provisioning progress in **Environment Creation Status** and refresh to see the latest status.
+- View all projects from the **Projects** dashboard.
+- Search for a project and filter by project **Type** and **Region**.
+- Open an existing project from its project card.
+- Create a new project with a guided setup flow.
+- Select an existing **Utility** or create a new one during setup.
+- Select an existing **Environment** or create a new environment for the project.
+- Enter and maintain core project attributes such as name, description, language, country, and timezone.
+- Define ingestion settings including customer type, fuel type, meter type, units, and data source.
+- Review project details and mapped environments from the **Project Details** page.
+- Enable or update **Pipeline Components** for a project.
+- Enable or update **Application Scope** items that apply to the project.
+- Review pending changes and use **Push Updates** to apply approved configuration changes.
+- Monitor **Environment Creation Status** while a new environment is being provisioned.
 
 ## User Guide
 
 ### Create a new project
 
-1. Open **Projects** from the main navigation to reach the **Projects Dashboard**.
-2. Review the project cards, or use search and filters to narrow the list by project name, **Project Type**, or **Region**.
-3. Click **Create new Project** to open the **Project Creation** wizard.
-4. In the first step, choose the **Project Type** and then select an existing **Utility** or create a new one inline.
-5. Decide whether to **Use Existing Environment** or **Create new Environment**. If you use an existing environment, the **AWS Region** is filled in automatically and cannot be changed.
-6. If you create a new utility, enter the required utility details such as **Country** and **Utility Name**, then continue.
-7. Move to the next step to complete **Core attributes Information** and **Ingestion Configuration Information**.
-8. When all required fields are complete, click **Submit Project Request**.
+1. Open **Projects** from the main navigation to reach the project dashboard.
+2. Review the project cards, or use **Search Projects** and the available filters to confirm the project does not already exist.
+3. Click **Create new Project** to start the guided setup.
+4. In the first step, choose the **Project Type**. Use the option that best matches the engagement:
+   - **Rollout**
+   - **POCs**
+   - **Internal**
+   - **Demos**
+5. In **Utility**, either select an existing utility or create a new one. If you create a new utility, enter the required business details such as **Country** and **Utility Name**, plus any optional address details.
+6. In **Environment Selection**, choose **Use Existing Environment** if you are working with an existing utility and environment, or choose **Create new Environment** if this project needs a new setup. If you create a new environment, select the required **AWS Region**. If you use an existing environment, the region is preselected and cannot be changed.
+7. Continue to the project details step and complete the core fields, including **Project ID**, **Project Name**, **Project Description**, **Project Image URL**, **Preferred Language**, **Country**, and **Timezone**. You can enter the **Project ID** manually or use **Autogenerate**. Generated IDs follow region-based numbering rules.
+8. Click **Next** to continue into ingestion setup.
 
-![Projects Dashboard](../assets/images/847642630-Screenshot-202025-08-27-20at-205.13.53-E2-80-AFPM.png)
+![Projects dashboard](../assets/images/847642630-Screenshot-202025-08-27-20at-205.13.53-E2-80-AFPM.png)
 
-### Complete core attributes and ingestion settings
+### Complete core attributes and ingestion setup
 
-1. In **Core attributes Information**, enter or confirm the **Project ID**. If you do not have one, click **Autogenerate**.
-2. Enter the **Project Name**, **Project Description**, and **Project Image URL**.
-3. Select the **Preferred Language** and **Country**.
-4. Choose the **Timezone** based on the selected country.
-5. In **Ingestion Configuration Information**, select one or more **Customer Type** values such as **Residential**, **SMB**, or **C&I**.
-6. Select the required **Fuel Type** values. For each fuel selected, choose both the standard unit and invoice unit from the available lists.
-7. Select the applicable **Meter Type** and then choose the **Data Source Type**.
-8. If you select **SFTP**, complete the additional connection fields shown on the form. Then review the page and click **Submit Project Request**.
+1. In the core attributes section of the creation flow, confirm the project identity fields are correct before moving on.
+2. If needed, use **Autogenerate** for **Project ID**. This is helpful when you want the next available ID for the selected region.
+3. In the ingestion section, select one or more **Customer Type** values such as **Residential**, **SMB**, or **C&I**.
+4. Select the required **Fuel Types**. For each fuel type you choose, complete the matching unit fields, including the standard unit and invoice unit.
+5. Select the applicable **Meter Types**.
+6. Choose the **Data Source Type**:
+   - If you select **S3**, no additional source details are required in this step.
+   - If you select **SFTP**, complete the additional fields such as **SFTP User**, **SFTP Password**, **SFTP Server Host Name**, and **Decryption Pathphrase**.
+7. Review all required fields carefully. S3-based ingestion is the most established setup path today, so use that where it matches your onboarding plan.
+8. Click **Submit Project Request** to create the project and start baseline environment setup if a new environment was requested.
 
-![Core attributes form](../assets/images/847642630-Screenshot-202025-08-27-20at-205.47.20-E2-80-AFPM.png)
-![Ingestion configuration form](../assets/images/847642630-Screenshot-202025-08-27-20at-205.56.50-E2-80-AFPM.png)
+![Project creation form](../assets/images/847642630-Screenshot-202025-08-27-20at-205.31.50-E2-80-AFPM.png)
+![Core attributes section](../assets/images/847642630-Screenshot-202025-08-27-20at-205.47.20-E2-80-AFPM.png)
+![Ingestion configuration section](../assets/images/847642630-Screenshot-202025-08-27-20at-205.56.50-E2-80-AFPM.png)
 
-### Review project details and environment mapping
+### Review project details and monitor environment creation
 
-1. Open **Project Details** for the project you want to manage.
-2. In **Project Attributes**, review the core information such as **Project ID**, **Project Name**, **Country**, **Customer Type**, **Fuel Type**, and **Meter Type**.
-3. In **Project Environments**, use the environment selector to view mapped environments for the same project.
-4. Confirm the environment details shown, including environment type such as **UAT**, **Prod**, **Non-Prod**, or **Dev**, along with region, URL, and status.
-5. If your role allows it, open the setup sections under **Project Setup** to continue configuration.
-6. Use these sections to review or update **Core Attributes**, **Ingestion Configs**, **Pipeline Components**, and **Application Scope** as needed.
+1. After project creation, open **Project Details** for the project you want to manage.
+2. In the project attributes area, review the key information such as **Project ID**, **Project Name**, **Country**, **Customer Type**, **Fuel Type**, and **Meter Type**.
+3. Use the setup sections available to your role to continue project configuration. Depending on permissions, you may see areas such as **Core Attributes**, **Ingestion Configs**, **Pipeline Components**, and **Application Scope**.
+4. In the environments section, review the mapped environments for the project. You can see details such as environment name, region, URL, and status.
+5. If the project was created with a new environment, open **Environment Creation Status** to track progress. Provisioning can take significant time, so this page is intended for progress checks rather than immediate completion.
+6. Review the overall status and the detailed progress shown on the page.
+7. Refresh the page when you want the latest status update.
+8. Return to **Project Details** once the environment is ready and continue setup.
 
-![Project details overview](../assets/images/853245955-Screenshot-202025-08-28-20at-203.14.27-E2-80-AFPM.png)
-![Project environments section](../assets/images/853245955-Screenshot-202025-08-28-20at-203.18.15-E2-80-AFPM.png)
+![Project details page](../assets/images/853245955-Screenshot-202025-08-28-20at-203.14.27-E2-80-AFPM.png)
+![Environment creation status](../assets/images/853245955-Screenshot-202025-08-28-20at-204.23.31-E2-80-AFPM.png)
+
+### Push approved project changes to an environment
+
+1. Make your project changes in the relevant setup areas, such as project configuration, pipeline setup, or application scope.
+2. Save your edits in those sections as needed. These changes are stored for review and are not applied to the environment immediately.
+3. Open **Project Details** and go to **Push Updates** or **Pending Configuration Push** for the selected project.
+4. Click **Push Updates** to begin the review flow.
+5. In the confirmation popup, review the consolidated list of changes since the last successful push.
+6. Confirm the push only after you are satisfied that the pending updates are ready for the target environment.
+7. Wait for the results popup to show which items succeeded and which failed.
+8. If any items fail, use **Retry Failed** to rerun only the failed updates instead of repeating the full push.
+
+![Push updates review](../assets/images/853245955-Screenshot-202025-08-28-20at-204.17.29-E2-80-AFPM.png)
+![Push results](../assets/images/853245955-Screenshot-202025-08-28-20at-204.18.22-E2-80-AFPM.png)
 
 ### Configure pipeline components and application scope
 
-1. From **Project Details**, open **Pipeline Components** to manage project processing and content-related setup.
-2. Review the categories shown, such as **Core Processing**, **Content Features**, and **Advanced Features**.
-3. Enable or disable the components that are available for this project. Some options appear only when they apply to the project’s customer, fuel, meter, or product setup.
-4. Where a file upload is offered, add a replacement file only if you want to override the default resource already provided.
-5. Save your changes before leaving the page.
-6. Next, open **Application Scope** from the project area.
-7. Expand an application category, review the available features, and use the toggles to enable or disable items by fuel type where applicable.
-8. Click **Save** to keep your changes.
+1. Open **Project Details** for the project you want to configure.
+2. Go to **Pipeline Components** to review the setup categories:
+   - **Core Processing**
+   - **Content Features**
+   - **Advanced Features**
+3. Enable or disable the components that are applicable to the project. Some components are enabled by default, and some are shown only when the project’s customer type, fuel type, meter type, or enabled products make them relevant.
+4. Where a component supports a default file, you can leave the default in place or upload a replacement file if you have a newer or project-specific version.
+5. For content-related items such as **RECO** and **Insights**, select the required **source pilot** and **supported locales** when prompted.
+6. Save your pipeline changes, then open **Application Scope** to control which pilot-level applications and features are enabled.
+7. In **Application Scope**, expand the relevant application areas and turn features on or off for the supported fuel types shown for the project.
+8. Click **Save** when you finish. Return later if the project scope changes.
 
 ![Pipeline components setup](../assets/images/853475347-Screenshot-202025-09-01-20at-2010.31.55-E2-80-AFAM.png)
 ![Application scope setup](../assets/images/852557844-Screenshot-202025-09-01-20at-2010.01.20-E2-80-AFAM.png)
 
-### Push updates and track environment creation status
-
-1. After making changes in project setup areas, return to **Project Details**.
-2. Open **Push Updates** or the pending push area for the selected project.
-3. Review the **confirmation popup**, which lists all configuration changes since the last successful push.
-4. Confirm the changes only after you are satisfied with the review.
-5. Wait for the result message to show which updates succeeded and which failed.
-6. If any items fail, use **retry Failed** where available.
-7. To monitor a newly created environment, open **Environment Creation Status** from the project area.
-8. Review the current status and refresh the page to see the latest provisioning progress.
-
-![Push updates review](../assets/images/853245955-Screenshot-202025-08-28-20at-204.17.29-E2-80-AFPM.png)
-![Environment creation status](../assets/images/853245955-Screenshot-202025-08-28-20at-204.23.31-E2-80-AFPM.png)
-
 ## Configuration Options
 
-Project Management includes a mix of editable and read-only settings.
+Project Management behavior is partly controlled by role-based access. Users only see the setup sections and actions allowed for their role. For example, some users may be able to create projects and manage setup sections, while others may have view-only access to project details and status.
 
-- **Editable during project creation:** **Project Type**, utility selection or creation, environment choice, core project details, and ingestion settings.
-- **Usually read-only after creation:** **Utility**, environment setup choices, **AWS Region**, and **Project ID**.
-- **Editable after creation:** selected fields in **Core Attributes**, parts of **Ingestion Configs**, **Pipeline Components**, and **Application Scope**.
-- **Conditional fields:** unit fields appear based on selected **Fuel Type**; SFTP fields appear only when **Data Source Type** is **SFTP**.
-- **Visibility by role:** access to setup sections is controlled by **RBAC**. Users only see sections they are permitted to use.
-- **Applicability rules:** some pipeline and application options are shown only when they match the project’s customer, fuel, meter, and product context.
+Common user-visible configuration areas include:
 
-If you do not see a section or cannot edit a field, configuration is likely managed by system administrators or restricted by your role.
+- **Project Type** selection during creation and editing where allowed
+- **Utility** selection during creation
+- **Environment** selection during creation
+- **Preferred Language**, **Country**, and **Timezone**
+- **Ingestion Configs** such as fuel types, units, meter types, and data source
+- **Pipeline Components** visibility based on project applicability
+- **Application Scope** visibility based on customer type, fuel type, and meter type
+
+Some central applicability rules and master lists are maintained by administrators. If you do not see a setup section, feature, or toggle that you expect, configuration is managed by system administrators.
 
 ## Related Features
 
 - [Application Scope](project-management.md)
-- [Recommendations](recommendations.md)
+- [Workflow Engine](workflow-engine.md)
+- [Config Registry](config-registry.md)
 - [Content Management](content-management.md)
-- [Environment Management](environment-management.md)

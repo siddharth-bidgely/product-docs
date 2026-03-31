@@ -22,19 +22,19 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 ## Endpoints
 
 ### GET /recommendation/v1/model/:pilotId
-**Description:** Returns the recommendation model for a utility pilot, including the default profile, transformed recommendation records, and the last-updated timestamp for the requested external content status.
+**Description:** Returns the recommendation model for a pilot, including the default profile, transformed recommendation records, and the last-updated timestamp for the requested external content status.
 
 **Path Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| `pilotId` | string | Yes | Pilot identifier used to resolve the utility. |
 
 **Query Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| status | string | Yes | External content status to resolve. The code supports `PUBLISHED` and `READY_FOR_QA`. |
+| `status` | string | Yes | External content status to resolve. Supported by the implementation for external reads, including `PUBLISHED` and `READY_FOR_QA` (Ready for Quality Assurance). |
 
 **Example Response:**
 ```json
@@ -42,18 +42,18 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
   "data": {
     "defaultProfile": [
       "HOME:OWN", 
-      "DWELLING:SINGLE_FAMILY", 
-      "AP:1:C:1-" 
+      "HEAT:PUMP", 
+      "AP:17:C:1-" 
     ],
     "model": [
       {
-        "recommendationId": "reco_hvac_tuneup_001",
+        "recommendationId": "RECO_1001",
         "fuelType": [
           "ELECTRIC"
         ],
         "category": "HVAC",
         "applianceTags": [
-          1
+          12
         ],
         "disabled": false,
         "defaultReco": true,
@@ -66,20 +66,21 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
         ]
       },
       {
-        "recommendationId": "reco_water_heater_002",
+        "recommendationId": "RECO_1002",
         "fuelType": [
-          "GAS"
+          "GAS",
+          "ELECTRIC"
         ],
         "category": "WATER_HEATING",
         "applianceTags": [
-          5
+          0,
+          17
         ],
         "disabled": false,
         "defaultReco": false,
-        "relevanceScore": 0.625,
+        "relevanceScore": 0.542,
         "exclusions": [
-          "AP:5:C:0-1", 
-          "RP:NOT_FLAT" 
+          "AP:5|6:C:1-"
         ]
       }
     ]
@@ -88,138 +89,164 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 }
 ```
 
+**Response Notes:**
+- `data.defaultProfile` is an array of profile tags derived from the utility’s default home-profile and appliance-profile values.
+- `data.model[].applianceTags` is an array of appliance tag IDs. When the resolved appliance ID is `0`, the API also adds secondary appliance tag `17`.
+- `data.model[].exclusions` is a flattened list of exclusion tags derived from:
+  - home profile exclusions,
+  - appliance profile exclusions,
+  - rate plan exclusions,
+  - program participation exclusions,
+  - month exclusions.
+- `updatedAt` is a timestamp in milliseconds since epoch. If no cached timestamp exists, the service sets one before returning.
+
 **Access Control:** Protected by policy `api::recommendation.reco-model-policy`.
 
 ---
 
 ### GET /recommendation/v1/metadata/:pilotId
-**Description:** Returns recommendation metadata for a utility pilot in version 1 format, filtered by external content status, locale, and channel.
+**Description:** Returns recommendation metadata for a pilot in version 1 format, filtered by external content status, locale, and channel.
 
 **Path Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| `pilotId` | string | Yes | Pilot identifier used to resolve the utility. |
 
 **Query Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| status | string | Yes | External content status to resolve. |
-| locale | string | Yes | Locale to return metadata for, such as `en` or `es`. |
-| channel | string | Yes | Delivery channel filter. Supported values are `EMAIL`, `WEB`, `PAPER`, and `DEFAULT`. |
+| `status` | string | Yes | External content status to resolve. |
+| `locale` | string | Yes | Locale to use for localized recommendation content. |
+| `channel` | string | Yes | Delivery channel filter. Supported values: `EMAIL`, `WEB`, `PAPER`, `DEFAULT`. |
 
 **Example Response:**
 ```json
 {
   "data": [
     {
-      "recommendationId": "reco_hvac_tuneup_001",
+      "recommendationId": "RECO_1001",
       "fuelType": [
         "ELECTRIC"
       ],
       "category": "HVAC",
       "applianceTags": [
-        1
+        12
       ],
       "disabled": false,
       "defaultReco": true,
       "featuredContent": true,
       "program": false,
-      "title": "Schedule an HVAC tune-up",
-      "description": "Improve system efficiency with seasonal maintenance.",
-      "detail": "A professional tune-up can reduce waste and improve comfort.",
-      "videoLink": "https://www.bidgely.com/videos/hvac-tuneup", 
-      "ctaButtonLink": "https://www.bidgely.com/learn/hvac-tuneup", 
-      "ctaButtonText": "Learn more",
-      "icon": "https://cms.bidgely.com/uploads/hvac_icon.png", 
-      "fullImage": "https://cms.bidgely.com/uploads/hvac_full.png", 
-      "shortenedImage": "https://cms.bidgely.com/uploads/hvac_short.png", 
-      "elongatedImage": "https://cms.bidgely.com/uploads/hvac_long.png" 
+      "title": "Tune up your heat pump",
+      "description": "Improve efficiency with a seasonal tune-up.",
+      "detail": "A professional tune-up can improve performance and reduce energy waste.", 
+      "videoLink": "https://www.bidgely.com/videos/heat-pump-tune-up", 
+      "ctaButtonLink": "https://www.bidgely.com/learn/heat-pump-tune-up", 
+      "ctaButtonText": "Learn more", 
+      "icon": "https://cms.bidgely.com/uploads/reco_icon_heat_pump.png", 
+      "fullImage": "https://cms.bidgely.com/uploads/reco_full_heat_pump.png", 
+      "shortenedImage": "https://cms.bidgely.com/uploads/reco_short_heat_pump.png", 
+      "elongatedImage": "https://cms.bidgely.com/uploads/reco_long_heat_pump.png" 
     }
   ],
   "updatedAt": 1735689600000
 }
 ```
+
+**Response Notes:**
+- Version 1 metadata includes core recommendation presentation fields and media URLs.
+- `applianceTags` contains appliance tag IDs associated with the recommendation category.
+- `updatedAt` is a timestamp in milliseconds since epoch.
 
 **Access Control:** Protected by policy `api::recommendation.reco-metadata-policy`.
 
 ---
 
 ### GET /recommendation/v2/metadata/:pilotId
-**Description:** Returns recommendation metadata for a utility pilot in version 2 format, including the version 1 fields plus additional action-classification fields.
+**Description:** Returns recommendation metadata for a pilot in version 2 format, extending version 1 with additional action and Home Energy Report fields.
 
 **Path Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| `pilotId` | string | Yes | Pilot identifier used to resolve the utility. |
 
 **Query Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| status | string | Yes | External content status to resolve. |
-| locale | string | Yes | Locale to return metadata for, such as `en` or `es`. |
-| channel | string | Yes | Delivery channel filter. Supported values are `EMAIL`, `WEB`, `PAPER`, and `DEFAULT`. |
+| `status` | string | Yes | External content status to resolve. |
+| `locale` | string | Yes | Locale to use for localized recommendation content. |
+| `channel` | string | Yes | Delivery channel filter. Supported values: `EMAIL`, `WEB`, `PAPER`, `DEFAULT`. |
 
 **Example Response:**
 ```json
 {
   "data": [
     {
-      "recommendationId": "reco_hvac_tuneup_001",
+      "recommendationId": "RECO_1001",
       "fuelType": [
         "ELECTRIC"
       ],
       "category": "HVAC",
       "applianceTags": [
-        1
+        12
       ],
       "disabled": false,
       "defaultReco": true,
       "featuredContent": true,
       "program": false,
-      "title": "Schedule an HVAC tune-up",
-      "description": "Improve system efficiency with seasonal maintenance.",
-      "detail": "A professional tune-up can reduce waste and improve comfort.",
-      "videoLink": "https://www.bidgely.com/videos/hvac-tuneup", 
-      "ctaButtonLink": "https://www.bidgely.com/learn/hvac-tuneup", 
-      "ctaButtonText": "Learn more",
-      "icon": "https://cms.bidgely.com/uploads/hvac_icon.png", 
-      "fullImage": "https://cms.bidgely.com/uploads/hvac_full.png", 
-      "shortenedImage": "https://cms.bidgely.com/uploads/hvac_short.png", 
-      "elongatedImage": "https://cms.bidgely.com/uploads/hvac_long.png", 
-      "actionSavingsPotential": 12.5,
-      "frequency": "one_time",
-      "userType": "homeowner",
-      "actionType": "maintenance",
-      "objective": "efficiency",
-      "herImage": "https://cms.bidgely.com/uploads/hvac_her.png" 
+      "title": "Tune up your heat pump",
+      "description": "Improve efficiency with a seasonal tune-up.",
+      "detail": "A professional tune-up can improve performance and reduce energy waste.", 
+      "videoLink": "https://www.bidgely.com/videos/heat-pump-tune-up", 
+      "ctaButtonLink": "https://www.bidgely.com/learn/heat-pump-tune-up", 
+      "ctaButtonText": "Learn more", 
+      "icon": "https://cms.bidgely.com/uploads/reco_icon_heat_pump.png", 
+      "fullImage": "https://cms.bidgely.com/uploads/reco_full_heat_pump.png", 
+      "shortenedImage": "https://cms.bidgely.com/uploads/reco_short_heat_pump.png", 
+      "elongatedImage": "https://cms.bidgely.com/uploads/reco_long_heat_pump.png", 
+      "actionSavingsPotential": 18.5, 
+      "frequency": "one_time", 
+      "userType": "homeowner", 
+      "actionType": "maintenance", 
+      "objective": "reduce_consumption", 
+      "herImage": "https://cms.bidgely.com/uploads/reco_her_heat_pump.png" 
     }
   ],
   "updatedAt": 1735689600000
 }
 ```
 
+**Response Notes:**
+- Version 2 includes all version 1 fields plus:
+  - `actionSavingsPotential`,
+  - `frequency`,
+  - `userType`,
+  - `actionType`,
+  - `objective`,
+  - `herImage` (Home Energy Report image).
+- `updatedAt` is a timestamp in milliseconds since epoch.
+
 **Access Control:** Protected by policy `api::recommendation.reco-metadata-policy`.
 
 ---
 
 ### GET /recommendation/v1/insight-definition/:pilotId
-**Description:** Returns insight definitions for a utility pilot, grouped from recommendation insight associations by appliance category, association type, and fuel type.
+**Description:** Returns insight definitions for a pilot, grouped by appliance category, insight association type, and fuel type.
 
 **Path Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| `pilotId` | string | Yes | Pilot identifier used to resolve the utility. |
 
 **Query Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| status | string | Yes | External content status to resolve. The code supports `PUBLISHED` and `READY_FOR_QA`. |
+| `status` | string | Yes | External content status to resolve. Supported by the implementation for external reads, including `PUBLISHED` and `READY_FOR_QA` (Ready for Quality Assurance). |
 
 **Example Response:**
 ```json
@@ -227,46 +254,54 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
   "data": [
     {
       "type": "SELF",
-      "applianceTag": 1,
+      "applianceTag": 12,
       "fuelType": "ELECTRIC",
       "recommendations": [
-        "reco_hvac_tuneup_001",
-        "reco_hvac_filter_003"
+        "RECO_1001",
+        "RECO_1007"
       ],
-      "insightId": "HVAC-T-SC-E" 
+      "insightId": "HVAC-T-SC-E"
     },
     {
       "type": "PEER",
-      "applianceTag": 5,
+      "applianceTag": 8,
       "fuelType": "GAS",
       "recommendations": [
-        "reco_water_heater_002"
+        "RECO_1010"
       ],
-      "insightId": "WH-T-NC-G" 
+      "insightId": "WH-T-NC-G"
     }
   ],
   "updatedAt": 1735689600000
 }
 ```
 
+**Response Notes:**
+- Only non-disabled recommendations are included.
+- `type` is derived from the insight association:
+  - `NC` → `PEER`
+  - `SC` → `SELF`
+  - `CC` → `APPLIANCE_CONSUMPTION_BASED`
+- `insightId` is generated from appliance-category shortcode, a fixed `-T-` segment, association code, and the first letter of fuel type.
+
 **Access Control:** Protected by policy `api::recommendation.reco-model-policy`.
 
 ---
 
 ### GET /recommendation/v1/last-updated-ts/:pilotId
-**Description:** Returns the cached last-updated timestamp for recommendation content for a utility pilot and external content status.
+**Description:** Returns the cached last-updated timestamp for recommendation data for a pilot and external content status.
 
 **Path Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| pilotId | string | Yes | Utility pilot identifier. |
+| `pilotId` | string | Yes | Pilot identifier used to look up the cached timestamp. |
 
 **Query Parameters:**
 
 | Name | Type | Required | Description |
 |---|---|---:|---|
-| status | string | Yes | External content status to resolve. |
+| `status` | string | Yes | External content status whose cache timestamp should be returned. |
 
 **Example Response:**
 ```json
@@ -274,6 +309,10 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
   "data": 1735689600000
 }
 ```
+
+**Response Notes:**
+- `data` is the last-updated timestamp in milliseconds since epoch.
+- If no timestamp exists, the API returns `null`.
 
 **Access Control:** Protected by policy `api::recommendation.reco-model-policy`.
 

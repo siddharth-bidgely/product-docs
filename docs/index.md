@@ -13,52 +13,71 @@ hide:
 
 ## Overview
 
-DETO is Bidgely’s self-serve platform for project delivery. It is designed so customers can onboard, configure, test, and launch with minimal help from Bidgely delivery, QA, or AIG teams.
+DETO is Bidgely’s self-serve platform for project delivery. The goal is to let customers onboard, configure, test, and launch with much less reliance on Bidgely delivery, QA, onboarding, or AIG teams for routine setup.
 
-The platform vision is a low-touch setup experience that still supports enterprise needs such as role-based access control, data imports, integrations, Single Sign-On (SSO), and phased launches. The goal is to let customers start using pre-configured products on Day 1, complete setup in under 30 days, and move from testing to launch with confidence.
+The platform is designed so customers can:
 
-For business users, DETO supports a guided setup flow for configuring the customer experience, assigning roles, testing in a sandbox, reviewing launch readiness, and managing soft launch and full launch. For technical users, it supports SSO setup, source-system connections, data mapping, ingestion scheduling, and ongoing data quality monitoring.
+- sign in and start testing on Day 1
+- complete setup in under 30 days
+- handle most configuration without human support
+- meet enterprise needs such as role-based access control, data imports, integrations, SSO, and phased launch controls
+
+The intended experience is a guided, low-touch setup flow with smart defaults, in-product help, AI-assisted recommendations, and real-time validation.
 
 ## Key points
 
-- Customers can sign in and access pre-configured products immediately, including web, widgets, reports, and CSR Console.
-- A guided **Setup Assistant** helps users complete configuration step by step, with smart defaults, walkthroughs, and in-product help.
-- **Dynamic templates and presets** prepare common program setups such as CX, HERs, and TOU before first login.
-- **Sandbox Mode** supports testing with sample data or production data before go-live.
-- Admins can manage roles, permissions, launch readiness, and phased rollouts without relying on external coordination.
-- IT teams can configure SSO, connect source systems, map data, schedule loads, and monitor data health from within the platform.
-- Built-in review and validation highlight missing inputs, inconsistent setup choices, and data issues before launch.
-- After launch, dashboards help teams monitor product health, customer coverage, automated process success, and anomalies over time.
+- **Day 1 access:** Customers should be able to log in and begin testing immediately from the console.
+- **Self-serve setup:** Non-technical and technical setup tasks are supported in-product, with technical expertise mainly needed for application and data integration.
+- **Enterprise-ready controls:** DETO supports role setup, permissions, SSO, data loading, integrations, and controlled launch phases.
+- **Safe testing before go-live:** Teams can use Sandbox Mode with sample data or production data to validate the experience before launch.
+- **Guided launch process:** Setup Assistant, AI-powered review, and data health checks help teams catch gaps before rollout.
+- **Phased rollout and monitoring:** Teams can run soft launches, move to full launch, and monitor live health and data quality after go-live.
 
 ## How teams use this
 
 ### Enterprise Admins and Customer Experience Managers
 
-These users focus on the non-technical launch process. They use DETO to:
+These users own the non-technical launch process. They use DETO to:
 
-- work from a pre-configured starting point
-- configure product UI and branding
+- configure product UI and customer experience
 - set up roles and permissions
-- define customer experience and reporting workflows
-- test web, widget, report, and CSR Console experiences
-- review setup issues and launch readiness
-- schedule soft launch and transition to full launch
-- monitor live product performance after go-live
+- configure reporting workflows
+- test the experience before launch
+- manage soft launch and full launch timing
 
-A typical flow starts with a pre-built template being applied behind the scenes. On first login, users see a ready-to-use console with sample or default data so they can begin testing right away. From there, they use the Setup Assistant to complete configuration, invite users, test in Sandbox Mode, review AI-assisted setup findings, and plan rollout.
+A typical flow is:
+
+1. **Start with a ready-to-use environment**  
+   Customers log in to a pre-configured console and can begin testing experiences such as web, widgets, reports, and CSR Console.
+
+2. **Use the Setup Assistant**  
+   The guided setup walks them through product configuration, user roles, data import, integrations, and launch setup.
+
+3. **Set up access and teams**  
+   Admins can define pre-set or custom permissions and stage access for reviews, testing, and rollout phases.
+
+4. **Test in Sandbox Mode**  
+   Teams can validate report generation, web flows, widget flows, and CSR Console behavior using sample data or production data.
+
+5. **Review launch readiness**  
+   AI-assisted review highlights incomplete setup, inconsistent inputs, and missing dependencies. Visual checks help confirm outputs such as rates, projections, TOU potential savings, and customer segmentation logic.
+
+6. **Launch in phases**  
+   Teams can run a soft launch with scoped access, feature controls, and scheduled go-lives, then move to full launch manually or after validations pass.
+
+7. **Monitor live performance**  
+   After launch, dashboards help teams track customer counts, disaggregation coverage, automated process success, anomalies, and trends over time.
 
 ### IT Managers
 
-IT Managers handle the technical setup needed to support launch and stable operations. They use DETO to:
+IT Managers use DETO for the technical setup needed to support launch and ongoing operations. They typically:
 
-- configure and validate SSO
-- connect source systems such as Snowflake and DataBricks
-- map source fields from CSV, APIs, or databases
-- run historical and incremental data loads
-- monitor job status and data health
-- respond to alerts about missing fields, schema mismatches, volume drop-offs, or other data issues
-
-Their work supports both initial readiness and ongoing production health.
+- configure and validate SSO with providers such as Okta or Azure AD
+- connect source systems through the integrations marketplace, including systems such as Snowflake or DataBricks
+- map source data from CSV, APIs, or databases to the required schema
+- schedule historical and incremental data loads
+- review automated data quality checks and health summaries
+- monitor ongoing sync health and alerts after launch
 
 ## Related documentation
 
