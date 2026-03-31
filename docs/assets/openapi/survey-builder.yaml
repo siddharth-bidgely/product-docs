@@ -12,26 +12,19 @@ paths:
   /survey-category/ingest:
     post:
       summary: Ingest survey categories
+      description: Triggers survey category ingestion.
       operationId: survey-category_ingestCategories
       tags:
         - Survey Builder
-      requestBody:
-        description: Array of survey categories to ingest
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/SurveyCategory'
       responses:
         '200':
-          description: Categories ingested successfully
+          description: Successful response
         '401':
           description: Unauthorized — invalid or missing Bearer token
   /survey/v1/template/{pilotId}/{templateId}:
     get:
-      summary: Retrieve a survey template for a pilot
+      summary: Get external survey template
+      description: Returns a flattened external survey template for the specified pilot and template, optionally filtered by content status and localized by locale and region.
       operationId: survey-template-external-apis_getTemplate
       tags:
         - Survey Builder
@@ -39,41 +32,56 @@ paths:
         - name: pilotId
           in: path
           required: true
+          description: Pilot identifier used to resolve the utility.
           schema:
             type: string
         - name: templateId
           in: path
           required: true
+          description: Survey template type identifier.
           schema:
             type: string
+            enum:
+              - defaultSurvey
+              - BillAnalyzer
         - name: status
           in: query
           required: false
+          description: External content status used to choose published content or draft-ready content.
           schema:
             type: string
         - name: locale
           in: query
           required: false
+          description: Locale used to localize question text, info, and choices.
+          schema:
+            type: string
+        - name: region
+          in: query
+          required: false
+          description: Region echoed back in the response.
           schema:
             type: string
       responses:
         '200':
-          description: Successful response
+          description: External survey template returned successfully
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   data:
-                    $ref: '#/components/schemas/ExternalTemplate'
+                    $ref: '#/components/schemas/ExternalSurveyTemplate'
                   updatedAt:
-                    type: integer
+                    type: string
                     nullable: true
+                  region:
+                    type: string
                 required:
                   - data
                   - updatedAt
         '400':
-          description: Bad request
+          description: Bad request — utility, locale, or template validation failed
         '401':
           description: Unauthorized — invalid or missing Bearer token
         '404':
@@ -82,7 +90,8 @@ paths:
         - api::survey-template.survey-template-fetch-policy
   /survey/v1/last-updated-ts/{pilotId}/{templateId}:
     get:
-      summary: Retrieve last updated timestamp for a survey template
+      summary: Get survey template last updated timestamp
+      description: Returns the cached last updated timestamp for the specified pilot and template.
       operationId: survey-template-external-apis_getLastUpdatedTS
       tags:
         - Survey Builder
@@ -90,28 +99,34 @@ paths:
         - name: pilotId
           in: path
           required: true
+          description: Pilot identifier used to resolve the cache entry.
           schema:
             type: string
         - name: templateId
           in: path
           required: true
+          description: Survey template type identifier.
           schema:
             type: string
+            enum:
+              - defaultSurvey
+              - BillAnalyzer
         - name: status
           in: query
           required: false
+          description: External content status used to resolve the cached timestamp.
           schema:
             type: string
       responses:
         '200':
-          description: Successful response
+          description: Last updated timestamp returned successfully
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   data:
-                    type: integer
+                    type: string
                     nullable: true
                 required:
                   - data
@@ -135,12 +150,217 @@ components:
           type: string
         order:
           type: integer
-          default: 1
+          default: '1'
       required:
         - categoryId
         - label
         - order
-    ExternalQuestionNode:
+    SurveyQuestion:
+      type: object
+      properties:
+        title:
+          type: string
+          maxLength: 100
+        type:
+          type: string
+          enum:
+            - SINGLE
+            - MULTIPLE
+            - MULTIPLE_WITH_SUB_CHOICES
+            - TEXT
+            - NUMBER
+            - IMAGE_UPLOAD
+            - TEXTAREA
+            - BOOLEAN
+            - RANGE
+            - SLIDER
+            - TWO_DIMENSIONS
+            - THREE_DIMENSIONS
+          default: SINGLE
+        img:
+          type: object
+          properties:
+            url:
+              type: string
+              format: uri
+            alt:
+              type: string
+        group:
+          type: string
+          enum:
+            - ESSENTIAL
+            - DETAILED
+          default: DETAILED
+        fuelTypes:
+          type: string
+          default: '[]'
+        maxLevel:
+          type: integer
+          default: '1'
+        questionTemplate:
+          type: string
+          enum:
+            - DEFAULT
+            - DROP_DOWN
+            - SUB_CHOICE_DROP_DOWN
+          default: DEFAULT
+        profileCode:
+          type: string
+          enum:
+            - AP
+            - HP
+            - METADATA
+          default: METADATA
+        category:
+          type: string
+        info:
+          type: string
+        stateMapper:
+          type: string
+        impactShc:
+          type: boolean
+          default: 'false'
+        impactItemization:
+          type: boolean
+          default: 'false'
+        impactReco:
+          type: boolean
+          default: 'false'
+        utility:
+          type: object
+          description: Relation (oneToOne) to utility.utility
+        choices:
+          type: object
+          description: 'Component: survey.survey-choice'
+        editStatus:
+          type: string
+          enum:
+            - DRAFT
+            - MODIFIED
+            - PUBLISHED
+          default: DRAFT
+        verificationStatus:
+          type: string
+          enum:
+            - TODO
+            - READY_FOR_QA
+            - READY_TO_PUBLISH
+          default: TODO
+      required:
+        - title
+        - type
+        - group
+        - fuelTypes
+        - maxLevel
+        - questionTemplate
+        - profileCode
+        - editStatus
+        - verificationStatus
+    SurveyTemplate:
+      type: object
+      properties:
+        templateType:
+          type: string
+          enum:
+            - defaultSurvey
+            - BillAnalyzer
+          default: defaultSurvey
+        label:
+          type: string
+        templateQuestions:
+          type: object
+          description: 'Component: survey.survey-template-question'
+        utility:
+          type: object
+          description: Relation (manyToOne) to utility.utility
+        verificationStatus:
+          type: string
+          enum:
+            - TODO
+            - READY_FOR_QA
+            - QA_IN_PROGRESS
+            - QA_FAILED
+            - READY_TO_PUBLISH
+          default: TODO
+        editStatus:
+          type: string
+          enum:
+            - DRAFT
+            - MODIFIED
+            - PUBLISHED
+          default: DRAFT
+      required:
+        - templateType
+        - label
+        - templateQuestions
+    ExternalQuestionChoiceRead:
+      type: object
+      properties:
+        selected:
+          type: string
+          nullable: true
+        unselected:
+          type: string
+          nullable: true
+      required:
+        - selected
+        - unselected
+    ExternalQuestionChoiceWrite:
+      type: object
+      properties:
+        selected:
+          type: string
+          nullable: true
+        unselected:
+          type: string
+          nullable: true
+      required:
+        - selected
+        - unselected
+    ExternalQuestionChoice:
+      type: object
+      properties:
+        value:
+          type: string
+        order:
+          type: integer
+        text:
+          type: string
+          nullable: true
+        read:
+          $ref: '#/components/schemas/ExternalQuestionChoiceRead'
+        write:
+          $ref: '#/components/schemas/ExternalQuestionChoiceWrite'
+      required:
+        - value
+        - order
+        - text
+        - read
+        - write
+    ExternalQuestionCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+          nullable: true
+      required:
+        - id
+        - label
+    ExternalQuestionParent:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: array
+          items:
+            type: string
+      required:
+        - id
+        - value
+    ExternalQuestion:
       type: object
       properties:
         documentId:
@@ -151,38 +371,39 @@ components:
           type: integer
         type:
           type: string
+          enum:
+            - SINGLE
+            - MULTIPLE
+            - MULTIPLE_WITH_SUB_CHOICES
+            - TEXT
+            - NUMBER
+            - IMAGE_UPLOAD
+            - TEXTAREA
+            - BOOLEAN
+            - RANGE
+            - SLIDER
+            - TWO_DIMENSIONS
+            - THREE_DIMENSIONS
         group:
           type: string
+          enum:
+            - ESSENTIAL
+            - DETAILED
         category:
-          type: object
-          properties:
-            id:
-              type: string
-            label:
-              type: string
-              nullable: true
-          required:
-            - id
+          allOf:
+            - $ref: '#/components/schemas/ExternalQuestionCategory'
+          nullable: true
         state:
           nullable: true
-          description: Reserved for future use
         text:
           type: string
+          nullable: true
         info:
           type: string
           nullable: true
         parent:
-          type: object
-          properties:
-            id:
-              type: string
-            value:
-              type: array
-              items:
-                type: string
-          required:
-            - id
-            - value
+          allOf:
+            - $ref: '#/components/schemas/ExternalQuestionParent'
           nullable: true
         answerType:
           type: string
@@ -192,58 +413,25 @@ components:
         profileCode:
           type: string
           nullable: true
+          enum:
+            - AP
+            - HP
+            - METADATA
         fuelTypes:
           type: array
+          nullable: true
           items:
             type: string
-          nullable: true
+            enum:
+              - GLOBAL
+              - ELECTRIC
+              - WATER
+              - GAS
         choices:
           type: array
-          items:
-            type: object
-            properties:
-              value:
-                type: string
-              order:
-                type: integer
-              text:
-                type: string
-              read:
-                type: object
-                properties:
-                  selected:
-                    type: string
-                    nullable: true
-                  unselected:
-                    nullable: true
-                    description: Reserved for future use
-                required:
-                  - selected
-                  - unselected
-              write:
-                type: object
-                properties:
-                  selected:
-                    type: string
-                    nullable: true
-                  unselected:
-                    type: string
-                    nullable: true
-                required:
-                  - selected
-                  - unselected
-            required:
-              - value
-              - order
-              - text
-              - read
-              - write
           nullable: true
-        children:
-          type: array
           items:
-            $ref: '#/components/schemas/ExternalQuestionNode'
-          nullable: true
+            $ref: '#/components/schemas/ExternalQuestionChoice'
       required:
         - documentId
         - id
@@ -260,16 +448,18 @@ components:
         - profileCode
         - fuelTypes
         - choices
-        - children
-    ExternalTemplate:
+    ExternalSurveyTemplate:
       type: object
       properties:
         surveyId:
           type: string
+          enum:
+            - defaultSurvey
+            - BillAnalyzer
         questions:
           type: array
           items:
-            $ref: '#/components/schemas/ExternalQuestionNode'
+            $ref: '#/components/schemas/ExternalQuestion'
       required:
         - surveyId
         - questions

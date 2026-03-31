@@ -4,76 +4,96 @@
     - [Confluence 1](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=815431723)
     - [Confluence 2](https://bidgely.atlassian.net/wiki/pages/viewpage.action?pageId=633110556)
 
-## Overview  
-The Content Management System (CMS) is a self‑serve hub that lets utilities and Bidgely teams manage all non‑code assets—such as appliance profiles, home profiles, recommendations, surveys, and media—directly from the DETO dashboard.  By keeping content in one place, the CMS eliminates duplicate files, speeds time‑to‑market, and provides a clear audit trail for every change.  The system is designed for a range of roles: Utility users can edit content within their pilots, Product Managers and Technical Product Managers can publish and configure pilots, Customer Success Managers can review and approve content, and Delivery staff can customize entities at the pilot level.
+## Overview
 
-The CMS is built around four core roles:  
-- **Utility** – basic editing of content within assigned pilots.  
-- **PM / TPM** – full lifecycle control, publishing, and pilot configuration.  
-- **CSM** – review, quality assurance, and final approval before publishing.  
-- **Delivery** – future‑ready customization of entities at the pilot level.  
+Content Management in DETO is the workspace where business teams manage pilot-specific content and supporting configuration without waiting for a code release. It acts as a single source of truth for utility content such as **Recommendations**, **Appliance Profile**, **Home Profile**, and related pilot settings. This helps teams move faster, reduce spreadsheet-based handoffs, and keep changes organized by project.
 
-With a single source of truth, decoupled content‑from‑code, and role‑based access, the CMS empowers stakeholders to deliver personalized, localized experiences without engineering involvement.
+The feature is designed around **Projects**. Each pilot has its own isolated content, locales, and workflow states, so teams can safely work on one utility’s setup without affecting another. Depending on your role, you can create and update content, submit it for review, approve it for publishing, and manage pilot-level setup.
 
-## Key Capabilities  
-- Create, edit, and delete pilots (projects).  
-- Manage appliance and home profiles with hierarchical trees.  
-- Build, preview, and publish recommendations.  
-- Configure score thresholds for recommendation ranking.  
-- Localize content for multiple locales.  
-- Track edit status (`DRAFT`, `MODIFIED`, `PUBLISHED`).  
-- Submit recommendations for review and approval.  
-- Bulk save or discard changes across many items.  
-- View live preview of content as it will appear in the CX product.  
-- Add comments and real‑time feedback on recommendations.  
-- Audit trail of every change with user, timestamp, and action.  
-- Role‑based permissions for editing, publishing, and reviewing.  
+A key benefit of Content Management is controlled publishing. Teams can work on **DRAFT** or **MODIFIED** content while the current **PUBLISHED** version remains unchanged. This supports review, collaboration, and safer rollout planning across production and QA use cases.
 
-## User Guide  
+## Key Capabilities
 
-### Create a New Pilot  
-1. Open the **CMS Admin Console** from the main menu.  
-2. Click **“Create New Project”**.  
-3. In the **Project Details** form, enter a unique **Pilot ID**, a descriptive **Name**, and select the **Default Locale**.  
-4. Check any additional **Supported Locales** you want to enable.  
-5. Click **Save** to create the pilot.  
-6. After creation, the system shows a **creation status page**.  
-7. Click **“Open Pilot”** to launch the pilot’s content dashboard.  
-8. ![Key Features](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)  
+- Create a new pilot from scratch or by cloning an existing one
+- Switch between assigned **Projects** and work within pilot-specific content
+- View a pilot’s **content dashboard** for content counts, health, and localization status
+- Edit **Recommendations** with separate working and published versions
+- Move recommendation content through review states such as **TODO**, **READY_FOR_REVIEW**, and **READY_TO_PUBLISH**
+- Publish or unpublish recommendations, based on role permissions
+- Manage **Appliance Profile** defaults, visibility, and fuel type settings
+- Manage **Home Profile** defaults, visibility, and account type filters
+- Save or discard individual changes, or use bulk **Save all** and **Discard all**
+- Work with localized content using **Default Locale** and **Supported Locales**
+- Add comments and feedback as part of the review process
+- Configure **Score Thresholds** for recommendation scoring, where permitted
 
-### Edit a Recommendation  
-1. From the pilot dashboard, navigate to **Recommendations**.  
-2. Click **“New Recommendation”** to open the wizard.  
-3. Enter a **Title**, **Description**, and attach any **Media**.  
-4. Choose target rules (locale, fuel type, etc.) in the **Targeting** panel.  
-5. Click **“Save”** to keep the recommendation in **DRAFT** status.  
-6. Click **“Submit for Review”** to move it to **READY_FOR_REVIEW**.  
-7. A CSM or PM reviews the recommendation and clicks **“Approve”**.  
-8. Click **“Publish”** to make the recommendation live.  
-9. ![Workflow State Transitions](../assets/images/815431723-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)  
+## User Guide
 
-### Edit Home Profile  
-1. In the pilot dashboard, open **Home Profile**.  
-2. The screen shows a **tree of attribute groups** (e.g., “Account Type”, “Region”).  
-3. Click an attribute to open its **edit panel**.  
-4. Select a **Default Value** from the dropdown.  
-5. Toggle **Visibility** to include or exclude the attribute from recommendation targeting.  
-6. Use the **Account Type Filter** to restrict the attribute to specific account types.  
-7. After making changes, click **“Save All”** to persist them.  
-8. If you need to revert, click **“Discard All”**.  
-9. ![Benefits](../assets/images/815431723-Screenshot-202025-02-22-20at-2010.51.10-E2-80-AFPM.png)  
+### Create a new project
 
-## Configuration Options  
-- **Pilot Permissions** – set which users can view, edit, or publish content for each pilot.  
-- **Role‑Based Access** – assign users to Utility, PM/TPM, CSM, or Delivery roles.  
-- **Locale Settings** – enable or disable specific locales for a pilot.  
-- **Score Thresholds** – configure thresholds per category to influence recommendation ranking.  
-- **Audit Settings** – view or export the audit trail for compliance.  
+1. Sign in to the CMS Admin Console and open **Projects**.
+2. In the **Projects List**, click **Create New Project**.
+3. Choose whether to start from a **Source Pilot** or create a new project with a one-click setup.
+4. Enter the required project details, including **Pilot ID**, **Name**, **Default Locale**, and **Supported Locales**.
+5. Click **Create Project** to start setup.
+6. Review the project creation status page and wait for the setup to complete.
+7. When the project is ready, open it to land on the pilot’s **content dashboard**.
 
-If a setting is not visible in the UI, it is managed by system administrators through the configuration registry.
+![Content management overview](../assets/images/815431723-Screenshot-202025-11-11-20at-2011.32.07-E2-80-AFAM.png)
 
-## Related Features  
-- [Project Management](project-management.md)  
-- [Recommendations](recommendations.md)  
-- [Survey Builder](survey-builder.md)  
-- [CX Visual Editor](cx-visual-editor.md)
+### Edit and publish recommendations
+
+1. Open **Projects** and select the pilot you want to manage.
+2. From the pilot’s **content dashboard**, open **Recommendations**.
+3. Find the recommendation you want to work on and open it for editing.
+4. Update the content you need, such as recommendation text, localized content, media, or targeting-related details available to your role.
+5. Click **Save** or **SAVE_UPDATES** to keep your changes. If you do not want to keep them, use **Discard** or **DISCARD_UPDATES**.
+6. Check the item’s status. New content typically starts as **DRAFT**, while edits to live content appear as **MODIFIED**.
+7. If your role supports review handoff, submit the item so it moves from **TODO** to **READY_FOR_REVIEW**.
+8. After approval, a publishing role can move the item to **READY_TO_PUBLISH** and click **PUBLISH**. If needed, authorized users can also **UNPUBLISH** content.
+
+![Recommendation workflow states](../assets/images/815431723-Mermaid-20Chart-20-20Create-20complex-20visual-20diagrams-20with-20text.-2025-10.png)
+
+### Update Appliance Profile for a pilot
+
+1. Open **Projects** and select the pilot you want to update.
+2. From the pilot area, open **Appliance Profile**.
+3. Browse the category tree and expand the sections you want to review.
+4. Select an appliance and update its available settings, such as default values, visibility, or fuel type options.
+5. Repeat the same action for other appliances if you are making multiple changes.
+6. Click **Save** for a single item, or use **Save all** to keep multiple edits together.
+7. If you need to undo pending changes, click **Discard** for one item or **Discard all** for bulk changes.
+
+![CMS within Delivery Console](../assets/images/633110556-Screenshot-202025-08-19-20at-204.24.52-E2-80-AFPM.png)
+
+### Update Home Profile for recommendation targeting
+
+1. Open the relevant pilot from **Projects**.
+2. Go to **Home Profile**.
+3. Expand the attribute groups to find the home attribute you want to manage.
+4. Update the attribute settings, such as default value, visibility, or account type filtering.
+5. Review your pending edits before saving.
+6. Click **Save** to keep a single change, or use **Save all** if you updated several attributes.
+7. Use **Discard** or **Discard all** if you want to remove unsaved changes.
+
+![Role-based workflow and controls](../assets/images/633110556-Screenshot-202025-08-21-20at-203.44.10-E2-80-AFPM.png)
+
+## Configuration Options
+
+Content Management is primarily configured at the project level.
+
+- **Project setup:** When creating a project, you define **Default Locale** and **Supported Locales**.
+- **Pilot isolation:** All content and settings are scoped to the selected project.
+- **Roles and permissions:** What you can view, edit, submit, publish, or configure depends on your assigned role and project access.
+- **Utility role:** Typically limited to reading assigned content, editing allowed content, saving changes, discarding changes, switching projects, and submitting for review.
+- **PM / TPM / CSM roles:** Can generally do everything Utility users can do, plus publish, unpublish, delete, manage pilot setup, edit profiles, configure **Score Thresholds**, and manage exclusions.
+- **Localization:** Locale-specific content can be maintained as part of normal authoring. The dashboard may also show localization completeness or status.
+
+If a setting or action is not visible, it is usually controlled by your role or by project access assigned by an administrator.
+
+## Related Features
+
+- [Recommendations](recommendations.md)
+- [Survey Builder](survey-builder.md)
+- [Color Management](color-management.md)
+- [Project Management](project-management.md)

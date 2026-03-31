@@ -22,58 +22,40 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
 ## Endpoints
 
 ### POST /survey-category/ingest
-**Description:** Ingests a batch of survey categories into the CMS.  
-**Path Parameters:** None  
-**Query Parameters:** None  
-**Request Body:**  
-```json
-{
-  "categories": [
-    {
-      "categoryId": "energyUsage",
-      "label": "Energy Usage",
-      "order": 1
-    },
-    {
-      "categoryId": "waterUsage",
-      "label": "Water Usage",
-      "order": 2
-    }
-  ]
-}
-```
-* `categories` – Array of category objects to ingest.  
-* `categoryId` – Unique identifier for the category.  
-* `label` – Human‑readable name.  
-* `order` – Display order for the category.  
+**Description:** Ingests survey category data into the CMS.
+
+**Path Parameters:** None
+
+**Query Parameters:** None
+
+**Request Body:** Not documented from the provided controller context.
 
 **Example Response:**
 ```json
-{
-  "success": true,
-  "ingestedCount": 2
-}
+{}
 ```
-* `success` – Indicates the operation completed without errors.  
-* `ingestedCount` – Number of categories successfully ingested.  
 
-**Access Control:** None (no policy specified for this route).  
+**Access Control:** No route-specific policy information was provided in the available evidence.
 
----  
+---
 
 ### GET /survey/v1/template/:pilotId/:templateId
-**Description:** Retrieves a survey template and its flattened question tree for a given pilot and template.  
-**Path Parameters:**  
-| Name | Type | Description |
-|------|------|-------------|
-| `pilotId` | string | Identifier of the pilot (utility) |
-| `templateId` | string | Identifier of the survey template (e.g., `defaultSurvey`) |
+**Description:** Returns the external survey template for a utility pilot, including a flattened list of survey questions localized for the requested locale.
 
-**Query Parameters:**  
-| Name | Type | Description |
-|------|------|-------------|
-| `status` | string | Content status to fetch (`draft` or `published`) |
-| `locale` | string | Language locale (e.g., `en`, `fr`) |
+**Path Parameters:**
+
+| Name | Type | Required | Description |
+|---|---|---:|---|
+| pilotId | string | Yes | Utility pilot identifier used to resolve the utility configuration. |
+| templateId | string | Yes | Survey template type identifier. Known values from the data model include `defaultSurvey` and `BillAnalyzer`. |
+
+**Query Parameters:**
+
+| Name | Type | Required | Description |
+|---|---|---:|---|
+| status | string | No | Content status to fetch. If set to published, the published template is returned; otherwise the handler prefers a draft template that is ready for quality assurance and falls back to published. |
+| locale | string | No | Locale for localized question text, info, and choice labels. The handler normalizes this through the default-locale utility and validates that the utility supports it. |
+| region | string | No | Region value echoed back in the response. |
 
 **Example Response:**
 ```json
@@ -82,125 +64,142 @@ _Narrative descriptions complement the OpenAPI widget above; if they differ, tre
     "surveyId": "defaultSurvey",
     "questions": [
       {
-        "documentId": "q123", // Strapi document ID
+        "documentId": "sq_01f8c2a9",
         "id": "Q1",
         "order": 1,
         "type": "SINGLE",
         "group": "ESSENTIAL",
         "category": {
-          "id": "energyUsage",
-          "label": "Energy Usage"
+          "id": "HOME_PROFILE",
+          "label": "Home Profile"
         },
         "state": null,
-        "text": "What is your average monthly energy consumption?",
-        "info": "Provide the total kWh used in the last month.",
+        "text": "What type of home do you live in?",
+        "info": "Choose the option that best matches your residence.",
         "parent": null,
         "answerType": "NON_BOOLEAN",
         "stateMapper": null,
-        "profileCode": "AP",
-        "fuelTypes": ["GLOBAL", "ELECTRIC"],
+        "profileCode": "METADATA",
+        "fuelTypes": [
+          "GLOBAL"
+        ],
         "choices": [
           {
-            "value": "low",
+            "value": "single_family",
             "order": 1,
-            "text": "Low",
+            "text": "Single-family home",
             "read": {
-              "selected": "low_read",
+              "selected": "single_family",
               "unselected": null
             },
             "write": {
-              "selected": "low_write",
-              "unselected": "low_unselect"
+              "selected": "single_family",
+              "unselected": null
             }
           },
           {
-            "value": "high",
+            "value": "apartment",
             "order": 2,
-            "text": "High",
+            "text": "Apartment",
             "read": {
-              "selected": "high_read",
+              "selected": "apartment",
               "unselected": null
             },
             "write": {
-              "selected": "high_write",
-              "unselected": "high_unselect"
+              "selected": "apartment",
+              "unselected": null
             }
           }
+        ]
+      },
+      {
+        "documentId": "sq_7b2d4e10",
+        "id": "Q1a",
+        "order": 2,
+        "type": "BOOLEAN",
+        "group": "DETAILED",
+        "category": {
+          "id": "HOME_PROFILE",
+          "label": "Home Profile"
+        },
+        "state": null,
+        "text": "Do you own this home?",
+        "info": null,
+        "parent": {
+          "id": "Q1",
+          "value": [
+            "single_family"
+          ]
+        },
+        "answerType": "BOOLEAN",
+        "stateMapper": null,
+        "profileCode": "METADATA",
+        "fuelTypes": [
+          "GLOBAL"
         ],
-        "children": [
+        "choices": [
           {
-            "documentId": "q124",
-            "id": "Q1.a",
+            "value": "true",
+            "order": 1,
+            "text": "Yes",
+            "read": {
+              "selected": "true",
+              "unselected": null
+            },
+            "write": {
+              "selected": "true",
+              "unselected": "false"
+            }
+          },
+          {
+            "value": "false",
             "order": 2,
-            "type": "TEXT",
-            "group": "DETAILED",
-            "category": {
-              "id": "energyUsage",
-              "label": "Energy Usage"
+            "text": "No",
+            "read": {
+              "selected": "false",
+              "unselected": null
             },
-            "state": null,
-            "text": "Please describe any recent changes to your energy usage.",
-            "info": null,
-            "parent": {
-              "id": "Q1",
-              "value": ["low"]
-            },
-            "answerType": "NON_BOOLEAN",
-            "stateMapper": null,
-            "profileCode": "AP",
-            "fuelTypes": ["GLOBAL"],
-            "choices": null
+            "write": {
+              "selected": "false",
+              "unselected": "true"
+            }
           }
         ]
       }
     ]
   },
-  "updatedAt": 1672531200000 // Timestamp of last update (ms since epoch)
+  "updatedAt": 1735689600000,
+  "region": "us-west-2"
 }
 ```
-* `data.surveyId` – Identifier of the requested survey template.  
-* `data.questions` – Flattened array of questions in pre‑order traversal.  
-* `documentId` – Strapi document ID of the question.  
-* `id` – Human‑readable question ID (e.g., `Q1`, `Q1.a`).  
-* `order` – Display order within the survey.  
-* `type` – Question type (`SINGLE`, `TEXT`, etc.).  
-* `group` – Question group (`ESSENTIAL`, `DETAILED`).  
-* `category` – Category metadata (`id`, `label`).  
-* `state` – Current state (null for external view).  
-* `text` – Localized question text.  
-* `info` – Optional additional information.  
-* `parent` – Reference to parent question (null for root).  
-* `answerType` – Derived answer type (`BOOLEAN` or `NON_BOOLEAN`).  
-* `stateMapper` – Optional state mapping string.  
-* `profileCode` – Profile code (`AP`, `HP`, `METADATA`).  
-* `fuelTypes` – Array of applicable fuel types (`GLOBAL`, `ELECTRIC`, etc.).  
-* `choices` – Array of answer choices (null if not applicable).  
-* `children` – Nested child questions (if any).  
-* `updatedAt` – Timestamp of the last update for the requested status.  
 
-**Access Control:** `api::survey-template.survey-template-fetch-policy` – Only users with the appropriate role can fetch templates.  
+**Access Control:** Protected by policy `api::survey-template.survey-template-fetch-policy`.
 
----  
+---
 
 ### GET /survey/v1/last-updated-ts/:pilotId/:templateId
-**Description:** Retrieves the last updated timestamp for a survey template in a given status.  
-**Path Parameters:**  
-| Name | Type | Description |
-|------|------|-------------|
-| `pilotId` | string | Identifier of the pilot (utility) |
-| `templateId` | string | Identifier of the survey template |
+**Description:** Returns the cached last-updated timestamp for a survey template and content status.
 
-**Query Parameters:**  
-| Name | Type | Description |
-|------|------|-------------|
-| `status` | string | Content status (`draft` or `published`) |
+**Path Parameters:**
+
+| Name | Type | Required | Description |
+|---|---|---:|---|
+| pilotId | string | Yes | Utility pilot identifier. |
+| templateId | string | Yes | Survey template type identifier. |
+
+**Query Parameters:**
+
+| Name | Type | Required | Description |
+|---|---|---:|---|
+| status | string | No | Content status used when looking up the cached timestamp. |
 
 **Example Response:**
 ```json
 {
-  "data": 1672531200000 // Timestamp of last update (ms since epoch)
+  "data": 1735689600000
 }
 ```
-* `data` – Milliseconds since Unix epoch representing the last update time; `null` if no timestamp exists.  
 
-**Access Control:** `api::survey-template.survey-template-fetch-policy` – Same policy as the template fetch endpoint.
+**Access Control:** No route-specific policy information was provided in the available evidence.
+
+---

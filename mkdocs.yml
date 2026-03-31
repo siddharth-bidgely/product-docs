@@ -1,34 +1,46 @@
-site_name: DocGen - DETO
+site_name: Delivery Tools Platform
 site_url: https://siddharth-bidgely.github.io/product-docs/
 site_description: Product documentation for Bidgely's DETO platform — self-serve delivery tools for energy utilities
 
 theme:
   name: material
+  custom_dir: overrides
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    logo: material/lightning-bolt
   features:
     - navigation.tabs
     - navigation.sections
     - navigation.expand
     - navigation.top
     - navigation.indexes
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.footer
     - search.suggest
     - search.highlight
     - content.tabs.link
     - content.code.copy
+    - content.code.annotate
+    - header.autohide
 
 hooks:
   - hooks.py
@@ -50,13 +62,33 @@ markdown_extensions:
       alternate_style: true
   - pymdownx.tasklist:
       custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.snippets
+  - pymdownx.mark
   - tables
   - attr_list
   - md_in_html
+  - def_list
+  - footnotes
+  - abbr
   - toc:
       permalink: true
 
 # nav is built by hooks.py from docs/_data/*.yml (see site-nav.yml)
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/siddharth-bidgely
+  generator: false
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js
@@ -64,4 +96,5 @@ extra_javascript:
   - assets/js/chat-widget.js
 
 extra_css:
+  - assets/css/extra.css
   - assets/css/chat-widget.css

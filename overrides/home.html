@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block tabs %}
+  {{ super() }}
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero__inner">
+      <div class="hero__badge">Doc-Gen</div>
+      <h1>
+        AI driven documentation<br>
+        for <span class="accent">DETO</span>
+      </h1>
+      <p class="subtitle">
+        Understand product features, runbooks and API documentation with AI-generated documentation you can trust.
+      </p>
+      <div class="hero__actions">
+        <a href="getting-started/architecture/" class="btn-primary">
+          Get Started &rarr;
+        </a>
+        <a href="features/project-management/" class="btn-secondary">
+          Explore Features
+        </a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <strong>5+</strong>
+          <span>Platform Features</span>
+        </div>
+        <div class="hero__stat">
+          <strong>3</strong>
+          <span>API Specs</span>
+        </div>
+        <div class="hero__stat">
+          <strong>AI</strong>
+          <span>Generated Docs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="features-section">
+    <h2>Sections</h2>
+    <p class="section-subtitle">Everything you need to understand the platform</p>
+
+    <div class="features-grid">
+      <a class="feature-card" href="features/project-management/">
+        <div class="feature-card__icon">&#9889;</div>
+        <h3>Project Management</h3>
+        <p>1-click project and environment creation &mdash; provisions infrastructure, CMS content, and SaaS configuration automatically.</p>
+        <span class="feature-card__arrow">&rarr;</span>
+      </a>
+
+      <a class="feature-card" href="features/content-management/">
+        <div class="feature-card__icon">&#128221;</div>
+        <h3>Content Management</h3>
+        <p>Manage appliances and home profile attributes used across customer experiences with full lifecycle control.</p>
+        <span class="feature-card__arrow">&rarr;</span>
+      </a>
+
+      <a class="feature-card" href="features/recommendations/">
+        <div class="feature-card__icon">&#128161;</div>
+        <h3>Recommendations</h3>
+        <p>Create, review, and publish energy recommendations with i18n support and approval workflows.</p>
+        <span class="feature-card__arrow">&rarr;</span>
+      </a>
+
+      <a class="feature-card" href="features/survey-builder/">
+        <div class="feature-card__icon">&#128203;</div>
+        <h3>Survey Builder</h3>
+        <p>Build and manage survey templates, categories, and questions with drag-and-drop ease.</p>
+        <span class="feature-card__arrow">&rarr;</span>
+      </a>
+
+      <a class="feature-card" href="features/cx-visual-editor/">
+        <div class="feature-card__icon">&#127912;</div>
+        <h3>CX Visual Editor</h3>
+        <p>Visual template editor for customer experience content &mdash; WYSIWYG editing with live preview.</p>
+        <span class="feature-card__arrow">&rarr;</span>
+      </a>
+
+      <a class="feature-card" href="api/cms/recommendations-api/">
+        <div class="feature-card__icon">&#128279;</div>
+        <h3>API Reference</h3>
+        <p>Interactive OpenAPI documentation with Swagger UI for all platform services.</p>
+        <span class="feature-card__arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="home-footer">
+    Documentation auto-generated from Confluence specs, source code, and OpenAPI schemas using LLMs.
+  </div>
+{% endblock %}
+
+{% block content %}{% endblock %}

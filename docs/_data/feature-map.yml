@@ -6,7 +6,7 @@ features:
     display_name: "Project Management"
     description: "1-click project and environment creation — provisions infrastructure, CMS content, and SaaS configuration automatically"
     confluence_pm_page_ids: ["847642630", "853245955", "853475347", "852557844"]
-    confluence_dev_page_ids: []
+    confluence_dev_page_ids: ["853243345"]
     feature_doc: features/project-management.md
     service_docs:
       - repo: bidgely-quill

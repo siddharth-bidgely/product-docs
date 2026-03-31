@@ -11,107 +11,211 @@ security:
 paths:
   /recommendation/v1/model/{pilotId}:
     get:
-      summary: GET /recommendation/v1/model/:pilotId
+      summary: Get recommendation model
+      description: Returns the external recommendation model and default profile for the specified pilot.
       operationId: reco-external-apis_getRecoModel
       tags:
         - Recommendations
-      responses:
-        '200':
-          description: Successful response
-        '401':
-          description: Unauthorized — invalid or missing Bearer token
-        '404':
-          description: Resource not found
       parameters:
         - name: pilotId
           in: path
           required: true
+          description: Pilot identifier.
           schema:
             type: string
+        - name: status
+          in: query
+          required: false
+          description: External content status used to select recommendation content.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recommendation model returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecoModelResponse'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
       x-policies:
         - api::recommendation.reco-model-policy
   /recommendation/v1/metadata/{pilotId}:
     get:
-      summary: GET /recommendation/v1/metadata/:pilotId
+      summary: Get recommendation metadata v1
+      description: Returns recommendation metadata for the specified pilot using the v1 response shape.
       operationId: reco-external-apis_getRecoMetadata
       tags:
         - Recommendations
-      responses:
-        '200':
-          description: Successful response
-        '401':
-          description: Unauthorized — invalid or missing Bearer token
-        '404':
-          description: Resource not found
       parameters:
         - name: pilotId
           in: path
           required: true
+          description: Pilot identifier.
           schema:
             type: string
+        - name: status
+          in: query
+          required: false
+          description: External content status used to select recommendation content.
+          schema:
+            type: string
+        - name: locale
+          in: query
+          required: false
+          description: Locale used for localized recommendation metadata.
+          schema:
+            type: string
+        - name: channel
+          in: query
+          required: false
+          description: Channel filter for recommendation metadata.
+          schema:
+            type: string
+            enum:
+              - EMAIL
+              - WEB
+              - PAPER
+              - DEFAULT
+      responses:
+        '200':
+          description: Recommendation metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecoMetadataResponse'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
       x-policies:
         - api::recommendation.reco-metadata-policy
   /recommendation/v2/metadata/{pilotId}:
     get:
-      summary: GET /recommendation/v2/metadata/:pilotId
+      summary: Get recommendation metadata v2
+      description: Returns recommendation metadata for the specified pilot using the v2 response shape.
       operationId: reco-external-apis_getRecoMetadataV2
       tags:
         - Recommendations
-      responses:
-        '200':
-          description: Successful response
-        '401':
-          description: Unauthorized — invalid or missing Bearer token
-        '404':
-          description: Resource not found
       parameters:
         - name: pilotId
           in: path
           required: true
+          description: Pilot identifier.
           schema:
             type: string
+        - name: status
+          in: query
+          required: false
+          description: External content status used to select recommendation content.
+          schema:
+            type: string
+        - name: locale
+          in: query
+          required: false
+          description: Locale used for localized recommendation metadata.
+          schema:
+            type: string
+        - name: channel
+          in: query
+          required: false
+          description: Channel filter for recommendation metadata.
+          schema:
+            type: string
+            enum:
+              - EMAIL
+              - WEB
+              - PAPER
+              - DEFAULT
+      responses:
+        '200':
+          description: Recommendation metadata returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecoMetadataV2Response'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
       x-policies:
         - api::recommendation.reco-metadata-policy
   /recommendation/v1/insight-definition/{pilotId}:
     get:
-      summary: GET /recommendation/v1/insight-definition/:pilotId
+      summary: Get insight definitions
+      description: Returns insight definitions derived from recommendations for the specified pilot.
       operationId: reco-external-apis_getInsightDefinition
       tags:
         - Recommendations
-      responses:
-        '200':
-          description: Successful response
-        '401':
-          description: Unauthorized — invalid or missing Bearer token
-        '404':
-          description: Resource not found
       parameters:
         - name: pilotId
           in: path
           required: true
+          description: Pilot identifier.
           schema:
             type: string
+        - name: status
+          in: query
+          required: false
+          description: External content status used to select recommendation content.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Insight definitions returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetInsightDefinitionResponse'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
       x-policies:
         - api::recommendation.reco-model-policy
   /recommendation/v1/last-updated-ts/{pilotId}:
     get:
-      summary: GET /recommendation/v1/last-updated-ts/:pilotId
+      summary: Get recommendation last updated timestamp
+      description: Returns the cached last updated timestamp for recommendation data for the specified pilot.
       operationId: reco-external-apis_getLastUpdatedTS
       tags:
         - Recommendations
-      responses:
-        '200':
-          description: Successful response
-        '401':
-          description: Unauthorized — invalid or missing Bearer token
-        '404':
-          description: Resource not found
       parameters:
         - name: pilotId
           in: path
           required: true
+          description: Pilot identifier.
           schema:
             type: string
+        - name: status
+          in: query
+          required: false
+          description: External content status used to select recommendation content.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Last updated timestamp returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLastUpdatedTSResponse'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
       x-policies:
         - api::recommendation.reco-model-policy
 components:
@@ -261,3 +365,233 @@ components:
         - channelEmail
         - channelWeb
         - category
+    RecoModelExternal:
+      type: object
+      properties:
+        recommendationId:
+          type: string
+        fuelType:
+          type: array
+          items:
+            type: string
+            enum:
+              - ELECTRIC
+              - WATER
+              - GAS
+        category:
+          type: string
+        applianceTags:
+          type: array
+          items:
+            type: integer
+        disabled:
+          type: boolean
+        defaultReco:
+          type: boolean
+        relevanceScore:
+          type: number
+        exclusions:
+          type: array
+          items:
+            type: string
+      required:
+        - recommendationId
+        - fuelType
+        - category
+        - applianceTags
+        - disabled
+        - defaultReco
+        - relevanceScore
+        - exclusions
+    GetRecoModelResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            defaultProfile:
+              type: array
+              items:
+                type: string
+            model:
+              type: array
+              items:
+                $ref: '#/components/schemas/RecoModelExternal'
+          required:
+            - defaultProfile
+            - model
+        updatedAt:
+          type: integer
+          nullable: true
+      required:
+        - data
+        - updatedAt
+    RecoMetadataExternal:
+      type: object
+      properties:
+        recommendationId:
+          type: string
+        fuelType:
+          type: array
+          items:
+            type: string
+            enum:
+              - ELECTRIC
+              - WATER
+              - GAS
+        category:
+          type: string
+        applianceTags:
+          type: array
+          items:
+            type: integer
+        disabled:
+          type: boolean
+        defaultReco:
+          type: boolean
+        featuredContent:
+          type: boolean
+        program:
+          type: boolean
+        title:
+          type: string
+        description:
+          type: string
+        detail:
+          type: string
+        videoLink:
+          type: string
+        ctaButtonLink:
+          type: string
+        ctaButtonText:
+          type: string
+        icon:
+          type: string
+        fullImage:
+          type: string
+        shortenedImage:
+          type: string
+        elongatedImage:
+          type: string
+      required:
+        - recommendationId
+        - fuelType
+        - category
+        - applianceTags
+        - disabled
+        - defaultReco
+        - featuredContent
+        - program
+        - title
+        - description
+        - detail
+        - videoLink
+        - ctaButtonLink
+        - ctaButtonText
+        - icon
+        - fullImage
+        - shortenedImage
+        - elongatedImage
+    RecoMetadataExternalV2:
+      allOf:
+        - $ref: '#/components/schemas/RecoMetadataExternal'
+        - type: object
+          properties:
+            actionSavingsPotential:
+              type: number
+            frequency:
+              type: string
+              enum:
+                - one_time
+                - repeat
+            userType:
+              type: string
+            actionType:
+              type: string
+            objective:
+              type: string
+            herImage:
+              type: string
+          required:
+            - actionSavingsPotential
+            - frequency
+            - userType
+            - actionType
+            - objective
+            - herImage
+    GetRecoMetadataResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecoMetadataExternal'
+        updatedAt:
+          type: integer
+          nullable: true
+      required:
+        - data
+        - updatedAt
+    GetRecoMetadataV2Response:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecoMetadataExternalV2'
+        updatedAt:
+          type: integer
+          nullable: true
+      required:
+        - data
+        - updatedAt
+    InsightDefinition:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - PEER
+            - SELF
+            - APPLIANCE_CONSUMPTION_BASED
+        applianceTag:
+          type: integer
+        fuelType:
+          type: string
+          enum:
+            - ELECTRIC
+            - WATER
+            - GAS
+        recommendations:
+          type: array
+          items:
+            type: string
+        insightId:
+          type: string
+      required:
+        - type
+        - applianceTag
+        - fuelType
+        - recommendations
+        - insightId
+    GetInsightDefinitionResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/InsightDefinition'
+        updatedAt:
+          type: integer
+          nullable: true
+      required:
+        - data
+        - updatedAt
+    GetLastUpdatedTSResponse:
+      type: object
+      properties:
+        data:
+          type: integer
+          nullable: true
+      required:
+        - data
