@@ -29,6 +29,12 @@ paths:
           description: External content status used to select recommendation content.
           schema:
             type: string
+        - name: region
+          in: query
+          required: false
+          description: Region identifier used by the recommendation model response.
+          schema:
+            type: string
       responses:
         '200':
           description: Recommendation model returned successfully.
@@ -216,6 +222,41 @@ paths:
           description: Unauthorized — invalid or missing Bearer token
         '404':
           description: Resource not found
+  /recommendation/v1/count/{pilotId}:
+    get:
+      summary: Get recommendation count
+      description: Returns the number of recommendations available for the specified pilot and external content status.
+      operationId: reco-external-apis_getRecoCount
+      tags:
+        - Recommendations
+      parameters:
+        - name: pilotId
+          in: path
+          required: true
+          description: Pilot identifier.
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: true
+          description: External content status used to filter recommendations.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Recommendation count returned successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRecoCountResponse'
+        '400':
+          description: Bad request.
+        '401':
+          description: Unauthorized — invalid or missing Bearer token
+        '404':
+          description: Resource not found
+      x-policies:
+        - api::recommendation.reco-model-policy
 components:
   securitySchemes:
     bearerAuth:
@@ -421,9 +462,12 @@ components:
         updatedAt:
           type: integer
           nullable: true
+        region:
+          type: string
       required:
         - data
         - updatedAt
+        - region
     RecoMetadataExternal:
       type: object
       properties:
@@ -591,5 +635,17 @@ components:
         data:
           type: integer
           nullable: true
+      required:
+        - data
+    GetRecoCountResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            count:
+              type: integer
+          required:
+            - count
       required:
         - data
